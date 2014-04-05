@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F0BD43F18F0189900771ADF /* AMPerSectionCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0BD43E18F0189900771ADF /* AMPerSectionCollectionViewLayout.m */; };
+		5F0BD44118F0195100771ADF /* AMPerSectionCollectionViewLayoutSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0BD44018F0195100771ADF /* AMPerSectionCollectionViewLayoutSpec.m */; };
 		5F709C7A18EFAD0B00799CAA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7918EFAD0B00799CAA /* Foundation.framework */; };
 		5F709C7C18EFAD0B00799CAA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7B18EFAD0B00799CAA /* CoreGraphics.framework */; };
 		5F709C7E18EFAD0B00799CAA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7D18EFAD0B00799CAA /* UIKit.framework */; };
@@ -38,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5F0BD43D18F0189900771ADF /* AMPerSectionCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPerSectionCollectionViewLayout.h; sourceTree = "<group>"; };
+		5F0BD43E18F0189900771ADF /* AMPerSectionCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPerSectionCollectionViewLayout.m; sourceTree = "<group>"; };
+		5F0BD44018F0195100771ADF /* AMPerSectionCollectionViewLayoutSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPerSectionCollectionViewLayoutSpec.m; sourceTree = "<group>"; };
 		5F709C7618EFAD0B00799CAA /* PerSectionLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerSectionLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F709C7918EFAD0B00799CAA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5F709C7B18EFAD0B00799CAA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -139,6 +144,8 @@
 				5F709C8B18EFAD0B00799CAA /* Main.storyboard */,
 				5F709C9118EFAD0B00799CAA /* AMMainCollectionViewController.h */,
 				5F709C9218EFAD0B00799CAA /* AMMainCollectionViewController.m */,
+				5F0BD43D18F0189900771ADF /* AMPerSectionCollectionViewLayout.h */,
+				5F0BD43E18F0189900771ADF /* AMPerSectionCollectionViewLayout.m */,
 				5FD1A21418EFDBC600B2ECE1 /* Sections */,
 				5F709C9418EFAD0B00799CAA /* Images.xcassets */,
 				5F709C8018EFAD0B00799CAA /* Supporting Files */,
@@ -161,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				5FD1A21C18EFEFE400B2ECE1 /* AMMainCollectionViewControllerSpec.m */,
+				5F0BD44018F0195100771ADF /* AMPerSectionCollectionViewLayoutSpec.m */,
 				5FD1A21E18EFEFF600B2ECE1 /* Sections */,
 				5FD1A21F18EFF52A00B2ECE1 /* Fixtures */,
 				5F709CA218EFAD0B00799CAA /* Supporting Files */,
@@ -340,6 +348,7 @@
 			files = (
 				5FD1A21918EFE07B00B2ECE1 /* AMSectionsProvider.m in Sources */,
 				5F709C8A18EFAD0B00799CAA /* AMAppDelegate.m in Sources */,
+				5F0BD43F18F0189900771ADF /* AMPerSectionCollectionViewLayout.m in Sources */,
 				5F709C9318EFAD0B00799CAA /* AMMainCollectionViewController.m in Sources */,
 				5F709C8618EFAD0B00799CAA /* main.m in Sources */,
 			);
@@ -352,6 +361,7 @@
 				5FD1A21D18EFEFE400B2ECE1 /* AMMainCollectionViewControllerSpec.m in Sources */,
 				5FD1A22218EFF54F00B2ECE1 /* AMFakeSectionController.m in Sources */,
 				5FD1A21B18EFE23500B2ECE1 /* AMSectionsProviderSpec.m in Sources */,
+				5F0BD44118F0195100771ADF /* AMPerSectionCollectionViewLayoutSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
