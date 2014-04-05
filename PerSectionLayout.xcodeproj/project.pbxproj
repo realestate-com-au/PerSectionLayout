@@ -56,6 +56,7 @@
 		5F709CA518EFAD0B00799CAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5FD1A20018EFD44600B2ECE1 /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
 		5FD1A21218EFD46700B2ECE1 /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
+		5FD1A21318EFD6EA00B2ECE1 /* Test.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Test.xcconfig; sourceTree = "<group>"; };
 		9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PerSectionLayoutTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3EFB879D4FA4147B115279E /* Pods-PerSectionLayoutTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PerSectionLayoutTests.xcconfig"; path = "Pods/Pods-PerSectionLayoutTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				5FD1A20018EFD44600B2ECE1 /* Project.xcconfig */,
+				5FD1A21318EFD6EA00B2ECE1 /* Test.xcconfig */,
 				5FD1A21218EFD46700B2ECE1 /* Warnings.xcconfig */,
 				5F709C7F18EFAD0B00799CAA /* PerSectionLayout */,
 				5F709CA118EFAD0B00799CAA /* PerSectionLayoutTests */,
@@ -457,7 +459,7 @@
 		};
 		5F709CAF18EFAD0B00799CAA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C3EFB879D4FA4147B115279E /* Pods-PerSectionLayoutTests.xcconfig */;
+			baseConfigurationReference = 5FD1A21318EFD6EA00B2ECE1 /* Test.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PerSectionLayout.app/PerSectionLayout";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -480,7 +482,7 @@
 		};
 		5F709CB018EFAD0B00799CAA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C3EFB879D4FA4147B115279E /* Pods-PerSectionLayoutTests.xcconfig */;
+			baseConfigurationReference = 5FD1A21318EFD6EA00B2ECE1 /* Test.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PerSectionLayout.app/PerSectionLayout";
 				FRAMEWORK_SEARCH_PATHS = (
