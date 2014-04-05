@@ -54,6 +54,8 @@
 		5F709C9B18EFAD0B00799CAA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5F709CA318EFAD0B00799CAA /* PerSectionLayoutTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PerSectionLayoutTests-Info.plist"; sourceTree = "<group>"; };
 		5F709CA518EFAD0B00799CAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5FD1A20018EFD44600B2ECE1 /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		5FD1A21218EFD46700B2ECE1 /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
 		9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PerSectionLayoutTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3EFB879D4FA4147B115279E /* Pods-PerSectionLayoutTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PerSectionLayoutTests.xcconfig"; path = "Pods/Pods-PerSectionLayoutTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,6 +88,8 @@
 		5F709C6D18EFAD0B00799CAA = {
 			isa = PBXGroup;
 			children = (
+				5FD1A20018EFD44600B2ECE1 /* Project.xcconfig */,
+				5FD1A21218EFD46700B2ECE1 /* Warnings.xcconfig */,
 				5F709C7F18EFAD0B00799CAA /* PerSectionLayout */,
 				5F709CA118EFAD0B00799CAA /* PerSectionLayoutTests */,
 				5F709C7818EFAD0B00799CAA /* Frameworks */,
@@ -425,6 +429,7 @@
 		};
 		5F709CAC18EFAD0B00799CAA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5FD1A20018EFD44600B2ECE1 /* Project.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -438,6 +443,7 @@
 		};
 		5F709CAD18EFAD0B00799CAA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5FD1A20018EFD44600B2ECE1 /* Project.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
