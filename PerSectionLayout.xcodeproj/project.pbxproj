@@ -21,7 +21,6 @@
 		5F709C9D18EFAD0B00799CAA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7918EFAD0B00799CAA /* Foundation.framework */; };
 		5F709C9E18EFAD0B00799CAA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7D18EFAD0B00799CAA /* UIKit.framework */; };
 		5F709CA618EFAD0B00799CAA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F709CA418EFAD0B00799CAA /* InfoPlist.strings */; };
-		5F709CA818EFAD0B00799CAA /* PerSectionLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F709CA718EFAD0B00799CAA /* PerSectionLayoutTests.m */; };
 		B117182D10F74CBC96B213A2 /* libPods-PerSectionLayoutTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */; };
 /* End PBXBuildFile section */
 
@@ -55,7 +54,6 @@
 		5F709C9B18EFAD0B00799CAA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5F709CA318EFAD0B00799CAA /* PerSectionLayoutTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PerSectionLayoutTests-Info.plist"; sourceTree = "<group>"; };
 		5F709CA518EFAD0B00799CAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5F709CA718EFAD0B00799CAA /* PerSectionLayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PerSectionLayoutTests.m; sourceTree = "<group>"; };
 		9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PerSectionLayoutTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3EFB879D4FA4147B115279E /* Pods-PerSectionLayoutTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PerSectionLayoutTests.xcconfig"; path = "Pods/Pods-PerSectionLayoutTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,7 +144,6 @@
 		5F709CA118EFAD0B00799CAA /* PerSectionLayoutTests */ = {
 			isa = PBXGroup;
 			children = (
-				5F709CA718EFAD0B00799CAA /* PerSectionLayoutTests.m */,
 				5F709CA218EFAD0B00799CAA /* Supporting Files */,
 			);
 			path = PerSectionLayoutTests;
@@ -305,7 +302,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F709CA818EFAD0B00799CAA /* PerSectionLayoutTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
