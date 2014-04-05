@@ -41,14 +41,12 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    
     return [sectionController collectionView:collectionView numberOfItemsInSection:section];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:indexPath.section];
-    
     return [sectionController collectionView:collectionView cellForItemAtIndexPath:indexPath];
 }
 

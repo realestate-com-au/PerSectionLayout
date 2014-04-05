@@ -19,10 +19,10 @@
             </objects>
             <point key="canvasLocation" x="258" y="353"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Main Collection View Controller-->
         <scene sceneID="C8g-Vy-P05">
             <objects>
-                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="zpb-WW-cng" sceneMemberID="viewController">
+                <collectionViewController autoresizesArchivedViewToFullSize="NO" id="zpb-WW-cng" customClass="AMMainCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="adm-PJ-c3Y">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

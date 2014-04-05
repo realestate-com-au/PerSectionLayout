@@ -22,6 +22,7 @@
 		5F709CA618EFAD0B00799CAA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F709CA418EFAD0B00799CAA /* InfoPlist.strings */; };
 		5FD1A21918EFE07B00B2ECE1 /* AMSectionsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A21818EFE07B00B2ECE1 /* AMSectionsProvider.m */; };
 		5FD1A21B18EFE23500B2ECE1 /* AMSectionsProviderSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A21A18EFE23500B2ECE1 /* AMSectionsProviderSpec.m */; };
+		5FD1A21D18EFEFE400B2ECE1 /* AMMainCollectionViewControllerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A21C18EFEFE400B2ECE1 /* AMMainCollectionViewControllerSpec.m */; };
 		5FD1A22218EFF54F00B2ECE1 /* AMFakeSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A22118EFF54F00B2ECE1 /* AMFakeSectionController.m */; };
 		B117182D10F74CBC96B213A2 /* libPods-PerSectionLayoutTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,7 @@
 		5FD1A21718EFE07B00B2ECE1 /* AMSectionsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSectionsProvider.h; sourceTree = "<group>"; };
 		5FD1A21818EFE07B00B2ECE1 /* AMSectionsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSectionsProvider.m; sourceTree = "<group>"; };
 		5FD1A21A18EFE23500B2ECE1 /* AMSectionsProviderSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSectionsProviderSpec.m; sourceTree = "<group>"; };
+		5FD1A21C18EFEFE400B2ECE1 /* AMMainCollectionViewControllerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMainCollectionViewControllerSpec.m; sourceTree = "<group>"; };
 		5FD1A22018EFF54F00B2ECE1 /* AMFakeSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFakeSectionController.h; sourceTree = "<group>"; };
 		5FD1A22118EFF54F00B2ECE1 /* AMFakeSectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFakeSectionController.m; sourceTree = "<group>"; };
 		9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PerSectionLayoutTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +160,7 @@
 		5F709CA118EFAD0B00799CAA /* PerSectionLayoutTests */ = {
 			isa = PBXGroup;
 			children = (
+				5FD1A21C18EFEFE400B2ECE1 /* AMMainCollectionViewControllerSpec.m */,
 				5FD1A21E18EFEFF600B2ECE1 /* Sections */,
 				5FD1A21F18EFF52A00B2ECE1 /* Fixtures */,
 				5F709CA218EFAD0B00799CAA /* Supporting Files */,
@@ -346,6 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FD1A21D18EFEFE400B2ECE1 /* AMMainCollectionViewControllerSpec.m in Sources */,
 				5FD1A22218EFF54F00B2ECE1 /* AMFakeSectionController.m in Sources */,
 				5FD1A21B18EFE23500B2ECE1 /* AMSectionsProviderSpec.m in Sources */,
 			);
