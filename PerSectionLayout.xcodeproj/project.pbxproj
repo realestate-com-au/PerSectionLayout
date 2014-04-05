@@ -20,6 +20,8 @@
 		5F709C9D18EFAD0B00799CAA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7918EFAD0B00799CAA /* Foundation.framework */; };
 		5F709C9E18EFAD0B00799CAA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7D18EFAD0B00799CAA /* UIKit.framework */; };
 		5F709CA618EFAD0B00799CAA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F709CA418EFAD0B00799CAA /* InfoPlist.strings */; };
+		5FD1A21918EFE07B00B2ECE1 /* AMSectionsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A21818EFE07B00B2ECE1 /* AMSectionsProvider.m */; };
+		5FD1A21B18EFE23500B2ECE1 /* AMSectionsProviderSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A21A18EFE23500B2ECE1 /* AMSectionsProviderSpec.m */; };
 		B117182D10F74CBC96B213A2 /* libPods-PerSectionLayoutTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +59,9 @@
 		5FD1A21318EFD6EA00B2ECE1 /* Test.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Test.xcconfig; sourceTree = "<group>"; };
 		5FD1A21518EFDBF800B2ECE1 /* AMSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSectionController.h; sourceTree = "<group>"; };
 		5FD1A21618EFDDBB00B2ECE1 /* MainSections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainSections.h; sourceTree = "<group>"; };
+		5FD1A21718EFE07B00B2ECE1 /* AMSectionsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSectionsProvider.h; sourceTree = "<group>"; };
+		5FD1A21818EFE07B00B2ECE1 /* AMSectionsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSectionsProvider.m; sourceTree = "<group>"; };
+		5FD1A21A18EFE23500B2ECE1 /* AMSectionsProviderSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSectionsProviderSpec.m; sourceTree = "<group>"; };
 		9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PerSectionLayoutTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3EFB879D4FA4147B115279E /* Pods-PerSectionLayoutTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PerSectionLayoutTests.xcconfig"; path = "Pods/Pods-PerSectionLayoutTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -129,6 +134,7 @@
 				5F709C8B18EFAD0B00799CAA /* Main.storyboard */,
 				5F709C9118EFAD0B00799CAA /* AMMainCollectionViewController.h */,
 				5F709C9218EFAD0B00799CAA /* AMMainCollectionViewController.m */,
+				5FD1A21418EFDBC600B2ECE1 /* Sections */,
 				5F709C9418EFAD0B00799CAA /* Images.xcassets */,
 				5F709C8018EFAD0B00799CAA /* Supporting Files */,
 			);
@@ -150,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				5F709CA218EFAD0B00799CAA /* Supporting Files */,
+				5FD1A21A18EFE23500B2ECE1 /* AMSectionsProviderSpec.m */,
 			);
 			path = PerSectionLayoutTests;
 			sourceTree = "<group>";
@@ -168,6 +175,8 @@
 			children = (
 				5FD1A21618EFDDBB00B2ECE1 /* MainSections.h */,
 				5FD1A21518EFDBF800B2ECE1 /* AMSectionController.h */,
+				5FD1A21718EFE07B00B2ECE1 /* AMSectionsProvider.h */,
+				5FD1A21818EFE07B00B2ECE1 /* AMSectionsProvider.m */,
 			);
 			name = Sections;
 			sourceTree = "<group>";
@@ -305,6 +314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FD1A21918EFE07B00B2ECE1 /* AMSectionsProvider.m in Sources */,
 				5F709C8A18EFAD0B00799CAA /* AMAppDelegate.m in Sources */,
 				5F709C9318EFAD0B00799CAA /* AMMainCollectionViewController.m in Sources */,
 				5F709C8618EFAD0B00799CAA /* main.m in Sources */,
@@ -315,6 +325,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FD1A21B18EFE23500B2ECE1 /* AMSectionsProviderSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
