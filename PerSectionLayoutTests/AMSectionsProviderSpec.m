@@ -4,46 +4,7 @@
 
 #import <Kiwi/Kiwi.h>
 #import "AMSectionsProvider.h"
-
-@interface FakeSectionController : NSObject <AMSectionController>
-@end
-
-@implementation FakeSectionController
-
-+ (NSInteger)fakeSection
-{
-    return 0;
-}
-
-- (NSInteger)section
-{
-    return [self.class fakeSection];
-}
-
-- (void)registerCustomElementsForCollectionView:(UICollectionView *)collectionView
-{
-    [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
-}
-
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return 10;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    return cell;
-}
-
-@end
+#import "AMFakeSectionController.h"
 
 SPEC_BEGIN(AMSectionsProviderSpec)
 
@@ -63,11 +24,11 @@ describe(@"AMSectionsProvider", ^{
     
     context(@"once 2 sections are added to the provider", ^{
         beforeEach(^{
-            [FakeSectionController stub:@selector(fakeSection) andReturn:theValue(0)];
-            [provider addSectionControllerForClass:[FakeSectionController class]];
+            [AMFakeSectionController stub:@selector(fakeSection) andReturn:theValue(0)];
+            [provider addSectionControllerForClass:[AMFakeSectionController class]];
             
-            [FakeSectionController stub:@selector(fakeSection) andReturn:theValue(1)];
-            [provider addSectionControllerForClass:[FakeSectionController class]];
+            [AMFakeSectionController stub:@selector(fakeSection) andReturn:theValue(1)];
+            [provider addSectionControllerForClass:[AMFakeSectionController class]];
         });
         
         it(@"should have added one section controller", ^{
@@ -77,11 +38,11 @@ describe(@"AMSectionsProvider", ^{
     
     context(@"controllerForSection", ^{
         beforeEach(^{
-            [FakeSectionController stub:@selector(fakeSection) andReturn:theValue(0)];
-            [provider addSectionControllerForClass:[FakeSectionController class]];
+            [AMFakeSectionController stub:@selector(fakeSection) andReturn:theValue(0)];
+            [provider addSectionControllerForClass:[AMFakeSectionController class]];
             
-            [FakeSectionController stub:@selector(fakeSection) andReturn:theValue(1)];
-            [provider addSectionControllerForClass:[FakeSectionController class]];
+            [AMFakeSectionController stub:@selector(fakeSection) andReturn:theValue(1)];
+            [provider addSectionControllerForClass:[AMFakeSectionController class]];
         });
         
         it(@"should return a section controller if a valid section is given", ^{
@@ -100,11 +61,11 @@ describe(@"AMSectionsProvider", ^{
         __block UICollectionView *collectionView;
         
         beforeEach(^{
-            [FakeSectionController stub:@selector(fakeSection) andReturn:theValue(0)];
-            [provider addSectionControllerForClass:[FakeSectionController class]];
+            [AMFakeSectionController stub:@selector(fakeSection) andReturn:theValue(0)];
+            [provider addSectionControllerForClass:[AMFakeSectionController class]];
             
-            [FakeSectionController stub:@selector(fakeSection) andReturn:theValue(1)];
-            [provider addSectionControllerForClass:[FakeSectionController class]];
+            [AMFakeSectionController stub:@selector(fakeSection) andReturn:theValue(1)];
+            [provider addSectionControllerForClass:[AMFakeSectionController class]];
             
             collectionView = [UICollectionView nullMock];
         });
