@@ -22,6 +22,7 @@
 		5F709C9E18EFAD0B00799CAA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7D18EFAD0B00799CAA /* UIKit.framework */; };
 		5F709CA618EFAD0B00799CAA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F709CA418EFAD0B00799CAA /* InfoPlist.strings */; };
 		5F709CA818EFAD0B00799CAA /* PerSectionLayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F709CA718EFAD0B00799CAA /* PerSectionLayoutTests.m */; };
+		B117182D10F74CBC96B213A2 /* libPods-PerSectionLayoutTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,8 @@
 		5F709CA318EFAD0B00799CAA /* PerSectionLayoutTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PerSectionLayoutTests-Info.plist"; sourceTree = "<group>"; };
 		5F709CA518EFAD0B00799CAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5F709CA718EFAD0B00799CAA /* PerSectionLayoutTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PerSectionLayoutTests.m; sourceTree = "<group>"; };
+		9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PerSectionLayoutTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3EFB879D4FA4147B115279E /* Pods-PerSectionLayoutTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PerSectionLayoutTests.xcconfig"; path = "Pods/Pods-PerSectionLayoutTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +78,7 @@
 				5F709C9C18EFAD0B00799CAA /* XCTest.framework in Frameworks */,
 				5F709C9E18EFAD0B00799CAA /* UIKit.framework in Frameworks */,
 				5F709C9D18EFAD0B00799CAA /* Foundation.framework in Frameworks */,
+				B117182D10F74CBC96B213A2 /* libPods-PerSectionLayoutTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +92,7 @@
 				5F709CA118EFAD0B00799CAA /* PerSectionLayoutTests */,
 				5F709C7818EFAD0B00799CAA /* Frameworks */,
 				5F709C7718EFAD0B00799CAA /* Products */,
+				C3EFB879D4FA4147B115279E /* Pods-PerSectionLayoutTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,6 +112,7 @@
 				5F709C7B18EFAD0B00799CAA /* CoreGraphics.framework */,
 				5F709C7D18EFAD0B00799CAA /* UIKit.framework */,
 				5F709C9B18EFAD0B00799CAA /* XCTest.framework */,
+				9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -179,9 +185,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5F709CAE18EFAD0B00799CAA /* Build configuration list for PBXNativeTarget "PerSectionLayoutTests" */;
 			buildPhases = (
+				DC7157DCD8F94A5BAF509701 /* Check Pods Manifest.lock */,
 				5F709C9618EFAD0B00799CAA /* Sources */,
 				5F709C9718EFAD0B00799CAA /* Frameworks */,
 				5F709C9818EFAD0B00799CAA /* Resources */,
+				50EBABA953AE436FA3547AD4 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -248,6 +256,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		50EBABA953AE436FA3547AD4 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-PerSectionLayoutTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DC7157DCD8F94A5BAF509701 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5F709C7218EFAD0B00799CAA /* Sources */ = {
@@ -414,6 +455,7 @@
 		};
 		5F709CAF18EFAD0B00799CAA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3EFB879D4FA4147B115279E /* Pods-PerSectionLayoutTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PerSectionLayout.app/PerSectionLayout";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -436,6 +478,7 @@
 		};
 		5F709CB018EFAD0B00799CAA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3EFB879D4FA4147B115279E /* Pods-PerSectionLayoutTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PerSectionLayout.app/PerSectionLayout";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -471,6 +514,7 @@
 				5F709CAD18EFAD0B00799CAA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5F709CAE18EFAD0B00799CAA /* Build configuration list for PBXNativeTarget "PerSectionLayoutTests" */ = {
 			isa = XCConfigurationList;
@@ -479,6 +523,7 @@
 				5F709CB018EFAD0B00799CAA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
