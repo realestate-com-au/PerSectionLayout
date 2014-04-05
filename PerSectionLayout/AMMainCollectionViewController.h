@@ -4,6 +4,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AMViewController : UIViewController
+@interface AMMainCollectionViewController : UICollectionViewController
 
 @end

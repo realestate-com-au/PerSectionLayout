@@ -13,9 +13,8 @@
 		5F709C8418EFAD0B00799CAA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F709C8218EFAD0B00799CAA /* InfoPlist.strings */; };
 		5F709C8618EFAD0B00799CAA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F709C8518EFAD0B00799CAA /* main.m */; };
 		5F709C8A18EFAD0B00799CAA /* AMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F709C8918EFAD0B00799CAA /* AMAppDelegate.m */; };
-		5F709C8D18EFAD0B00799CAA /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F709C8B18EFAD0B00799CAA /* Main_iPhone.storyboard */; };
-		5F709C9018EFAD0B00799CAA /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F709C8E18EFAD0B00799CAA /* Main_iPad.storyboard */; };
-		5F709C9318EFAD0B00799CAA /* AMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F709C9218EFAD0B00799CAA /* AMViewController.m */; };
+		5F709C8D18EFAD0B00799CAA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F709C8B18EFAD0B00799CAA /* Main.storyboard */; };
+		5F709C9318EFAD0B00799CAA /* AMMainCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F709C9218EFAD0B00799CAA /* AMMainCollectionViewController.m */; };
 		5F709C9518EFAD0B00799CAA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F709C9418EFAD0B00799CAA /* Images.xcassets */; };
 		5F709C9C18EFAD0B00799CAA /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C9B18EFAD0B00799CAA /* XCTest.framework */; };
 		5F709C9D18EFAD0B00799CAA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7918EFAD0B00799CAA /* Foundation.framework */; };
@@ -45,10 +44,9 @@
 		5F709C8718EFAD0B00799CAA /* PerSectionLayout-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PerSectionLayout-Prefix.pch"; sourceTree = "<group>"; };
 		5F709C8818EFAD0B00799CAA /* AMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMAppDelegate.h; sourceTree = "<group>"; };
 		5F709C8918EFAD0B00799CAA /* AMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMAppDelegate.m; sourceTree = "<group>"; };
-		5F709C8C18EFAD0B00799CAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		5F709C8F18EFAD0B00799CAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		5F709C9118EFAD0B00799CAA /* AMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMViewController.h; sourceTree = "<group>"; };
-		5F709C9218EFAD0B00799CAA /* AMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMViewController.m; sourceTree = "<group>"; };
+		5F709C8C18EFAD0B00799CAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5F709C9118EFAD0B00799CAA /* AMMainCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMMainCollectionViewController.h; sourceTree = "<group>"; };
+		5F709C9218EFAD0B00799CAA /* AMMainCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMMainCollectionViewController.m; sourceTree = "<group>"; };
 		5F709C9418EFAD0B00799CAA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5F709C9A18EFAD0B00799CAA /* PerSectionLayoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PerSectionLayoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F709C9B18EFAD0B00799CAA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -126,10 +124,9 @@
 			children = (
 				5F709C8818EFAD0B00799CAA /* AMAppDelegate.h */,
 				5F709C8918EFAD0B00799CAA /* AMAppDelegate.m */,
-				5F709C8B18EFAD0B00799CAA /* Main_iPhone.storyboard */,
-				5F709C8E18EFAD0B00799CAA /* Main_iPad.storyboard */,
-				5F709C9118EFAD0B00799CAA /* AMViewController.h */,
-				5F709C9218EFAD0B00799CAA /* AMViewController.m */,
+				5F709C8B18EFAD0B00799CAA /* Main.storyboard */,
+				5F709C9118EFAD0B00799CAA /* AMMainCollectionViewController.h */,
+				5F709C9218EFAD0B00799CAA /* AMMainCollectionViewController.m */,
 				5F709C9418EFAD0B00799CAA /* Images.xcassets */,
 				5F709C8018EFAD0B00799CAA /* Supporting Files */,
 			);
@@ -243,9 +240,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F709C9018EFAD0B00799CAA /* Main_iPad.storyboard in Resources */,
 				5F709C9518EFAD0B00799CAA /* Images.xcassets in Resources */,
-				5F709C8D18EFAD0B00799CAA /* Main_iPhone.storyboard in Resources */,
+				5F709C8D18EFAD0B00799CAA /* Main.storyboard in Resources */,
 				5F709C8418EFAD0B00799CAA /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,7 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F709C8A18EFAD0B00799CAA /* AMAppDelegate.m in Sources */,
-				5F709C9318EFAD0B00799CAA /* AMViewController.m in Sources */,
+				5F709C9318EFAD0B00799CAA /* AMMainCollectionViewController.m in Sources */,
 				5F709C8618EFAD0B00799CAA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,20 +326,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		5F709C8B18EFAD0B00799CAA /* Main_iPhone.storyboard */ = {
+		5F709C8B18EFAD0B00799CAA /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5F709C8C18EFAD0B00799CAA /* Base */,
 			);
-			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		5F709C8E18EFAD0B00799CAA /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5F709C8F18EFAD0B00799CAA /* Base */,
-			);
-			name = Main_iPad.storyboard;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		5F709CA418EFAD0B00799CAA /* InfoPlist.strings */ = {
