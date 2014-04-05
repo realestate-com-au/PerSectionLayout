@@ -55,6 +55,8 @@
 		5FD1A20018EFD44600B2ECE1 /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
 		5FD1A21218EFD46700B2ECE1 /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
 		5FD1A21318EFD6EA00B2ECE1 /* Test.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Test.xcconfig; sourceTree = "<group>"; };
+		5FD1A21518EFDBF800B2ECE1 /* AMSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMSectionController.h; sourceTree = "<group>"; };
+		5FD1A21618EFDDBB00B2ECE1 /* MainSections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainSections.h; sourceTree = "<group>"; };
 		9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PerSectionLayoutTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3EFB879D4FA4147B115279E /* Pods-PerSectionLayoutTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PerSectionLayoutTests.xcconfig"; path = "Pods/Pods-PerSectionLayoutTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -159,6 +161,15 @@
 				5F709CA418EFAD0B00799CAA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5FD1A21418EFDBC600B2ECE1 /* Sections */ = {
+			isa = PBXGroup;
+			children = (
+				5FD1A21618EFDDBB00B2ECE1 /* MainSections.h */,
+				5FD1A21518EFDBF800B2ECE1 /* AMSectionController.h */,
+			);
+			name = Sections;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
