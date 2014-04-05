@@ -1,4 +1,4 @@
 PerSectionLayout
 ================
 
-Custom collection view layout
+Custom collection view layout, inspired by PSTCollectionView
