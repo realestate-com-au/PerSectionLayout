@@ -16,6 +16,9 @@
 - (CGSize)sizeForFooterInSection:(NSInteger)section;
 - (UIEdgeInsets)insetForSectionAtIndex:(NSInteger)section;
 - (CGFloat)minimumLineSpacingForSectionAtIndex:(NSInteger)section;
+- (CGFloat)minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
+- (void)fetchItemsInfo;
+- (void)getSizingInfos;
 
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
 
@@ -59,6 +62,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         it(@"should have a default minimum line spacing", ^{
             [[theValue(layout.minimumLineSpacing) should] equal:theValue(5.f)];
         });
+        
+        it(@"should have a default minimum inter item spacing", ^{
+            [[theValue(layout.minimumInteritemSpacing) should] equal:theValue(5.f)];
+        });
     });
     
     context(@"AMPerSectionCollectionViewLayoutDelegate", ^{
@@ -83,6 +90,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 layout.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
                 layout.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
                 layout.minimumLineSpacing = 8.f;
+                layout.minimumInteritemSpacing = 10.f;
                 
                 collectionView.delegate = delegate;
             });
@@ -114,6 +122,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             it(@"minimumLineSpacingForSectionAtIndex", ^{
                 [[theValue([layout minimumLineSpacingForSectionAtIndex:0]) should] equal:theValue(layout.minimumLineSpacing)];
             });
+            
+            it(@"minimumInteritemSpacing", ^{
+                [[theValue([layout minimumInteritemSpacingForSectionAtIndex:0]) should] equal:theValue(layout.minimumInteritemSpacing)];
+            });
         });
         
         context(@"with a delegate that doesn't implement any of the optional methods", ^{
@@ -130,6 +142,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 delegate.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
                 delegate.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
                 delegate.minimumLineSpacing = 8.f;
+                delegate.minimumInteritemSpacing = 10.f;
                 
                 collectionView.delegate = delegate;
             });
@@ -161,6 +174,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             it(@"minimumLineSpacingForSectionAtIndex", ^{
                 [[theValue([layout minimumLineSpacingForSectionAtIndex:0]) should] equal:theValue(delegate.minimumLineSpacing)];
             });
+            
+            it(@"minimumInteritemSpacing", ^{
+                [[theValue([layout minimumInteritemSpacingForSectionAtIndex:0]) should] equal:theValue(delegate.minimumInteritemSpacing)];
+            });
         });
     });
     
@@ -176,6 +193,11 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             [layout prepareLayout];
         });
         
+        it(@"should fetch items info", ^{
+            [[layout should] receive:@selector(fetchItemsInfo)];
+            [layout prepareLayout];
+        });
+        
         context(@"layout info", ^{
             it(@"should have one", ^{
                 [[layout.layoutInfo should] beNonNil];
@@ -185,6 +207,81 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 [[theValue(layout.layoutInfo.collectionViewSize) should] equal:theValue(collectionView.frame.size)];
             });
         });
+    });
+    
+    context(@"fetchItemsInfo", ^{
+       it(@"should get the sizing infos", ^{
+            [[layout should] receive:@selector(getSizingInfos)];
+            [layout fetchItemsInfo];
+        });
+    });
+    
+    context(@"getSizingInfos", ^{
+        
+        __block UICollectionView *collectionView = nil;
+        __block AMFakeCollectionViewDelegateDataSource *delegate = nil;
+        
+        beforeEach(^{
+            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 250.f) collectionViewLayout:layout];
+            delegate = [[AMFakeCollectionViewDelegateDataSource alloc] init];
+            
+            delegate.numberOfSections = 1;
+            delegate.numberOfItemsInSection = 5;
+            
+            delegate.itemSize = CGSizeMake(70.f, 80.f);
+            delegate.headerReferenceSize = CGSizeMake(27.f, 48.f);
+            delegate.footerReferenceSize = CGSizeMake(17.f, 58.f);
+            delegate.sectionHeaderReferenceSize = CGSizeMake(227.f, 148.f);
+            delegate.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
+            delegate.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
+            delegate.minimumLineSpacing = 8.f;
+            delegate.minimumInteritemSpacing = 10.f;
+            
+            collectionView.delegate = delegate;
+            [layout prepareLayout];
+        });
+        
+        it(@"should set the header frame size", ^{
+            [[theValue(layout.layoutInfo.headerFrame.size) should] equal:theValue([layout sizeForHeader])];
+        });
+        
+        it(@"should set the footer frame size", ^{
+             [[theValue(layout.layoutInfo.footerFrame.size) should] equal:theValue([layout sizeForFooter])];
+        });
+        
+        for (NSInteger section = 0; section < [collectionView numberOfSections]; section++)
+        {
+            AMPerSectionCollectionViewLayoutSection *layoutSection = layout.layoutInfo.layoutInfoSections[(NSUInteger)section];
+            
+            it(@"should set the section header frame size", ^{
+                [[theValue(layoutSection.headerFrame.size) should] equal:theValue([layout sizeForHeaderInSection:section])];
+            });
+            
+            it(@"should set the section footer frame size", ^{
+                [[theValue(layoutSection.footerFrame.size) should] equal:theValue([layout sizeForFooterInSection:section])];
+            });
+            
+            it(@"should set the section margin", ^{
+                [[theValue(layoutSection.sectionMargins) should] equal:theValue([layout sizeForHeaderInSection:section])];
+            });
+            
+            it(@"should set the vertical interstice", ^{
+                [[theValue(layoutSection.verticalInterstice) should] equal:theValue([layout minimumLineSpacingForSectionAtIndex:section])];
+            });
+            
+            it(@"should set the horizontal interstice", ^{
+                [[theValue(layoutSection.horizontalInterstice) should] equal:theValue([layout minimumInteritemSpacingForSectionAtIndex:section])];
+            });
+            
+            
+            for (NSInteger item = 0; item < [collectionView numberOfItemsInSection:section]; item++)
+            {
+                AMPerSectionCollectionViewLayoutItem *layoutItem = layoutSection.layoutSectionItems[(NSUInteger)item];
+                
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:section];
+                [[theValue(layoutItem.frame) should] equal:theValue([layout sizeForItemAtIndexPath:indexPath])];
+            }
+        }
     });
     
     context(@"invalidateLayout", ^{

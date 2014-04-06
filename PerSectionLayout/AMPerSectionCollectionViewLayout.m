@@ -163,6 +163,11 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 
 #pragma mark - Layout
 
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
+{
+    return NO;
+}
+
 - (void)invalidateLayout
 {
 	[super invalidateLayout];
@@ -174,11 +179,42 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 {
 	self.layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
     self.layoutInfo.collectionViewSize = self.collectionView.frame.size;
+    [self fetchItemsInfo];
 }
 
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
+- (void)fetchItemsInfo
 {
-    return NO;
+	[self getSizingInfos];
+}
+
+- (void)getSizingInfos
+{
+    self.layoutInfo.headerFrame = (CGRect){.size = [self sizeForHeader]};
+	self.layoutInfo.footerFrame = (CGRect){.size = [self sizeForFooter]};
+    
+    NSInteger numberOfSections =(NSInteger) [self.collectionView numberOfSections];
+	for (NSInteger section = 0; section < numberOfSections; section++)
+    {
+		AMPerSectionCollectionViewLayoutSection *layoutSection = [self.layoutInfo addSection];
+		
+		layoutSection.headerFrame = (CGRect){.size = [self sizeForHeaderInSection:section]};
+        layoutSection.footerFrame = (CGRect){.size = [self sizeForFooterInSection:section]};
+        layoutSection.sectionMargins = [self insetForSectionAtIndex:section];
+        layoutSection.verticalInterstice = [self minimumLineSpacingForSectionAtIndex:section];
+        layoutSection.horizontalInterstice = [self minimumInteritemSpacingForSectionAtIndex:section];
+        
+
+		NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:section];
+        CGSize itemSize = [self itemSize];
+        BOOL implementsSizeDelegate = [self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:sizeForItemAtIndexPath:)];
+		for (NSInteger item = 0; item < numberOfItems; item++)
+        {
+			NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:section];
+
+			AMPerSectionCollectionViewLayoutItem *layoutItem = [layoutSection addItem];
+			layoutItem.frame = (CGRect){.size = (implementsSizeDelegate) ? [self sizeForItemAtIndexPath:indexPath] : itemSize};
+		}
+	}
 }
 
 #pragma mark - Content Size
