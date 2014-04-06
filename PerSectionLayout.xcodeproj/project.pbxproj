@@ -15,6 +15,7 @@
 		5F0BD45E18F0DEA600771ADF /* AMPerSectionCollectionViewLayoutSectionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0BD45D18F0DEA600771ADF /* AMPerSectionCollectionViewLayoutSectionSpec.m */; };
 		5F0BD46118F0F56B00771ADF /* AMPerSectionCollectionViewLayoutItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0BD46018F0F56B00771ADF /* AMPerSectionCollectionViewLayoutItem.m */; };
 		5F0BD46318F0F58D00771ADF /* AMPerSectionCollectionViewLayoutItemSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0BD46218F0F58D00771ADF /* AMPerSectionCollectionViewLayoutItemSpec.m */; };
+		5F0BD47718F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0BD47618F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.m */; };
 		5F709C7A18EFAD0B00799CAA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7918EFAD0B00799CAA /* Foundation.framework */; };
 		5F709C7C18EFAD0B00799CAA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7B18EFAD0B00799CAA /* CoreGraphics.framework */; };
 		5F709C7E18EFAD0B00799CAA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7D18EFAD0B00799CAA /* UIKit.framework */; };
@@ -58,6 +59,8 @@
 		5F0BD45F18F0F56B00771ADF /* AMPerSectionCollectionViewLayoutItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPerSectionCollectionViewLayoutItem.h; sourceTree = "<group>"; };
 		5F0BD46018F0F56B00771ADF /* AMPerSectionCollectionViewLayoutItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPerSectionCollectionViewLayoutItem.m; sourceTree = "<group>"; };
 		5F0BD46218F0F58D00771ADF /* AMPerSectionCollectionViewLayoutItemSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPerSectionCollectionViewLayoutItemSpec.m; sourceTree = "<group>"; };
+		5F0BD47518F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFakeCollectionViewDelegateDataSource.h; sourceTree = "<group>"; };
+		5F0BD47618F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFakeCollectionViewDelegateDataSource.m; sourceTree = "<group>"; };
 		5F709C7618EFAD0B00799CAA /* PerSectionLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerSectionLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F709C7918EFAD0B00799CAA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5F709C7B18EFAD0B00799CAA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -249,6 +252,8 @@
 			children = (
 				5FD1A22018EFF54F00B2ECE1 /* AMFakeSectionController.h */,
 				5FD1A22118EFF54F00B2ECE1 /* AMFakeSectionController.m */,
+				5F0BD47518F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.h */,
+				5F0BD47618F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.m */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -406,6 +411,7 @@
 				5FD1A22218EFF54F00B2ECE1 /* AMFakeSectionController.m in Sources */,
 				5FD1A21B18EFE23500B2ECE1 /* AMSectionsProviderSpec.m in Sources */,
 				5F0BD44118F0195100771ADF /* AMPerSectionCollectionViewLayoutSpec.m in Sources */,
+				5F0BD47718F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.m in Sources */,
 				5F0BD45E18F0DEA600771ADF /* AMPerSectionCollectionViewLayoutSectionSpec.m in Sources */,
 				5F0BD46318F0F58D00771ADF /* AMPerSectionCollectionViewLayoutItemSpec.m in Sources */,
 			);
