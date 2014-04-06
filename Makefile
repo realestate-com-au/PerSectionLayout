@@ -1,2 +1,2 @@
 travis-tests:
-	xcodebuild -workspace PerSectionLayout.xcworkspace -scheme PerSectionLayout -sdk iphonesimulator test | xcpretty
+	xcodebuild -workspace PerSectionLayout.xcworkspace -scheme PerSectionLayout -sdk iphonesimulator clean test | xcpretty -c
