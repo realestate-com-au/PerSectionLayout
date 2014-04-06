@@ -20,6 +20,7 @@ extern NSString * const AMPerSectionCollectionElementKindSectionFooter;
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section;
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout isLayoutHorizontalInSection:(NSInteger)section;
 @end
 
 @interface AMPerSectionCollectionViewLayout : UICollectionViewLayout
@@ -32,5 +33,6 @@ extern NSString * const AMPerSectionCollectionElementKindSectionFooter;
 @property (nonatomic, assign) UIEdgeInsets sectionInset; // default: UIEdgeInsetsZero
 @property (nonatomic, assign) CGFloat minimumLineSpacing; // default: 5
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing; // default: 5
+@property (nonatomic, assign, getter = isSectionLayoutHorizontal) BOOL sectionLayoutHorizontal; // default: NO
 
 @end

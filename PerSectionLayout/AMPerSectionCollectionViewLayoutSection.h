@@ -13,6 +13,7 @@
 - (void)invalidate;
 - (void)computeLayout;
 
+@property (nonatomic, assign, getter = isHorizontal) BOOL horizontal; // default: No
 @property (nonatomic, assign) CGFloat verticalInterstice;
 @property (nonatomic, assign) CGFloat horizontalInterstice;
 @property (nonatomic, assign) UIEdgeInsets sectionMargins;

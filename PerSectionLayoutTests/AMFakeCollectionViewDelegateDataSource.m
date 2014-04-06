@@ -70,4 +70,9 @@
     return self.minimumInteritemSpacing;
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout isLayoutHorizontalInSection:(NSInteger)section
+{
+    return self.isSectionLayoutHorizontal;
+}
+
 @end

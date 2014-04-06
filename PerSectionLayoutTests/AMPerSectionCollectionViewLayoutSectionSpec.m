@@ -55,6 +55,17 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
         });
     });
     
+    context(@"isHorizontal", ^{
+        it(@"should be no by default", ^{
+            [[theValue(section.isHorizontal) should] beNo];
+        });
+        
+        it(@"shoulb remember if is set to horizontal", ^{
+            section.horizontal = YES;
+            [[theValue(section.isHorizontal) should] beYes];
+        });
+    });
+    
     context(@"verticalInterstice", ^{
         
         __block CGFloat verticalInterstice = 0;
