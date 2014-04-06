@@ -30,8 +30,9 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
             });
             
             it(@"should add a new layout item the array of items", ^{
-                id object = [section addItem];
+                AMPerSectionCollectionViewLayoutItem *object = [section addItem];
                 [[section.layoutSectionItems should] contain:object];
+                [[object should] beKindOfClass:[AMPerSectionCollectionViewLayoutItem class]];
             });
         });
     });

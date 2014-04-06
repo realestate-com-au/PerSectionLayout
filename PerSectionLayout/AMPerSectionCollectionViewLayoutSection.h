@@ -3,12 +3,13 @@
 //
 
 @import Foundation;
+#import "AMPerSectionCollectionViewLayoutItem.h"
 
 @interface AMPerSectionCollectionViewLayoutSection : NSObject
 
 - (NSArray *)layoutSectionItems;
 - (NSInteger)itemsCount;
-- (NSObject *)addItem;
+- (AMPerSectionCollectionViewLayoutItem *)addItem;
 - (void)invalidate;
 - (void)computeLayout;
 

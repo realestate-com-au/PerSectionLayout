@@ -33,9 +33,9 @@
     return (NSInteger)self.items.count;
 }
 
-- (NSObject *)addItem
+- (AMPerSectionCollectionViewLayoutItem *)addItem
 {
-    NSObject *layoutItem = [[NSObject alloc] init];
+    AMPerSectionCollectionViewLayoutItem *layoutItem = [[AMPerSectionCollectionViewLayoutItem alloc] init];
     [self.items addObject:layoutItem];
     [self invalidate];
     
