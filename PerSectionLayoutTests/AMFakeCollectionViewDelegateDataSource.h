@@ -20,6 +20,5 @@
 @property (nonatomic) UIEdgeInsets sectionInset;
 @property (nonatomic) CGFloat minimumLineSpacing;
 @property (nonatomic) CGFloat minimumInteritemSpacing;
-@property (nonatomic, assign, getter = isSectionLayoutHorizontal) BOOL sectionLayoutHorizontal;
 
 @end

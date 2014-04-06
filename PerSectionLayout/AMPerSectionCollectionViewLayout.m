@@ -106,7 +106,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     
     return CGSizeMake(CGRectGetWidth(self.collectionView.bounds), footerReferenceSize.height);
 }
-- (CGSize)sizeForHeaderInSection:(NSInteger)section isHorizontal:(BOOL)isHorzontal
+- (CGSize)sizeForHeaderInSection:(NSInteger)section
 {
     CGSize sectionHeaderReferenceSize = self.sectionHeaderReferenceSize;
     if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:sizeForHeaderInSection:)])
@@ -114,19 +114,10 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         sectionHeaderReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView layout:self sizeForHeaderInSection:section];
     }
     
-    if (isHorzontal)
-    {
-        sectionHeaderReferenceSize = CGSizeMake(sectionHeaderReferenceSize.width, CGRectGetHeight(self.collectionView.bounds));
-    }
-    else
-    {
-        sectionHeaderReferenceSize = CGSizeMake(CGRectGetWidth(self.collectionView.bounds), sectionHeaderReferenceSize.height);
-    }
-    
-    return sectionHeaderReferenceSize;
+    return CGSizeMake(CGRectGetWidth(self.collectionView.bounds), sectionHeaderReferenceSize.height);
 }
 
-- (CGSize)sizeForFooterInSection:(NSInteger)section isHorizontal:(BOOL)isHorzontal
+- (CGSize)sizeForFooterInSection:(NSInteger)section
 {
     CGSize sectionFooterReferenceSize = self.sectionFooterReferenceSize;
     if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:sizeForFooterInSection:)])
@@ -134,16 +125,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         sectionFooterReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView layout:self sizeForFooterInSection:section];
     }
     
-    if (isHorzontal)
-    {
-        sectionFooterReferenceSize = CGSizeMake(sectionFooterReferenceSize.width, CGRectGetHeight(self.collectionView.bounds));
-    }
-    else
-    {
-        sectionFooterReferenceSize = CGSizeMake(CGRectGetWidth(self.collectionView.bounds), sectionFooterReferenceSize.height);
-    }
-    
-    return sectionFooterReferenceSize;
+    return CGSizeMake(CGRectGetWidth(self.collectionView.bounds), sectionFooterReferenceSize.height);
 }
 
 - (UIEdgeInsets)insetForSectionAtIndex:(NSInteger)section
@@ -177,17 +159,6 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     }
     
     return minimumInteritemSpacing;
-}
-
-- (BOOL)isLayoutHorizontalForSectionAtIndex:(NSInteger)section
-{
-    BOOL isLayoutHorizontal = self.isSectionLayoutHorizontal;
-    if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:isLayoutHorizontalInSection:)])
-    {
-        isLayoutHorizontal = [self.collectionViewDelegate collectionView:self.collectionView layout:self isLayoutHorizontalInSection:section];
-    }
-    
-    return isLayoutHorizontal;
 }
 
 #pragma mark - Layout
@@ -226,14 +197,14 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 	for (NSInteger section = 0; section < numberOfSections; section++)
     {
 		AMPerSectionCollectionViewLayoutSection *layoutSection = [self.layoutInfo addSection];
-        layoutSection.horizontal = [self isLayoutHorizontalForSectionAtIndex:section];
 		
-		layoutSection.headerFrame = (CGRect){.size = [self sizeForHeaderInSection:section isHorizontal:layoutSection.isHorizontal]};
-        layoutSection.footerFrame = (CGRect){.size = [self sizeForFooterInSection:section isHorizontal:layoutSection.isHorizontal]};
+		layoutSection.headerFrame = (CGRect){.size = [self sizeForHeaderInSection:section]};
+        layoutSection.footerFrame = (CGRect){.size = [self sizeForFooterInSection:section]};
         layoutSection.sectionMargins = [self insetForSectionAtIndex:section];
-        layoutSection.verticalInterstice = layoutSection.isHorizontal ?  [self minimumInteritemSpacingForSectionAtIndex:section] : [self minimumLineSpacingForSectionAtIndex:section];
-        layoutSection.horizontalInterstice = layoutSection.isHorizontal ? [self minimumLineSpacingForSectionAtIndex:section] : [self minimumInteritemSpacingForSectionAtIndex:section];
+        layoutSection.verticalInterstice = [self minimumLineSpacingForSectionAtIndex:section];
+        layoutSection.horizontalInterstice = [self minimumInteritemSpacingForSectionAtIndex:section];
         
+
 		NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:section];
         CGSize itemSize = [self itemSize];
         BOOL implementsSizeDelegate = [self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:sizeForItemAtIndexPath:)];
