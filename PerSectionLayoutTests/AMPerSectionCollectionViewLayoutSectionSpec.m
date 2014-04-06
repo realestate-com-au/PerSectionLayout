@@ -69,6 +69,20 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
         });
     });
     
+    context(@"horizontalInterstice", ^{
+        
+        __block CGFloat horizontalInterstice = 0;
+        
+        beforeEach(^{
+            horizontalInterstice = 20.f;
+            section.horizontalInterstice = horizontalInterstice;
+        });
+        
+        it(@"should remember the vertical interstice", ^{
+            [[theValue(section.horizontalInterstice) should] equal:theValue(horizontalInterstice)];
+        });
+    });
+    
     context(@"sectionMargins", ^{
         
         __block UIEdgeInsets sectionMargins = UIEdgeInsetsZero;

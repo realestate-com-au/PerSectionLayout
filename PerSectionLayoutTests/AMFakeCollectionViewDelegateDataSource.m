@@ -65,4 +65,9 @@
     return self.minimumLineSpacing;
 }
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return self.minimumInteritemSpacing;
+}
+
 @end

@@ -42,6 +42,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 {
     self.itemSize = CGSizeMake(50.f, 50.f);
     self.minimumLineSpacing = 5.f;
+    self.minimumInteritemSpacing = 5.f;
 }
 
 #pragma mark - Layout attributes
@@ -147,6 +148,17 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     }
     
     return minimumLineSpacing;
+}
+
+- (CGFloat)minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    CGFloat minimumInteritemSpacing = self.minimumInteritemSpacing;
+    if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:minimumInteritemSpacingForSectionAtIndex:)])
+    {
+        minimumInteritemSpacing = [self.collectionViewDelegate collectionView:self.collectionView layout:self minimumInteritemSpacingForSectionAtIndex:section];
+    }
+    
+    return minimumInteritemSpacing;
 }
 
 #pragma mark - Layout

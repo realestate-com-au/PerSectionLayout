@@ -19,5 +19,6 @@
 @property (nonatomic) CGSize sectionFooterReferenceSize;
 @property (nonatomic) UIEdgeInsets sectionInset;
 @property (nonatomic) CGFloat minimumLineSpacing;
+@property (nonatomic) CGFloat minimumInteritemSpacing;
 
 @end

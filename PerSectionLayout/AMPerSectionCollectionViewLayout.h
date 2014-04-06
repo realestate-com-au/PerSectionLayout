@@ -19,16 +19,18 @@ extern NSString * const AMPerSectionCollectionElementKindSectionFooter;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForFooterInSection:(NSInteger)section;
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section;
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section;
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
 @end
 
 @interface AMPerSectionCollectionViewLayout : UICollectionViewLayout
 
-@property (nonatomic) CGSize itemSize; // default: (50, 50)
-@property (nonatomic) CGSize headerReferenceSize; // default: CGSizeZero
-@property (nonatomic) CGSize footerReferenceSize; // default: CGSizeZero
-@property (nonatomic) CGSize sectionHeaderReferenceSize; // default: CGSizeZero
-@property (nonatomic) CGSize sectionFooterReferenceSize; // default: CGSizeZero
-@property (nonatomic) UIEdgeInsets sectionInset; // default: UIEdgeInsetsZero
-@property (nonatomic) CGFloat minimumLineSpacing; // default: 5
+@property (nonatomic, assign) CGSize itemSize; // default: (50, 50)
+@property (nonatomic, assign) CGSize headerReferenceSize; // default: CGSizeZero
+@property (nonatomic, assign) CGSize footerReferenceSize; // default: CGSizeZero
+@property (nonatomic, assign) CGSize sectionHeaderReferenceSize; // default: CGSizeZero
+@property (nonatomic, assign) CGSize sectionFooterReferenceSize; // default: CGSizeZero
+@property (nonatomic, assign) UIEdgeInsets sectionInset; // default: UIEdgeInsetsZero
+@property (nonatomic, assign) CGFloat minimumLineSpacing; // default: 5
+@property (nonatomic, assign) CGFloat minimumInteritemSpacing; // default: 5
 
 @end
