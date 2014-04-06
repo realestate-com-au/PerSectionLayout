@@ -31,8 +31,9 @@ describe(@"AMPerSectionCollectionViewLayoutInfo", ^{
             });
             
             it(@"should add a new layout section the array of sections", ^{
-                id object = [layoutInfo addSection];
+                AMPerSectionCollectionViewLayoutSection *object = [layoutInfo addSection];
                 [[layoutInfo.layoutInfoSections should] contain:object];
+                [[object should] beKindOfClass:[AMPerSectionCollectionViewLayoutSection class]];
             });
             
             it(@"should invalidate the layout info", ^{

@@ -2,12 +2,13 @@
 //  Copyright (c) 2014 Dblechoc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+#import "AMPerSectionCollectionViewLayoutSection.h"
 
 @interface AMPerSectionCollectionViewLayoutInfo : NSObject
 
 - (NSArray *)layoutInfoSections;
-- (NSObject *)addSection;
+- (AMPerSectionCollectionViewLayoutSection *)addSection;
 - (void)invalidate;
 
 @property (nonatomic, assign) CGSize contentSize;

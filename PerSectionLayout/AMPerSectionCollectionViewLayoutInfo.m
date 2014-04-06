@@ -31,7 +31,7 @@
 
 - (NSObject *)addSection
 {
-    NSObject *layoutSection = [[NSObject alloc] init];
+    AMPerSectionCollectionViewLayoutSection *layoutSection = [[AMPerSectionCollectionViewLayoutSection alloc] init];
     [self.sections addObject:layoutSection];
     [self invalidate];
     
