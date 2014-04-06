@@ -131,53 +131,54 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         
         context(@"with a delegate that doesn't implement any of the optional methods", ^{
             
-            __block AMFakeCollectionViewDelegateDataSource *delegate = nil;
+            __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
             
             beforeEach(^{
-                delegate = [[AMFakeCollectionViewDelegateDataSource alloc] init];
+                delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
                 
-                delegate.itemSize = CGSizeMake(70.f, 80.f);
-                delegate.headerReferenceSize = CGSizeMake(27.f, 48.f);
-                delegate.footerReferenceSize = CGSizeMake(17.f, 58.f);
-                delegate.sectionHeaderReferenceSize = CGSizeMake(227.f, 148.f);
-                delegate.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
-                delegate.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
-                delegate.minimumLineSpacing = 8.f;
-                delegate.minimumInteritemSpacing = 10.f;
+                delegateDataSource.itemSize = CGSizeMake(70.f, 80.f);
+                delegateDataSource.headerReferenceSize = CGSizeMake(27.f, 48.f);
+                delegateDataSource.footerReferenceSize = CGSizeMake(17.f, 58.f);
+                delegateDataSource.sectionHeaderReferenceSize = CGSizeMake(227.f, 148.f);
+                delegateDataSource.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
+                delegateDataSource.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
+                delegateDataSource.minimumLineSpacing = 8.f;
+                delegateDataSource.minimumInteritemSpacing = 10.f;
                 
-                collectionView.delegate = delegate;
+                collectionView.delegate = delegateDataSource;
+                [delegateDataSource registerCustomElementsForCollectionView:collectionView];
             });
             
             it(@"sizeForItemAtIndexPath", ^{
-                [[theValue([layout sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]) should] equal:theValue(delegate.itemSize)];
+                [[theValue([layout sizeForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]) should] equal:theValue(delegateDataSource.itemSize)];
             });
             
             it(@"sizeForHeader", ^{
-                [[theValue([layout sizeForHeader]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), delegate.headerReferenceSize.height))];
+                [[theValue([layout sizeForHeader]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), delegateDataSource.headerReferenceSize.height))];
             });
             
             it(@"sizeForFooter", ^{
-                [[theValue([layout sizeForFooter]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), delegate.footerReferenceSize.height))];
+                [[theValue([layout sizeForFooter]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), delegateDataSource.footerReferenceSize.height))];
             });
             
             it(@"sizeForHeaderInSection", ^{
-                [[theValue([layout sizeForHeaderInSection:0]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), delegate.sectionHeaderReferenceSize.height))];
+                [[theValue([layout sizeForHeaderInSection:0]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), delegateDataSource.sectionHeaderReferenceSize.height))];
             });
             
             it(@"sizeForFooterInSection", ^{
-                [[theValue([layout sizeForFooterInSection:0]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), delegate.sectionFooterReferenceSize.height))];
+                [[theValue([layout sizeForFooterInSection:0]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), delegateDataSource.sectionFooterReferenceSize.height))];
             });
             
             it(@"insetForSectionAtIndex", ^{
-                [[theValue([layout insetForSectionAtIndex:0]) should] equal:theValue(delegate.sectionInset)];
+                [[theValue([layout insetForSectionAtIndex:0]) should] equal:theValue(delegateDataSource.sectionInset)];
             });
             
             it(@"minimumLineSpacingForSectionAtIndex", ^{
-                [[theValue([layout minimumLineSpacingForSectionAtIndex:0]) should] equal:theValue(delegate.minimumLineSpacing)];
+                [[theValue([layout minimumLineSpacingForSectionAtIndex:0]) should] equal:theValue(delegateDataSource.minimumLineSpacing)];
             });
             
             it(@"minimumInteritemSpacing", ^{
-                [[theValue([layout minimumInteritemSpacingForSectionAtIndex:0]) should] equal:theValue(delegate.minimumInteritemSpacing)];
+                [[theValue([layout minimumInteritemSpacingForSectionAtIndex:0]) should] equal:theValue(delegateDataSource.minimumInteritemSpacing)];
             });
         });
     });
