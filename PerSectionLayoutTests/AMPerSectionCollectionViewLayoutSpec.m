@@ -19,6 +19,7 @@
 - (CGFloat)minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
 - (void)fetchItemsInfo;
 - (void)getSizingInfos;
+- (void)updateItemsLayout;
 
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
 
@@ -214,6 +215,11 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             [[layout should] receive:@selector(getSizingInfos)];
             [layout fetchItemsInfo];
         });
+        
+        it(@"should update the items layout", ^{
+            [[layout should] receive:@selector(updateItemsLayout)];
+            [layout fetchItemsInfo];
+        });
     });
     
     context(@"getSizingInfos", ^{
@@ -282,6 +288,49 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 [[theValue(layoutItem.frame) should] equal:theValue([layout sizeForItemAtIndexPath:indexPath])];
             }
         }
+    });
+    
+    context(@"updateItemsLayout", ^{
+        
+        __block UICollectionView *collectionView = nil;
+        __block AMFakeCollectionViewDelegateDataSource *delegate = nil;
+        
+        beforeEach(^{
+            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 250.f) collectionViewLayout:layout];
+            delegate = [[AMFakeCollectionViewDelegateDataSource alloc] init];
+            
+            delegate.numberOfSections = 1;
+            delegate.numberOfItemsInSection = 5;
+            
+            delegate.itemSize = CGSizeMake(70.f, 80.f);
+            delegate.headerReferenceSize = CGSizeMake(27.f, 48.f);
+            delegate.footerReferenceSize = CGSizeMake(17.f, 58.f);
+            delegate.sectionHeaderReferenceSize = CGSizeMake(227.f, 148.f);
+            delegate.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
+            delegate.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
+            delegate.minimumLineSpacing = 8.f;
+            delegate.minimumInteritemSpacing = 10.f;
+            
+            collectionView.delegate = delegate;
+            [layout prepareLayout];
+        });
+        
+        // FIXME: revist me once compute layout is working
+        
+        it(@"should compute the collection view content size", ^{
+            [[theValue([layout collectionViewContentSize]) shouldNot] equal:theValue(CGSizeZero)];
+        });
+        
+        for (AMPerSectionCollectionViewLayoutSection *layoutSection in layout.layoutInfo.layoutInfoSections)
+        {
+            it(@"should compute the layout of each section", ^{
+                [[theValue(layoutSection.frame) shouldNot] equal:theValue(CGRectZero)];
+            });
+        }
+        
+        it(@"should compute the global footer frame", ^{
+            [[theValue([layout.layoutInfo footerFrame]) shouldNot] equal:theValue(CGRectZero)];
+        });
     });
     
     context(@"invalidateLayout", ^{

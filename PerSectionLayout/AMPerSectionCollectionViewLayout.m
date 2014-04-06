@@ -185,6 +185,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 - (void)fetchItemsInfo
 {
 	[self getSizingInfos];
+	[self updateItemsLayout];
 }
 
 - (void)getSizingInfos
@@ -215,6 +216,47 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 			layoutItem.frame = (CGRect){.size = (implementsSizeDelegate) ? [self sizeForItemAtIndexPath:indexPath] : itemSize};
 		}
 	}
+}
+
+- (void)updateItemsLayout
+{
+    CGSize contentSize = CGSizeZero;
+    
+    //	global header
+    contentSize.width = MAX(contentSize.width, CGRectGetWidth(self.layoutInfo.headerFrame));
+    contentSize.height += CGRectGetHeight(self.layoutInfo.headerFrame);
+    
+    //	sections
+	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
+    {
+		[section computeLayout];
+		
+		// update section offset to make frame absolute (section only calculates relative)
+		CGRect sectionFrame = section.frame;
+        sectionFrame.origin.y += contentSize.height;
+        section.frame = sectionFrame;
+        
+		CGRect headerFrame = section.headerFrame;
+        headerFrame.size.width = CGRectGetWidth(self.collectionView.bounds);
+        section.headerFrame = headerFrame;
+        
+		CGRect footerFrame = section.footerFrame;
+        footerFrame.size.width = CGRectGetWidth(self.collectionView.bounds);
+        section.footerFrame = footerFrame;
+        
+        
+        contentSize.height += CGRectGetMaxY(sectionFrame);
+        contentSize.width = MAX(contentSize.width, CGRectGetMaxX(section.frame));
+	}
+    
+    //	global footer
+	CGPoint footerOrigin = CGPointZero;
+    footerOrigin.y = contentSize.height;
+    contentSize.width = MAX(contentSize.width, CGRectGetWidth(self.layoutInfo.footerFrame));
+    contentSize.height += CGRectGetHeight(self.layoutInfo.footerFrame);
+    self.layoutInfo.footerFrame = (CGRect){.origin = footerOrigin, .size = self.layoutInfo.footerFrame.size};
+    
+    self.layoutInfo.contentSize = contentSize;
 }
 
 #pragma mark - Content Size
