@@ -93,7 +93,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         headerReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView sizeForHeaderInLayout:self];
     }
     
-    return CGSizeMake(CGRectGetWidth(self.collectionView.frame), headerReferenceSize.height);
+    return CGSizeMake(CGRectGetWidth(self.collectionView.bounds), headerReferenceSize.height);
 }
 
 - (CGSize)sizeForFooter
@@ -104,7 +104,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         footerReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView sizeForFooterInLayout:self];
     }
     
-    return CGSizeMake(CGRectGetWidth(self.collectionView.frame), footerReferenceSize.height);
+    return CGSizeMake(CGRectGetWidth(self.collectionView.bounds), footerReferenceSize.height);
 }
 - (CGSize)sizeForHeaderInSection:(NSInteger)section
 {
@@ -114,7 +114,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         sectionHeaderReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView layout:self sizeForHeaderInSection:section];
     }
     
-    return CGSizeMake(CGRectGetWidth(self.collectionView.frame), sectionHeaderReferenceSize.height);
+    return CGSizeMake(CGRectGetWidth(self.collectionView.bounds), sectionHeaderReferenceSize.height);
 }
 
 - (CGSize)sizeForFooterInSection:(NSInteger)section
@@ -125,7 +125,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         sectionFooterReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView layout:self sizeForFooterInSection:section];
     }
     
-    return CGSizeMake(CGRectGetWidth(self.collectionView.frame), sectionFooterReferenceSize.height);
+    return CGSizeMake(CGRectGetWidth(self.collectionView.bounds), sectionFooterReferenceSize.height);
 }
 
 - (UIEdgeInsets)insetForSectionAtIndex:(NSInteger)section
@@ -178,7 +178,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 - (void)prepareLayout
 {
 	self.layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
-    self.layoutInfo.collectionViewSize = self.collectionView.frame.size;
+    self.layoutInfo.collectionViewSize = self.collectionView.bounds.size;
     [self fetchItemsInfo];
 }
 

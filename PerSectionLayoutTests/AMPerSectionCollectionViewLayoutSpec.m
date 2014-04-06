@@ -187,7 +187,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         
         beforeEach(^{
             collectionView = [UICollectionView nullMock];
-            [collectionView stub:@selector(frame) andReturn:theValue(CGRectMake(0.f, 0.f, 70.f, 130.f))];
+            [collectionView stub:@selector(bounds) andReturn:theValue(CGRectMake(0.f, 0.f, 70.f, 130.f))];
             
             [layout stub:@selector(collectionView) andReturn:collectionView];
             [layout prepareLayout];
@@ -204,7 +204,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             });
             
             it(@"should be given the collection view size", ^{
-                [[theValue(layout.layoutInfo.collectionViewSize) should] equal:theValue(collectionView.frame.size)];
+                [[theValue(layout.layoutInfo.collectionViewSize) should] equal:theValue(collectionView.bounds.size)];
             });
         });
     });
