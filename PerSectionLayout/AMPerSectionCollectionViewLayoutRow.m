@@ -57,7 +57,7 @@
     // UICollectionView is smart and lays out items like they would have been placed on a full row
     // So we need to calculate the "usedItemCount" with using the last item as a reference size.
     // This allows us to correctly justify-place the items in the grid.
-    NSInteger usedItemCount = 0;
+    //NSInteger usedItemCount = 0; // FIXME: do we need this
     NSInteger itemIndex = 0;
     BOOL canFitMoreItems = itemIndex < self.itemsCount;
     while (itemIndex < self.itemsCount || canFitMoreItems)
@@ -71,7 +71,7 @@
             leftOverSpace -= section.horizontalInterstice;
         }
         itemIndex++;
-        usedItemCount = itemIndex;
+        //usedItemCount = itemIndex; // FIXME: do we need this
     }
     
     CGPoint itemOffset = CGPointZero;
@@ -96,7 +96,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: %p frame:%@ index:%d items:%@>", NSStringFromClass([self class]), self, NSStringFromCGRect(self.frame), self.index, self.items];
+	return [NSString stringWithFormat:@"<%@: %p frame:%@ index:%ld items:%@>", NSStringFromClass([self class]), self, NSStringFromCGRect(self.frame), (long)self.index, self.items];
 }
 
 @end
