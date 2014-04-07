@@ -72,7 +72,85 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    return nil;
+    NSMutableArray *layoutAttributesArray = [NSMutableArray array];
+    
+	// header
+	CGRect normalizedHeaderFrame = self.layoutInfo.headerFrame;
+	if (CGRectIntersectsRect(normalizedHeaderFrame, rect))
+    {
+		UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+		layoutAttributes.frame = normalizedHeaderFrame;
+		[layoutAttributesArray addObject:layoutAttributes];
+	}
+	
+	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
+    {
+		if (CGRectIntersectsRect(section.frame, rect))
+        {
+			NSInteger sectionIndex = (NSInteger)[self.layoutInfo.layoutInfoSections indexOfObject:section];
+			
+			// section header
+			CGRect normalizedSectionHeaderFrame = section.headerFrame;
+			normalizedSectionHeaderFrame.origin.x += CGRectGetMinX(section.frame);
+			normalizedSectionHeaderFrame.origin.y += CGRectGetMinY(section.frame);
+			if (CGRectIntersectsRect(normalizedSectionHeaderFrame, rect))
+            {
+				UICollectionViewLayoutAttributes *layoutAttributes;
+				layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionIndex]];
+				layoutAttributes.frame = normalizedSectionHeaderFrame;
+				[layoutAttributesArray addObject:layoutAttributes];
+			}
+			
+			// section body
+			for (AMPerSectionCollectionViewLayoutRow *row in section.layoutSectionRows)
+            {
+				//	figure out row's frame in global layout measurements
+				CGRect normalizedRowFrame = row.frame;
+				normalizedRowFrame.origin.x += section.frame.origin.x;
+				normalizedRowFrame.origin.y += section.frame.origin.y;
+				
+				if (CGRectIntersectsRect(normalizedRowFrame, rect))
+                {
+					for (NSInteger itemIndex = 0; itemIndex < row.itemsCount; itemIndex++)
+                    {
+						AMPerSectionCollectionViewLayoutItem *item = row.layoutSectionItems[(NSUInteger)itemIndex];
+						NSInteger sectionItemIndex = (NSInteger)[section.layoutSectionItems indexOfObject:item];
+						CGRect itemFrame = item.frame;
+                        
+						UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:[NSIndexPath indexPathForItem:sectionItemIndex inSection:sectionIndex]];
+						layoutAttributes.frame = CGRectMake(CGRectGetMinX(normalizedRowFrame) + CGRectGetMinX(itemFrame),
+															CGRectGetMinY(normalizedRowFrame) + CGRectGetMinY(itemFrame),
+															CGRectGetWidth(itemFrame),
+															CGRectGetHeight(itemFrame));
+						[layoutAttributesArray addObject:layoutAttributes];
+					}
+				}
+			}
+            
+			// section footer
+			CGRect normalizedSectionFooterFrame = section.footerFrame;
+			normalizedSectionFooterFrame.origin.x += CGRectGetMinX(section.frame);
+			normalizedSectionFooterFrame.origin.y += CGRectGetMinY(section.frame);
+			if (CGRectIntersectsRect(normalizedSectionFooterFrame, rect))
+            {
+				UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionIndex]];
+				layoutAttributes.frame = normalizedSectionFooterFrame;
+				[layoutAttributesArray addObject:layoutAttributes];
+			}
+		}
+	}
+	
+	// footer
+	CGRect normalizedFooterFrame = self.layoutInfo.footerFrame;
+	if (CGRectIntersectsRect(normalizedFooterFrame, rect))
+    {
+		UICollectionViewLayoutAttributes *layoutAttributes;
+		layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter withIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+		layoutAttributes.frame = normalizedFooterFrame;
+		[layoutAttributesArray addObject:layoutAttributes];
+	}
+    
+	return layoutAttributesArray;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath

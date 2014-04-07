@@ -427,8 +427,17 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
         
         context(@"layoutAttributesForElementsInRect", ^{
-            it(@"should return nothing", ^{
-                [[[layout layoutAttributesForElementsInRect:CGRectMake(0.f, 0.f, 40.f, 50.f)] should] beNil];
+            __block NSArray *layoutAttributesForElementsInRect = nil;
+            
+            beforeEach(^{
+                layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f, 0.f, layout.collectionViewContentSize.width, layout.collectionViewContentSize.height)];
+            });
+            
+            it(@"should return all elements", ^{
+                [[layoutAttributesForElementsInRect should] beNonNil];
+                
+                // header + footer + 30 * (rows) + 3 * header + footer ==> 38
+                [[layoutAttributesForElementsInRect should] haveCountOf:38];
             });
         });
         
