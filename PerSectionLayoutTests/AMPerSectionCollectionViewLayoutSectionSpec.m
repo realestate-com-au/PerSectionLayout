@@ -4,6 +4,7 @@
 
 #import <Kiwi/Kiwi.h>
 #import "AMPerSectionCollectionViewLayoutSection.h"
+#import "AMPerSectionCollectionViewLayoutRow.h"
 
 @interface AMPerSectionCollectionViewLayoutSection (AMPerSectionCollectionViewLayoutSectionSpec)
 @property (nonatomic, assign) BOOL isInvalid;
@@ -33,6 +34,24 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
                 AMPerSectionCollectionViewLayoutItem *object = [section addItem];
                 [[section.layoutSectionItems should] contain:object];
                 [[object should] beKindOfClass:[AMPerSectionCollectionViewLayoutItem class]];
+            });
+        });
+    });
+    
+    context(@"rows", ^{
+        it(@"should have none by default", ^{
+            [[section.layoutSectionRows should] beEmpty];
+        });
+        
+        context(@"addItem", ^{
+            it(@"should return an layout item object", ^{
+                [[[section addRow] should] beNonNil];
+            });
+            
+            it(@"should add a new layout item the array of items", ^{
+                AMPerSectionCollectionViewLayoutRow *object = [section addRow];
+                [[section.layoutSectionRows should] contain:object];
+                [[object should] beKindOfClass:[AMPerSectionCollectionViewLayoutRow class]];
             });
         });
     });

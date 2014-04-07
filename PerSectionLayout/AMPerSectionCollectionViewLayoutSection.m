@@ -4,10 +4,12 @@
 
 #import "AMPerSectionCollectionViewLayoutSection.h"
 #import "AMPerSectionCollectionViewLayoutInfo.h"
+#import "AMPerSectionCollectionViewLayoutRow.h"
 
 @interface AMPerSectionCollectionViewLayoutSection ()
 @property (nonatomic, assign) BOOL isInvalid;
 @property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, strong) NSMutableArray *rows;
 @end
 
 @implementation AMPerSectionCollectionViewLayoutSection
@@ -18,6 +20,7 @@
     if (self)
     {
         _items = [NSMutableArray array];
+        _rows = [NSMutableArray array];
     }
     
     return self;
@@ -38,7 +41,21 @@
 {
     AMPerSectionCollectionViewLayoutItem *layoutItem = [[AMPerSectionCollectionViewLayoutItem alloc] init];
     [self.items addObject:layoutItem];
-    [self invalidate];
+    
+    return layoutItem;
+}
+
+#pragma mark - Rows
+
+- (NSArray *)layoutSectionRows
+{
+    return [self.rows copy];
+}
+
+- (AMPerSectionCollectionViewLayoutRow *)addRow
+{
+    AMPerSectionCollectionViewLayoutRow *layoutItem = [[AMPerSectionCollectionViewLayoutRow alloc] init];
+    [self.rows addObject:layoutItem];
     
     return layoutItem;
 }
@@ -48,6 +65,7 @@
 - (void)invalidate
 {
     self.isInvalid = YES;
+    self.rows = [NSMutableArray array];
 }
 
 - (void)computeLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo;
@@ -59,7 +77,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: %p itemsCount:%ld frame:%@ bodyFrame:%@ headerFrame:%@ footerFrame:%@>", NSStringFromClass([self class]), self, (long)self.itemsCount, NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bodyFrame), NSStringFromCGRect(self.headerFrame), NSStringFromCGRect(self.footerFrame)];
+	return [NSString stringWithFormat:@"<%@: %p itemsCount:%ld frame:%@ bodyFrame:%@ headerFrame:%@ footerFrame:%@ rows:%@>", NSStringFromClass([self class]), self, (long)self.itemsCount, NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bodyFrame), NSStringFromCGRect(self.headerFrame), NSStringFromCGRect(self.footerFrame), self.rows];
 }
 
 @end

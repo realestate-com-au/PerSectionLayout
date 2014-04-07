@@ -4,13 +4,16 @@
 
 @import Foundation;
 #import "AMPerSectionCollectionViewLayoutItem.h"
+#import "AMPerSectionCollectionViewLayoutRow.h"
 @class AMPerSectionCollectionViewLayoutInfo;
 
 @interface AMPerSectionCollectionViewLayoutSection : NSObject
 
 - (NSArray *)layoutSectionItems;
+- (NSArray *)layoutSectionRows;
 - (NSInteger)itemsCount;
 - (AMPerSectionCollectionViewLayoutItem *)addItem;
+- (AMPerSectionCollectionViewLayoutRow *)addRow;
 - (void)invalidate;
 - (void)computeLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo;
 
