@@ -82,7 +82,7 @@
     
     // get available space for section body, compensate for section margins
     CGFloat dimension = layoutInfo.collectionViewSize.width;
-
+    
     dimension -= self.sectionMargins.left + self.sectionMargins.right;
     bodySize.width = dimension;
     
@@ -101,7 +101,8 @@
         BOOL finishCycle = (itemIndex >= self.itemsCount);
         
         AMPerSectionCollectionViewLayoutItem *item = nil;
-        if (!finishCycle) {
+        if (!finishCycle)
+        {
             item = self.items[(NSUInteger)itemIndex];
         }
         
@@ -109,9 +110,11 @@
         CGFloat itemDimension = itemSize.width;
         itemDimension += self.horizontalInterstice;
         
-        if (dimensionLeft < itemDimension || finishCycle) {
+        if (dimensionLeft < itemDimension || finishCycle)
+        {
             // finish current row
-            if (row) {
+            if (row)
+            {
                 // compensate last row
                 row.itemsCount = itemsByRowCount;
                 [row computeLayout:layoutInfo inSection:self];
@@ -120,7 +123,8 @@
                 bodySize.height += row.size.height;
                 currentRowPoint += row.size.height + self.verticalInterstice;
             }
-            if (!finishCycle) {
+            if (!finishCycle)
+            {
                 // create new row
                 row = [self addRow];
                 row.index = rowIndex;
@@ -131,7 +135,8 @@
         }
         dimensionLeft -= itemDimension;
         
-        if (item) {
+        if (item)
+        {
             [row addItem:item];
         }
         itemIndex++;
