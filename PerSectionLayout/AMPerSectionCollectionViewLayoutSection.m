@@ -146,14 +146,19 @@
     self.bodyFrame = (CGRect){.origin = bodyOrigin, .size = bodySize};
     
     CGRect ff = self.footerFrame;
-    ff.origin.x = 0;
-    ff.origin.y = bodyOrigin.y + bodySize.height + self.sectionMargins.bottom;
-    self.footerFrame = ff;
+    CGFloat footerOrigin = bodyOrigin.y + bodySize.height + self.sectionMargins.bottom;;
+    
+    if (CGRectGetHeight(ff) > 0)
+    {
+        ff.origin.x = 0;
+        ff.origin.y = footerOrigin;
+        self.footerFrame = ff;
+    }
     
     CGPoint sectionOrigin = CGPointZero;
     CGSize sectionSize = CGSizeZero;
     sectionSize.width = MAX(self.headerFrame.size.width, bodySize.width + self.sectionMargins.left + self.sectionMargins.right);
-    sectionSize.height = ff.origin.y + ff.size.height;
+    sectionSize.height = footerOrigin + ff.size.height;
     self.frame = (CGRect){.origin = sectionOrigin, .size = sectionSize};
 }
 

@@ -22,6 +22,7 @@
 - (void)updateItemsLayout;
 - (AMPerSectionCollectionViewLayoutSection *)sectionAtIndex:(NSInteger)section;
 - (AMPerSectionCollectionViewLayoutItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
+- (BOOL)layoutInfoFrame:(CGRect)layoutInfoFrame requiresLayoutAttritbutesForRect:(CGRect)rect;
 
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
 
@@ -103,19 +104,19 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             });
             
             it(@"sizeForHeader", ^{
-                [[theValue([layout sizeForHeader]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), layout.headerReferenceSize.height))];
+                [[theValue([layout sizeForHeader]) should] equal:theValue(layout.headerReferenceSize)];
             });
             
             it(@"sizeForFooter", ^{
-                [[theValue([layout sizeForFooter]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), layout.footerReferenceSize.height))];
+                [[theValue([layout sizeForFooter]) should] equal:theValue(layout.footerReferenceSize)];
             });
             
             it(@"sizeForHeaderInSection", ^{
-                [[theValue([layout sizeForHeaderInSection:0]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), layout.sectionHeaderReferenceSize.height))];
+                [[theValue([layout sizeForHeaderInSection:0]) should] equal:theValue(layout.sectionHeaderReferenceSize)];
             });
             
             it(@"sizeForFooterInSection", ^{
-                [[theValue([layout sizeForFooterInSection:0]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), layout.sectionFooterReferenceSize.height))];
+                [[theValue([layout sizeForFooterInSection:0]) should] equal:theValue(layout.sectionFooterReferenceSize)];
             });
             
             it(@"insetForSectionAtIndex", ^{
@@ -157,19 +158,19 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             });
             
             it(@"sizeForHeader", ^{
-                [[theValue([layout sizeForHeader]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), delegateDataSource.headerReferenceSize.height))];
+                [[theValue([layout sizeForHeader]) should] equal:theValue(delegateDataSource.headerReferenceSize)];
             });
             
             it(@"sizeForFooter", ^{
-                [[theValue([layout sizeForFooter]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), delegateDataSource.footerReferenceSize.height))];
+                [[theValue([layout sizeForFooter]) should] equal:theValue(delegateDataSource.footerReferenceSize)];
             });
             
             it(@"sizeForHeaderInSection", ^{
-                [[theValue([layout sizeForHeaderInSection:0]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), delegateDataSource.sectionHeaderReferenceSize.height))];
+                [[theValue([layout sizeForHeaderInSection:0]) should] equal:theValue(delegateDataSource.sectionHeaderReferenceSize)];
             });
             
             it(@"sizeForFooterInSection", ^{
-                [[theValue([layout sizeForFooterInSection:0]) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), delegateDataSource.sectionFooterReferenceSize.height))];
+                [[theValue([layout sizeForFooterInSection:0]) should] equal:theValue(delegateDataSource.sectionFooterReferenceSize)];
             });
             
             it(@"insetForSectionAtIndex", ^{
@@ -226,6 +227,44 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
     });
     
+    context(@"layout attributes frame validation", ^{
+        
+        __block CGRect layoutInfoFrame = CGRectZero;
+        __block CGRect rect = CGRectZero;
+        
+        context(@"when both rects intersect", ^{
+            beforeEach(^{
+                rect = CGRectMake(0.f, 0.f, 100.f, 100.f);
+            });
+            
+            it(@"should be true if layoutInfoFrame height is greater than zero", ^{
+                layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 70.f);
+                [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beTrue];
+            });
+            
+            it(@"should be false if layoutInfoFrame height of zero", ^{
+                layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 0.f);
+                [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beFalse];
+            });
+        });
+        
+        context(@"when rects don't intersect", ^{
+            beforeEach(^{
+                rect = CGRectMake(1000.f, 1000.f, 100.f, 100.f);
+            });
+            
+            it(@"should be false if layoutInfoFrame height is greater than zero", ^{
+                layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 70.f);
+                [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beFalse];
+            });
+            
+            it(@"should be false if layoutInfoFrame height of zero", ^{
+                layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 0.f);
+                [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beFalse];
+            });
+        });
+    });
+    
     context(@"getSizingInfos", ^{
         
         __block UICollectionView *collectionView = nil;
@@ -252,11 +291,11 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
         
         it(@"should set the header frame size", ^{
-            [[theValue(layout.layoutInfo.headerFrame.size) should] equal:theValue([layout sizeForHeader])];
+            [[theValue(layout.layoutInfo.headerFrame.size) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), [layout sizeForHeader].height))];
         });
         
         it(@"should set the footer frame size", ^{
-            [[theValue(layout.layoutInfo.footerFrame.size) should] equal:theValue([layout sizeForFooter])];
+            [[theValue(layout.layoutInfo.footerFrame.size) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), [layout sizeForFooter].height))];
         });
         
         for (NSInteger section = 0; section < [collectionView numberOfSections]; section++)

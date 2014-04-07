@@ -202,6 +202,28 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
         it(@"should have a footer frame", ^{
             [[theValue(firstSection.footerFrame) should] equal:theValue(CGRectMake(0.f, 230.f, 250.f, 70.f))];
         });
+        
+        context(@"with no section footer frame", ^{
+            beforeEach(^{
+                delegateDataSource.sectionFooterReferenceSize = CGSizeZero;
+                [layout prepareLayout];
+                firstSection = layout.layoutInfo.layoutInfoSections[0];
+            });
+            
+            it(@"should have a frame", ^{
+                [[theValue(firstSection.frame) should] equal:theValue(CGRectMake(0.f, 0.f, 250.f, 230.f))];
+            });
+            
+            it(@"should have a body frame", ^{
+                [[theValue(firstSection.bodyFrame) should] equal:theValue(CGRectMake(0.f, 50.f, 250.f, 180.f))];
+            });
+            
+            it(@"should have a footer frame", ^{
+                [[theValue(firstSection.footerFrame) should] equal:theValue(CGRectZero)];
+            });
+            
+        });
+        
     });
 });
 

@@ -68,6 +68,11 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     return section.layoutSectionItems[(NSUInteger)indexPath.item];
 }
 
+- (BOOL)layoutInfoFrame:(CGRect)layoutInfoFrame requiresLayoutAttritbutesForRect:(CGRect)rect
+{
+    return ((CGRectGetHeight(layoutInfoFrame) > 0) && CGRectIntersectsRect(layoutInfoFrame, rect));
+}
+
 #pragma mark - Layout attributes
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
@@ -76,7 +81,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     
 	// header
 	CGRect normalizedHeaderFrame = self.layoutInfo.headerFrame;
-	if (CGRectIntersectsRect(normalizedHeaderFrame, rect))
+	if ([self layoutInfoFrame:normalizedHeaderFrame requiresLayoutAttritbutesForRect:rect])
     {
 		UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
 		layoutAttributes.frame = normalizedHeaderFrame;
@@ -91,15 +96,15 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 			
 			// section header
 			CGRect normalizedSectionHeaderFrame = section.headerFrame;
-			normalizedSectionHeaderFrame.origin.x += CGRectGetMinX(section.frame);
-			normalizedSectionHeaderFrame.origin.y += CGRectGetMinY(section.frame);
-			if (CGRectIntersectsRect(normalizedSectionHeaderFrame, rect))
+            normalizedSectionHeaderFrame.origin.x += CGRectGetMinX(section.frame);
+            normalizedSectionHeaderFrame.origin.y += CGRectGetMinY(section.frame);
+            if ([self layoutInfoFrame:normalizedSectionHeaderFrame requiresLayoutAttritbutesForRect:rect])
             {
-				UICollectionViewLayoutAttributes *layoutAttributes;
-				layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionIndex]];
-				layoutAttributes.frame = normalizedSectionHeaderFrame;
-				[layoutAttributesArray addObject:layoutAttributes];
-			}
+                UICollectionViewLayoutAttributes *layoutAttributes;
+                layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionIndex]];
+                layoutAttributes.frame = normalizedSectionHeaderFrame;
+                [layoutAttributesArray addObject:layoutAttributes];
+            }
 			
 			// section body
 			for (AMPerSectionCollectionViewLayoutRow *row in section.layoutSectionRows)
@@ -127,22 +132,22 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 				}
 			}
             
-			// section footer
+            // section footer
 			CGRect normalizedSectionFooterFrame = section.footerFrame;
-			normalizedSectionFooterFrame.origin.x += CGRectGetMinX(section.frame);
-			normalizedSectionFooterFrame.origin.y += CGRectGetMinY(section.frame);
-			if (CGRectIntersectsRect(normalizedSectionFooterFrame, rect))
+            normalizedSectionFooterFrame.origin.x += CGRectGetMinX(section.frame);
+            normalizedSectionFooterFrame.origin.y += CGRectGetMinY(section.frame);
+            if ([self layoutInfoFrame:normalizedSectionFooterFrame requiresLayoutAttritbutesForRect:rect])
             {
-				UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionIndex]];
-				layoutAttributes.frame = normalizedSectionFooterFrame;
-				[layoutAttributesArray addObject:layoutAttributes];
-			}
+                UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionIndex]];
+                layoutAttributes.frame = normalizedSectionFooterFrame;
+                [layoutAttributesArray addObject:layoutAttributes];
+            }
 		}
 	}
 	
 	// footer
 	CGRect normalizedFooterFrame = self.layoutInfo.footerFrame;
-	if (CGRectIntersectsRect(normalizedFooterFrame, rect))
+	if ([self layoutInfoFrame:normalizedFooterFrame requiresLayoutAttritbutesForRect:rect])
     {
 		UICollectionViewLayoutAttributes *layoutAttributes;
 		layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter withIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
@@ -233,7 +238,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         headerReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView sizeForHeaderInLayout:self];
     }
     
-    return CGSizeMake(CGRectGetWidth(self.collectionView.bounds), headerReferenceSize.height);
+    return headerReferenceSize;
 }
 
 - (CGSize)sizeForFooter
@@ -244,7 +249,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         footerReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView sizeForFooterInLayout:self];
     }
     
-    return CGSizeMake(CGRectGetWidth(self.collectionView.bounds), footerReferenceSize.height);
+    return footerReferenceSize;
 }
 - (CGSize)sizeForHeaderInSection:(NSInteger)section
 {
@@ -254,7 +259,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         sectionHeaderReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView layout:self sizeForHeaderInSection:section];
     }
     
-    return CGSizeMake(CGRectGetWidth(self.collectionView.bounds), sectionHeaderReferenceSize.height);
+    return  sectionHeaderReferenceSize;
 }
 
 - (CGSize)sizeForFooterInSection:(NSInteger)section
@@ -265,7 +270,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         sectionFooterReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView layout:self sizeForFooterInSection:section];
     }
     
-    return CGSizeMake(CGRectGetWidth(self.collectionView.bounds), sectionFooterReferenceSize.height);
+    return  sectionFooterReferenceSize;
 }
 
 - (UIEdgeInsets)insetForSectionAtIndex:(NSInteger)section
@@ -363,6 +368,13 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     CGSize contentSize = CGSizeZero;
     
     //	global header
+    CGRect globalHeaderFrame =  self.layoutInfo.headerFrame;
+    if (CGRectGetWidth(globalHeaderFrame) > 0)
+    {
+        globalHeaderFrame.size.width = CGRectGetWidth(self.collectionView.bounds);
+        self.layoutInfo.headerFrame = globalHeaderFrame;
+    }
+    
     contentSize.width = MAX(contentSize.width, CGRectGetWidth(self.layoutInfo.headerFrame));
     contentSize.height += CGRectGetHeight(self.layoutInfo.headerFrame);
     
@@ -377,24 +389,34 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         section.frame = sectionFrame;
         
         CGRect headerFrame = section.headerFrame;
-        headerFrame.size.width = CGRectGetWidth(sectionFrame);
-        section.headerFrame = headerFrame;
+        if (CGRectGetHeight(headerFrame) > 0)
+        {
+            headerFrame.size.width = CGRectGetWidth(sectionFrame);
+            section.headerFrame = headerFrame;
+        }
         
         CGRect footerFrame = section.footerFrame;
-        footerFrame.size.width = CGRectGetWidth(sectionFrame);
-        section.footerFrame = footerFrame;
+        if (CGRectGetHeight(footerFrame) > 0)
+        {
+            footerFrame.size.width = CGRectGetWidth(sectionFrame);
+            section.footerFrame = footerFrame;
+        }
         
         contentSize.height += CGRectGetHeight(sectionFrame);
         contentSize.width = MAX(contentSize.width, CGRectGetMaxX(section.frame));
 	}
     
     //	global footer
-	CGPoint footerOrigin = CGPointZero;
-    footerOrigin.y = contentSize.height;
-    contentSize.width = MAX(contentSize.width, CGRectGetWidth(self.layoutInfo.footerFrame));
-    contentSize.height += CGRectGetHeight(self.layoutInfo.footerFrame);
-    self.layoutInfo.footerFrame = (CGRect){.origin = footerOrigin, .size = self.layoutInfo.footerFrame.size};
+    CGRect globalFooterFrame =  self.layoutInfo.footerFrame;
+    if (CGRectGetWidth(globalFooterFrame) > 0)
+    {
+        globalFooterFrame.origin.x = 0;
+        globalFooterFrame.origin.y = contentSize.height;
+        globalFooterFrame.size.width = CGRectGetWidth(self.collectionView.bounds);
+        self.layoutInfo.footerFrame = globalFooterFrame;
+    }
     
+	contentSize.height += CGRectGetHeight(self.layoutInfo.footerFrame);
     self.layoutInfo.contentSize = contentSize;
 }
 
