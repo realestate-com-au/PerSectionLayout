@@ -376,6 +376,14 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         sectionFrame.origin.y += contentSize.height;
         section.frame = sectionFrame;
         
+        CGRect headerFrame = section.headerFrame;
+        headerFrame.size.width = CGRectGetWidth(sectionFrame);
+        section.headerFrame = headerFrame;
+        
+        CGRect footerFrame = section.footerFrame;
+        footerFrame.size.width = CGRectGetWidth(sectionFrame);
+        section.footerFrame = footerFrame;
+        
         contentSize.height += CGRectGetHeight(sectionFrame);
         contentSize.width = MAX(contentSize.width, CGRectGetMaxX(section.frame));
 	}
