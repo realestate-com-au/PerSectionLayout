@@ -38,6 +38,11 @@ describe(@"AMPerSectionCollectionViewLayoutRow", ^{
             it(@"should add a new layout item the array of items", ^{
                 [[row.layoutSectionItems should] contain:item];
             });
+            
+            it(@"should set itelf as the item row object", ^{
+                AMPerSectionCollectionViewLayoutRow *itemRow = item.row;
+                [[row should] equal:itemRow];
+            });
         });
     });
     

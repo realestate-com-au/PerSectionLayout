@@ -34,6 +34,7 @@
 - (void)addItem:(AMPerSectionCollectionViewLayoutItem *)item
 {
     [self.items addObject:item];
+    item.row = self;
     [self invalidate];
 }
 

@@ -4,6 +4,7 @@
 
 #import <Kiwi/Kiwi.h>
 #import "AMPerSectionCollectionViewLayoutItem.h"
+#import "AMPerSectionCollectionViewLayoutRow.h"
 
 SPEC_BEGIN(AMPerSectionCollectionViewLayoutItemSpec)
 
@@ -26,6 +27,21 @@ describe(@"AMPerSectionCollectionViewLayoutItem", ^{
         
         it(@"should remember it's frame", ^{
             [[theValue(item.frame) should] equal:theValue(frame)];
+        });
+    });
+    
+    context(@"row", ^{
+        
+        __block AMPerSectionCollectionViewLayoutRow *row = nil;
+        
+        beforeEach(^{
+            row = [[AMPerSectionCollectionViewLayoutRow alloc] init];
+            item.row = row;
+        });
+        
+        it(@"should remember it's row", ^{
+            AMPerSectionCollectionViewLayoutRow *itemRow = item.row;
+            [[row should] equal:itemRow];
         });
     });
 });
