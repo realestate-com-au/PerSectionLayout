@@ -11,7 +11,7 @@
     self = [super init];
     if (self)
     {
-        _numberOfItemsInSection = 1;
+        _numberOfSections = 1;
         _numberOfItemsInSection = 10;
     }
     
