@@ -146,6 +146,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 delegateDataSource.minimumInteritemSpacing = 10.f;
                 
                 collectionView.delegate = delegateDataSource;
+                collectionView.dataSource = delegateDataSource;
                 [delegateDataSource registerCustomElementsForCollectionView:collectionView];
             });
             
@@ -294,43 +295,39 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
     context(@"updateItemsLayout", ^{
         
         __block UICollectionView *collectionView = nil;
-        __block AMFakeCollectionViewDelegateDataSource *delegate = nil;
+        __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
         
         beforeEach(^{
-            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 250.f) collectionViewLayout:layout];
-            delegate = [[AMFakeCollectionViewDelegateDataSource alloc] init];
+            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 250.f, 500.f) collectionViewLayout:layout];
+            delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
             
-            delegate.numberOfSections = 1;
-            delegate.numberOfItemsInSection = 5;
             
-            delegate.itemSize = CGSizeMake(70.f, 80.f);
-            delegate.headerReferenceSize = CGSizeMake(27.f, 48.f);
-            delegate.footerReferenceSize = CGSizeMake(17.f, 58.f);
-            delegate.sectionHeaderReferenceSize = CGSizeMake(227.f, 148.f);
-            delegate.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
-            delegate.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
-            delegate.minimumLineSpacing = 8.f;
-            delegate.minimumInteritemSpacing = 10.f;
+            delegateDataSource.numberOfSections = 1;
+            delegateDataSource.numberOfItemsInSection = 10;
+            delegateDataSource.itemSize = CGSizeMake(50.f, 50.f);
+            delegateDataSource.headerReferenceSize = CGSizeMake(25.f, 30.f);
+            delegateDataSource.footerReferenceSize = CGSizeMake(25.f, 40.f);
+            delegateDataSource.sectionHeaderReferenceSize = CGSizeMake(27.f, 50.f);
+            delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
+            delegateDataSource.minimumLineSpacing = 10.f;
+            delegateDataSource.minimumInteritemSpacing = 10.f;
             
-            collectionView.delegate = delegate;
+            collectionView.delegate = delegateDataSource;
+            collectionView.dataSource = delegateDataSource;
+            
             [layout prepareLayout];
         });
         
-        // FIXME: revist me once compute layout is working
-        
         it(@"should compute the collection view content size", ^{
-            [[theValue([layout collectionViewContentSize]) shouldNot] equal:theValue(CGSizeZero)];
+            [[theValue([layout collectionViewContentSize]) should] equal:theValue(CGSizeMake(250.f, 370.f))];
         });
         
-        for (AMPerSectionCollectionViewLayoutSection *layoutSection in layout.layoutInfo.layoutInfoSections)
-        {
-            it(@"should compute the layout of each section", ^{
-                [[theValue(layoutSection.frame) shouldNot] equal:theValue(CGRectZero)];
-            });
-        }
+        it(@"should compute the global header frame", ^{
+            [[theValue([layout.layoutInfo headerFrame]) should] equal:theValue(CGRectMake(0.f, 0.f, 250.f, 30.f))];
+        });
         
         it(@"should compute the global footer frame", ^{
-            [[theValue([layout.layoutInfo footerFrame]) shouldNot] equal:theValue(CGRectZero)];
+             [[theValue([layout.layoutInfo footerFrame]) should] equal:theValue(CGRectMake(0.f, 330.f, 250.f, 40.f))];
         });
     });
     
