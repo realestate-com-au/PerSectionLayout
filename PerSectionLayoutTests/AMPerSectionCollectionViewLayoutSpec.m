@@ -313,6 +313,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
             delegateDataSource.minimumLineSpacing = 10.f;
             delegateDataSource.minimumInteritemSpacing = 10.f;
+            delegateDataSource.sectionInset = UIEdgeInsetsMake(10.f, 30.f, 20.f, 40.f);
             
             collectionView.delegate = delegateDataSource;
             collectionView.dataSource = delegateDataSource;
@@ -321,7 +322,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
         
         it(@"should compute the collection view content size", ^{
-            [[theValue([layout collectionViewContentSize]) should] equal:theValue(CGSizeMake(250.f, 370.f))];
+            [[theValue([layout collectionViewContentSize]) should] equal:theValue(CGSizeMake(250.f, 460.f))];
         });
         
         it(@"should compute the global header frame", ^{
@@ -329,7 +330,32 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
         
         it(@"should compute the global footer frame", ^{
-             [[theValue([layout.layoutInfo footerFrame]) should] equal:theValue(CGRectMake(0.f, 330.f, 250.f, 40.f))];
+             [[theValue([layout.layoutInfo footerFrame]) should] equal:theValue(CGRectMake(0.f, 420.f, 250.f, 40.f))];
+        });
+        
+        context(@"first section", ^{
+            
+            __block AMPerSectionCollectionViewLayoutSection *layoutSection = nil;
+            
+            beforeEach(^{
+                layoutSection = [layout sectionAtIndex:0];
+            });
+            
+            it(@"should compute the header frame", ^{
+                [[theValue(layoutSection.headerFrame) should] equal:theValue(CGRectMake(0.f, 0.f, 250.f, 50.f))];
+            });
+            
+            it(@"should computer the body frame", ^{
+                [[theValue(layoutSection.bodyFrame) should] equal:theValue(CGRectMake(30.f, 60.f, 180.f, 240.f))];
+            });
+            
+            it(@"should compute the footer frame", ^{
+                [[theValue(layoutSection.footerFrame) should] equal:theValue(CGRectMake(0.f, 320.f, 250.f, 70.f))];
+            });
+            
+            it(@"should compute the total frame", ^{
+               [[theValue(layoutSection.frame) should] equal:theValue(CGRectMake(0.f, 30.f, 250.f, 390.f))];
+            });
         });
     });
     
