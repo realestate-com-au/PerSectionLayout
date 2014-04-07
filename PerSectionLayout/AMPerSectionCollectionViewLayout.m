@@ -45,6 +45,29 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     self.minimumInteritemSpacing = 5.f;
 }
 
+#pragma mark - Utilities
+
+- (AMPerSectionCollectionViewLayoutSection *)sectionAtIndex:(NSInteger)section
+{
+    if (section >= (NSInteger)self.layoutInfo.layoutInfoSections.count)
+    {
+		return nil;
+	}
+    
+    return self.layoutInfo.layoutInfoSections[(NSUInteger)section];
+}
+
+- (AMPerSectionCollectionViewLayoutItem *)itemAtIndexPath:(NSIndexPath *)indexPath
+{
+    AMPerSectionCollectionViewLayoutSection *section = [self sectionAtIndex:indexPath.section];
+    if (indexPath.item >= (NSInteger)section.layoutSectionItems.count)
+    {
+		return nil;
+	}
+    
+    return section.layoutSectionItems[(NSUInteger)indexPath.item];
+}
+
 #pragma mark - Layout attributes
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
@@ -54,12 +77,51 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    AMPerSectionCollectionViewLayoutItem *item = [self itemAtIndexPath:indexPath];
+    CGRect itemFrame = item.frame;
+    
+    AMPerSectionCollectionViewLayoutSection *section = [self sectionAtIndex:indexPath.section];
+	AMPerSectionCollectionViewLayoutRow *row = item.row;
+	
+	UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+	
+	// calculate item rect
+	CGRect normalizedRowFrame = row.frame;
+	normalizedRowFrame.origin.x += CGRectGetMinX(section.frame);
+	normalizedRowFrame.origin.y += CGRectGetMinY(section.frame);
+	layoutAttributes.frame = CGRectMake(CGRectGetMinX(normalizedRowFrame) + CGRectGetMinX(itemFrame), CGRectGetMinY(normalizedRowFrame) + CGRectGetMinY(itemFrame), CGRectGetWidth(itemFrame), CGRectGetHeight(itemFrame));
+	
+	return layoutAttributes;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    return nil;
+    UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:kind withIndexPath:indexPath];
+	
+	if ([kind isEqualToString:AMPerSectionCollectionElementKindHeader])
+    {
+		layoutAttributes.frame = self.layoutInfo.headerFrame;
+	}
+    else if ([kind isEqualToString:AMPerSectionCollectionElementKindFooter])
+    {
+		layoutAttributes.frame = self.layoutInfo.footerFrame;
+        
+	}
+    else
+    {
+		AMPerSectionCollectionViewLayoutSection *section = [self sectionAtIndex:indexPath.section];
+		if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionHeader])
+        {
+			layoutAttributes.frame = section.headerFrame;
+            
+		}
+        else if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionFooter])
+        {
+			layoutAttributes.frame = section.footerFrame;
+		}
+	}
+    
+	return layoutAttributes;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString *)decorationViewKind atIndexPath:(NSIndexPath *)indexPath
@@ -204,14 +266,14 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         layoutSection.verticalInterstice = [self minimumLineSpacingForSectionAtIndex:section];
         layoutSection.horizontalInterstice = [self minimumInteritemSpacingForSectionAtIndex:section];
         
-
+        
 		NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:section];
         CGSize itemSize = [self itemSize];
         BOOL implementsSizeDelegate = [self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:sizeForItemAtIndexPath:)];
 		for (NSInteger item = 0; item < numberOfItems; item++)
         {
 			NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:section];
-
+            
 			AMPerSectionCollectionViewLayoutItem *layoutItem = [layoutSection addItem];
 			layoutItem.frame = (CGRect){.size = (implementsSizeDelegate) ? [self sizeForItemAtIndexPath:indexPath] : itemSize};
 		}
