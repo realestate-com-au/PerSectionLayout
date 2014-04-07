@@ -30,10 +30,6 @@
 {
     return [self.items copy];
 }
-- (NSInteger)itemsCount
-{
-    return (NSInteger)self.items.count;
-}
 
 - (void)addItem:(AMPerSectionCollectionViewLayoutItem *)item
 {

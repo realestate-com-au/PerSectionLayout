@@ -49,13 +49,15 @@ describe(@"AMPerSectionCollectionViewLayoutRow", ^{
     });
     
     context(@"itemsCount", ^{
+        __block NSInteger itemsCount = 0;
+        
         beforeEach(^{
-             [row addItem:[[AMPerSectionCollectionViewLayoutItem alloc] init]];
-             [row addItem:[[AMPerSectionCollectionViewLayoutItem alloc] init]];
+            itemsCount = 10;
+            row.itemsCount = itemsCount;
         });
         
-        it(@"should be in sync with the number of items", ^{
-            [[theValue(row.itemsCount) should] equal:theValue(row.layoutSectionItems.count)];
+        it(@"should remember the row frame", ^{
+            [[theValue(row.itemsCount) should] equal:theValue(itemsCount)];
         });
     });
     
@@ -110,7 +112,6 @@ describe(@"AMPerSectionCollectionViewLayoutRow", ^{
     });
     
     context(@"computeLayout", ^{
-        // FIXME: nothing for now
         
         __block AMPerSectionCollectionViewLayoutInfo *layoutInfo = nil;
         __block AMPerSectionCollectionViewLayoutSection *section = nil;

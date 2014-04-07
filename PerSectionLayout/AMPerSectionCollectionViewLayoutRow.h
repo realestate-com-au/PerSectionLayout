@@ -10,11 +10,11 @@
 @interface AMPerSectionCollectionViewLayoutRow : NSObject
 
 - (NSArray *)layoutSectionItems;
-- (NSInteger)itemsCount;
 - (void)addItem:(AMPerSectionCollectionViewLayoutItem *)item;
 - (void)invalidate;
 - (void)computeLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo inSection:(AMPerSectionCollectionViewLayoutSection *)section;
 
+@property (nonatomic, assign) NSInteger itemsCount;
 @property (nonatomic, assign) CGSize size;
 @property (nonatomic, assign) CGRect frame;
 @property (nonatomic, assign) NSInteger index;
