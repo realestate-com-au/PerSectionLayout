@@ -1,5 +1,5 @@
 language: objective-c
 rvm:
     - 2.0.0-p247
-install: echo "Pods already installed and checked in"
+install: bundle install
 script: make test
