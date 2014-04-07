@@ -46,8 +46,8 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
     
     context(@"itemsCount", ^{
         beforeEach(^{
-             [[[section addItem] should] beNonNil];
-             [[[section addItem] should] beNonNil];
+            [section addItem];
+            [section addItem];
         });
         
         it(@"should be in sync with the number of items", ^{

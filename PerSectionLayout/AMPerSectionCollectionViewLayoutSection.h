@@ -4,6 +4,7 @@
 
 @import Foundation;
 #import "AMPerSectionCollectionViewLayoutItem.h"
+@class AMPerSectionCollectionViewLayoutInfo;
 
 @interface AMPerSectionCollectionViewLayoutSection : NSObject
 
@@ -11,7 +12,7 @@
 - (NSInteger)itemsCount;
 - (AMPerSectionCollectionViewLayoutItem *)addItem;
 - (void)invalidate;
-- (void)computeLayout;
+- (void)computeLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo;
 
 @property (nonatomic, assign) CGFloat verticalInterstice;
 @property (nonatomic, assign) CGFloat horizontalInterstice;

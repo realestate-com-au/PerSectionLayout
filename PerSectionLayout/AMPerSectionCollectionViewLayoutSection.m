@@ -3,6 +3,7 @@
 //
 
 #import "AMPerSectionCollectionViewLayoutSection.h"
+#import "AMPerSectionCollectionViewLayoutInfo.h"
 
 @interface AMPerSectionCollectionViewLayoutSection ()
 @property (nonatomic, assign) BOOL isInvalid;
@@ -49,7 +50,7 @@
     self.isInvalid = YES;
 }
 
-- (void)computeLayout
+- (void)computeLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo;
 {
     // FIXME: empty for now
 }

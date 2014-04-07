@@ -229,7 +229,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     //	sections
 	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
     {
-		[section computeLayout];
+		[section computeLayout:self.layoutInfo];
 		
 		// update section offset to make frame absolute (section only calculates relative)
 		CGRect sectionFrame = section.frame;
