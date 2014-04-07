@@ -98,6 +98,8 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
     });
     
     context(@"frame", ^{
+        // FIXME: nothing for now
+        
         context(@"once computed", ^{
             it(@"should have a valid frame", ^{
                 [[theValue(section.frame) should] equal:theValue(CGRectZero)];
@@ -119,6 +121,8 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
     });
     
     context(@"bodyFrame", ^{
+         // FIXME: nothing for now
+        
         context(@"once computed", ^{
             it(@"should have a valid body frame", ^{
                 [[theValue(section.frame) should] equal:theValue(CGRectZero)];
