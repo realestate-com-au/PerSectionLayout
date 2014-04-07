@@ -4,7 +4,13 @@
 
 #import <Kiwi/Kiwi.h>
 #import "AMPerSectionCollectionViewLayoutSection.h"
+#import "AMFakeCollectionViewDelegateDataSource.h"
+#import "AMPerSectionCollectionViewLayoutInfo.h"
 #import "AMPerSectionCollectionViewLayoutRow.h"
+
+@interface AMPerSectionCollectionViewLayout (AMPerSectionCollectionViewLayoutSectionSpec)
+@property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
+@end
 
 @interface AMPerSectionCollectionViewLayoutSection (AMPerSectionCollectionViewLayoutSectionSpec)
 @property (nonatomic, assign) BOOL isInvalid;
@@ -112,17 +118,18 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
         });
         
         it(@"should remember the section margins", ^{
-             [[theValue(section.sectionMargins) should] equal:theValue(sectionMargins)];
+            [[theValue(section.sectionMargins) should] equal:theValue(sectionMargins)];
         });
     });
     
-    context(@"frame", ^{
-        // FIXME: nothing for now
+    context(@"invalidate", ^{
+        it(@"should be valid by default", ^{
+            [[theValue(section.isInvalid) should] beFalse];
+        });
         
-        context(@"once computed", ^{
-            it(@"should have a valid frame", ^{
-                [[theValue(section.frame) should] equal:theValue(CGRectZero)];
-            });
+        it(@"should flag the layout info has invalid", ^{
+            [section invalidate];
+            [[theValue(section.isInvalid) should] beTrue];
         });
     });
     
@@ -138,17 +145,6 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
             [[theValue(section.headerFrame) should] equal:theValue(headerFrame)];
         });
     });
-    
-    context(@"bodyFrame", ^{
-         // FIXME: nothing for now
-        
-        context(@"once computed", ^{
-            it(@"should have a valid body frame", ^{
-                [[theValue(section.frame) should] equal:theValue(CGRectZero)];
-            });
-        });
-    });
-    
     context(@"footerFrame", ^{
         __block CGRect footerFrame = CGRectZero;
         
@@ -162,19 +158,50 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
         });
     });
     
-    context(@"invalidate", ^{
-        it(@"should be valid by default", ^{
-            [[theValue(section.isInvalid) should] beFalse];
+    context(@"computeLayout", ^{
+        
+        __block UICollectionView *collectionView = nil;
+        __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
+        __block AMPerSectionCollectionViewLayout *layout;
+        __block AMPerSectionCollectionViewLayoutSection *firstSection;
+        
+        beforeEach(^{
+            layout = [[AMPerSectionCollectionViewLayout alloc] init];
+            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 250.f, 500.f) collectionViewLayout:layout];
+            delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
+            
+            delegateDataSource.numberOfSections = 1;
+            delegateDataSource.numberOfItemsInSection = 10;
+            delegateDataSource.itemSize = CGSizeMake(50.f, 50.f);
+            delegateDataSource.sectionHeaderReferenceSize = CGSizeMake(27.f, 50.f);
+            delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
+            delegateDataSource.minimumLineSpacing = 10.f;
+            delegateDataSource.minimumInteritemSpacing = 10.f;
+            
+            collectionView.delegate = delegateDataSource;
+            collectionView.dataSource = delegateDataSource;
+            [delegateDataSource registerCustomElementsForCollectionView:collectionView];
+            
+            [layout prepareLayout];
+            
+            firstSection = layout.layoutInfo.layoutInfoSections[0];
         });
         
-        it(@"should flag the layout info has invalid", ^{
-            [section invalidate];
-            [[theValue(section.isInvalid) should] beTrue];
+        it(@"should have a frame", ^{
+            [[theValue(firstSection.frame) should] equal:theValue(CGRectMake(0.f, 0.f, 250.f, 300.f))];
         });
-    });
-    
-    context(@"computeLayout", ^{
-        // FIXME: nothing for now
+        
+        it(@"should have a body frame", ^{
+            [[theValue(firstSection.bodyFrame) should] equal:theValue(CGRectMake(0.f, 50.f, 250.f, 180.f))];
+        });
+        
+        it(@"should have a header frame", ^{
+            [[theValue(firstSection.headerFrame) should] equal:theValue(CGRectMake(0.f, 0.f, 250.f, 50.f))];
+        });
+        
+        it(@"should have a footer frame", ^{
+            [[theValue(firstSection.footerFrame) should] equal:theValue(CGRectMake(0.f, 230.f, 250.f, 70.f))];
+        });
     });
 });
 
