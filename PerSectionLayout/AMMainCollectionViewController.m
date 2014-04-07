@@ -4,6 +4,7 @@
 
 #import "AMMainCollectionViewController.h"
 #import "AMSectionsProvider.h"
+#import "AMListSectionController.h"
 
 @interface AMMainCollectionViewController ()
 @property (nonatomic, strong) AMSectionsProvider *sectionsProvider;
@@ -17,6 +18,7 @@
     if (self)
     {
         self.sectionsProvider = [[AMSectionsProvider alloc] init];
+        [self.sectionsProvider addSectionControllerForClass:[AMListSectionController class]];
     }
     
     return self;

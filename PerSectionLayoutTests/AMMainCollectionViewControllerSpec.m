@@ -5,7 +5,7 @@
 #import <Kiwi/Kiwi.h>
 #import "AMMainCollectionViewController.h"
 #import "AMSectionsProvider.h"
-#import "AMFakeSectionController.h"
+#import "AMListSectionController.h"
 
 @interface AMMainCollectionViewController (AMMainCollectionViewControllerSpec)
 @property (nonatomic, strong) AMSectionsProvider *sectionsProvider;
@@ -17,14 +17,13 @@ SPEC_BEGIN(AMMainCollectionViewControllerSpec)
 describe(@"AMMainCollectionViewController", ^{
     
     __block AMMainCollectionViewController *controller = nil;
-    __block AMFakeSectionController *sectionController = nil;
+    __block AMListSectionController *sectionController = nil;
     
     beforeEach(^{
         UINavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
         controller = (AMMainCollectionViewController *)[navigationController topViewController];
         
-        [controller.sectionsProvider addSectionControllerForClass:[AMFakeSectionController class]];
-        sectionController = (AMFakeSectionController *)[controller.sectionsProvider controllerForSection:0];
+        sectionController = (AMListSectionController *)[controller.sectionsProvider controllerForSection:0];
     });
     
     context(@"initialization", ^{
@@ -50,9 +49,9 @@ describe(@"AMMainCollectionViewController", ^{
             [[theValue(sections) should] equal:theValue([controller.sectionsProvider sectionControllersCount])];
         });
         
-        it(@"should ak the section controller for the number of items in section", ^{
+        it(@"should ask the section controller for the number of items in section", ^{
             NSInteger items = [controller collectionView:controller.collectionView numberOfItemsInSection:0];
-            [[theValue(items) should] equal:theValue([sectionController numberOfItemsInSection])];
+            [[theValue(items) should] equal:theValue(10)];
         });
         
         it(@"should ask the section controller for a cell", ^{
