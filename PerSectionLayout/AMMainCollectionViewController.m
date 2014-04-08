@@ -5,6 +5,7 @@
 #import "AMMainCollectionViewController.h"
 #import "AMSectionsProvider.h"
 #import "AMListSectionController.h"
+#import "AMPerSectionCollectionViewLayout.h"
 
 @interface AMMainCollectionViewController ()
 @property (nonatomic, strong) AMSectionsProvider *sectionsProvider;
@@ -18,7 +19,7 @@
     if (self)
     {
         self.sectionsProvider = [[AMSectionsProvider alloc] init];
-        [self.sectionsProvider addSectionControllerForClass:[AMListSectionController class]];
+       [self.sectionsProvider addSectionControllerForClass:[AMListSectionController class]];
     }
     
     return self;
@@ -30,6 +31,7 @@
 {
     [super viewDidLoad];
     
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withReuseIdentifier:@"header"];
     [self.sectionsProvider registerCustomElementsForCollectionView:self.collectionView];
 }
 
@@ -50,6 +52,26 @@
 {
     id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:indexPath.section];
     return [sectionController collectionView:collectionView cellForItemAtIndexPath:indexPath];
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([kind isEqualToString:AMPerSectionCollectionElementKindHeader])
+    {
+        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withReuseIdentifier:@"header"  forIndexPath:indexPath];
+        view.backgroundColor = [UIColor redColor];
+        
+        return view;
+    }
+    
+    return nil;
+}
+
+#pragma mark -  AMPerSectionCollectionViewLayoutDelegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView sizeForHeaderInLayout:(AMPerSectionCollectionViewLayout *)collectionViewLayout
+{
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), 50);
 }
 
 @end
