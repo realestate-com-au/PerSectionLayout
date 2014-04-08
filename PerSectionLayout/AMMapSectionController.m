@@ -36,4 +36,9 @@
     return cell;
 }
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section
+{
+    return 100;
+}
+
 @end
