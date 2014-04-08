@@ -81,7 +81,7 @@
     //	header origin is 0, 0. nothing to do
     
     // get available space for section body, compensate for section margins
-    CGFloat dimension = layoutInfo.collectionViewSize.width;
+    CGFloat dimension = self.width;
     
     dimension -= self.sectionMargins.left + self.sectionMargins.right;
     bodySize.width = dimension;

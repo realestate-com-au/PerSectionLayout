@@ -18,6 +18,7 @@ extern NSString * const AMPerSectionCollectionElementKindSectionFooter;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForHeaderInSection:(NSInteger)section;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForFooterInSection:(NSInteger)section;
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section;
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section;
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
 @end
@@ -30,6 +31,7 @@ extern NSString * const AMPerSectionCollectionElementKindSectionFooter;
 @property (nonatomic, assign) CGSize sectionHeaderReferenceSize; // default: CGSizeZero
 @property (nonatomic, assign) CGSize sectionFooterReferenceSize; // default: CGSizeZero
 @property (nonatomic, assign) UIEdgeInsets sectionInset; // default: UIEdgeInsetsZero
+@property (nonatomic, assign) CGFloat sectionMinimumWidth; // default: NAN (use the collection view width)
 @property (nonatomic, assign) CGFloat minimumLineSpacing; // default: 5
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing; // default: 5
 

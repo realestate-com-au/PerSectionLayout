@@ -50,7 +50,7 @@
 - (void)computeLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo inSection:(AMPerSectionCollectionViewLayoutSection *)section
 {
     // calculate space that's left over if we would align it from left to right.
-    CGFloat leftOverSpace = layoutInfo.collectionViewSize.width;
+    CGFloat leftOverSpace = section.width;
     leftOverSpace -= section.sectionMargins.left + section.sectionMargins.right;
     
     // calculate the space that we have left after counting all items.

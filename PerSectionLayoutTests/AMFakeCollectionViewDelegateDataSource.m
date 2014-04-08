@@ -60,6 +60,11 @@
     return self.sectionInset;
 }
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section
+{
+    return self.sectionMinimumWidth;
+}
+
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     return self.minimumLineSpacing;

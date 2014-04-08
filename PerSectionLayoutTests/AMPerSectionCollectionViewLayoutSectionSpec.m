@@ -122,6 +122,20 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
         });
     });
     
+    context(@"width", ^{
+        
+        __block CGFloat width = 0.f;
+        
+        beforeEach(^{
+            width = 200;
+            section.width = width;
+        });
+        
+        it(@"should remember the section margins", ^{
+            [[theValue(section.width) should] equal:theValue(width)];
+        });
+    });
+    
     context(@"invalidate", ^{
         it(@"should be valid by default", ^{
             [[theValue(section.isInvalid) should] beFalse];
@@ -175,6 +189,7 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
             delegateDataSource.itemSize = CGSizeMake(50.f, 50.f);
             delegateDataSource.sectionHeaderReferenceSize = CGSizeMake(27.f, 50.f);
             delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
+            delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
             delegateDataSource.minimumLineSpacing = 10.f;
             delegateDataSource.minimumInteritemSpacing = 10.f;
             

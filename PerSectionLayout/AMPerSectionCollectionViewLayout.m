@@ -4,6 +4,7 @@
 
 #import "AMPerSectionCollectionViewLayout.h"
 #import "AMPerSectionCollectionViewLayoutInfo.h"
+#import "math.h"
 
 NSString * const AMPerSectionCollectionElementKindHeader = @"AMPerSectionCollectionElementKindHeader";
 NSString * const AMPerSectionCollectionElementKindFooter = @"AMPerSectionCollectionElementKindFooter";
@@ -43,6 +44,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     self.itemSize = CGSizeMake(50.f, 50.f);
     self.minimumLineSpacing = 5.f;
     self.minimumInteritemSpacing = 5.f;
+    self.sectionMinimumWidth = NAN;
 }
 
 #pragma mark - Utilities
@@ -284,6 +286,17 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     return sectionInset;
 }
 
+- (CGFloat)miniumWidthForSectionAtIndex:(NSInteger)section
+{
+    CGFloat minimuWidth = self.sectionMinimumWidth;
+    if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:minimumWidthForSectionAtIndex:)])
+    {
+        minimuWidth = [self.collectionViewDelegate collectionView:self.collectionView layout:self minimumWidthForSectionAtIndex:section];
+    }
+    
+    return minimuWidth;
+}
+
 - (CGFloat)minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     CGFloat minimumLineSpacing = self.minimumLineSpacing;
@@ -348,7 +361,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
         layoutSection.sectionMargins = [self insetForSectionAtIndex:section];
         layoutSection.verticalInterstice = [self minimumLineSpacingForSectionAtIndex:section];
         layoutSection.horizontalInterstice = [self minimumInteritemSpacingForSectionAtIndex:section];
-        
+        layoutSection.width = [self miniumWidthForSectionAtIndex:section];
         
 		NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:section];
         CGSize itemSize = [self itemSize];
@@ -381,6 +394,8 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     //	sections
 	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
     {
+        CGFloat sectionWidth = section.width;
+        section.width = (isnan(sectionWidth)) ? CGRectGetWidth(self.collectionView.bounds) : sectionWidth; // FIXME adjust me here
 		[section computeLayout:self.layoutInfo];
 		
 		// update section offset to make frame absolute (section only calculates relative)

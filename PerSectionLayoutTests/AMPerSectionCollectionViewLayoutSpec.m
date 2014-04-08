@@ -6,6 +6,7 @@
 #import "AMPerSectionCollectionViewLayout.h"
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 #import "AMFakeCollectionViewDelegateDataSource.h"
+#import "math.h"
 
 @interface AMPerSectionCollectionViewLayout ()
 
@@ -17,6 +18,7 @@
 - (UIEdgeInsets)insetForSectionAtIndex:(NSInteger)section;
 - (CGFloat)minimumLineSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
+- (CGFloat)miniumWidthForSectionAtIndex:(NSInteger)section;
 - (void)fetchItemsInfo;
 - (void)getSizingInfos;
 - (void)updateItemsLayout;
@@ -70,6 +72,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         it(@"should have a default minimum inter item spacing", ^{
             [[theValue(layout.minimumInteritemSpacing) should] equal:theValue(5.f)];
         });
+        
+        it(@"should have a default section minimu with", ^{
+            [[theValue(layout.sectionMinimumWidth) should] equal:theValue(NAN)];
+        });
     });
     
     context(@"AMPerSectionCollectionViewLayoutDelegate", ^{
@@ -93,6 +99,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 layout.sectionHeaderReferenceSize = CGSizeMake(227.f, 148.f);
                 layout.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
                 layout.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
+                layout.sectionMinimumWidth = 400.f;
                 layout.minimumLineSpacing = 8.f;
                 layout.minimumInteritemSpacing = 10.f;
                 
@@ -121,6 +128,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             
             it(@"insetForSectionAtIndex", ^{
                 [[theValue([layout insetForSectionAtIndex:0]) should] equal:theValue(layout.sectionInset)];
+            });
+            
+            it(@"miniumWidthForSectionAtIndex", ^{
+                [[theValue([layout miniumWidthForSectionAtIndex:0]) should] equal:theValue(layout.sectionMinimumWidth)];
             });
             
             it(@"minimumLineSpacingForSectionAtIndex", ^{
@@ -175,6 +186,9 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             
             it(@"insetForSectionAtIndex", ^{
                 [[theValue([layout insetForSectionAtIndex:0]) should] equal:theValue(delegateDataSource.sectionInset)];
+            });
+            it(@"miniumWidthForSectionAtIndex", ^{
+                [[theValue([layout miniumWidthForSectionAtIndex:0]) should] equal:theValue(delegateDataSource.sectionMinimumWidth)];
             });
             
             it(@"minimumLineSpacingForSectionAtIndex", ^{
@@ -353,6 +367,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             delegateDataSource.minimumLineSpacing = 10.f;
             delegateDataSource.minimumInteritemSpacing = 10.f;
             delegateDataSource.sectionInset = UIEdgeInsetsMake(10.f, 30.f, 20.f, 40.f);
+            delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
             
             collectionView.delegate = delegateDataSource;
             collectionView.dataSource = delegateDataSource;
@@ -477,6 +492,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
             delegateDataSource.minimumLineSpacing = 10.f;
             delegateDataSource.minimumInteritemSpacing = 10.f;
+            delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
             
             collectionView.delegate = delegateDataSource;
             collectionView.dataSource = delegateDataSource;

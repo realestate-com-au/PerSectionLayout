@@ -20,5 +20,6 @@
 @property (nonatomic) UIEdgeInsets sectionInset;
 @property (nonatomic) CGFloat minimumLineSpacing;
 @property (nonatomic) CGFloat minimumInteritemSpacing;
+@property (nonatomic) CGFloat sectionMinimumWidth;
 
 @end
