@@ -165,4 +165,15 @@
     return collectionViewLayout.minimumInteritemSpacing;
 }
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section
+{
+    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
+    if ([sectionController respondsToSelector:@selector(collectionView:layout:minimumWidthForSectionAtIndex:)])
+    {
+        return [sectionController collectionView:collectionView layout:collectionViewLayout minimumWidthForSectionAtIndex:section];
+    }
+    
+    return collectionViewLayout.minimumInteritemSpacing;
+}
+
 @end
