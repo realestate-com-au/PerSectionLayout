@@ -4,8 +4,9 @@
 
 @import UIKit;
 #import "MainSections.h"
+#import "AMPerSectionCollectionViewLayout.h"
 
-@protocol AMSectionController <NSObject, UICollectionViewDataSource, UICollectionViewDelegate>
+@protocol AMSectionController <NSObject, UICollectionViewDataSource, AMPerSectionCollectionViewLayoutDelegate>
 
 - (NSInteger)section;
 - (void)registerCustomElementsForCollectionView:(UICollectionView *)collectionView;

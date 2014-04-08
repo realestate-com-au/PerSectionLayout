@@ -6,6 +6,7 @@
 #import "AMMainCollectionViewController.h"
 #import "AMSectionsProvider.h"
 #import "AMListSectionController.h"
+#import "AMPerSectionCollectionViewLayout.h"
 
 @interface AMMainCollectionViewController (AMMainCollectionViewControllerSpec)
 @property (nonatomic, strong) AMSectionsProvider *sectionsProvider;
