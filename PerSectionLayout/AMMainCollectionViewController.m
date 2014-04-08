@@ -173,7 +173,7 @@
         return [sectionController collectionView:collectionView layout:collectionViewLayout minimumWidthForSectionAtIndex:section];
     }
     
-    return collectionViewLayout.minimumInteritemSpacing;
+    return collectionViewLayout.sectionMinimumWidth;
 }
 
 @end
