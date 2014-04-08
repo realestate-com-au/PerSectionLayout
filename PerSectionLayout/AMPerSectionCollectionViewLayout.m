@@ -391,18 +391,15 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     contentSize.width = MAX(contentSize.width, CGRectGetWidth(self.layoutInfo.headerFrame));
     contentSize.height += CGRectGetHeight(self.layoutInfo.headerFrame);
     
-    //	sections
+    //	first pass, compute all of the frames, ignoring position
 	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
     {
         CGFloat sectionWidth = section.width;
         section.width = (isnan(sectionWidth)) ? CGRectGetWidth(self.collectionView.bounds) : sectionWidth; // FIXME adjust me here
 		[section computeLayout:self.layoutInfo];
-		
-		// update section offset to make frame absolute (section only calculates relative)
-		CGRect sectionFrame = section.frame;
-        sectionFrame.origin.y += contentSize.height;
-        section.frame = sectionFrame;
         
+        CGRect sectionFrame = section.frame;
+
         CGRect headerFrame = section.headerFrame;
         if (CGRectGetHeight(headerFrame) > 0)
         {
@@ -416,10 +413,43 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
             footerFrame.size.width = CGRectGetWidth(sectionFrame);
             section.footerFrame = footerFrame;
         }
-        
-        contentSize.height += CGRectGetHeight(sectionFrame);
-        contentSize.width = MAX(contentSize.width, CGRectGetMaxX(section.frame));
 	}
+
+    CGFloat leftOverWidth = CGRectGetWidth(self.collectionView.bounds);
+    CGFloat lineBottomMargin = NAN;
+    CGFloat lineYOffset = contentSize.height;
+
+    for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
+    {
+        CGRect sectionFrame = section.frame;
+        
+        // if it fits, remember it's height
+        if (leftOverWidth >= CGRectGetWidth(sectionFrame))
+        {
+            if (isnan(lineBottomMargin))
+            {
+                lineBottomMargin = CGRectGetHeight(sectionFrame);
+            }
+            else
+            {
+                lineBottomMargin = MIN(CGRectGetHeight(sectionFrame), lineBottomMargin);
+            }
+        }
+        else
+        {
+            leftOverWidth = CGRectGetWidth(self.collectionView.bounds);
+            lineYOffset = contentSize.height;
+        }
+        
+        sectionFrame.origin.x = CGRectGetWidth(self.collectionView.bounds) - leftOverWidth;
+        sectionFrame.origin.y = lineYOffset;
+
+        leftOverWidth -= CGRectGetWidth(sectionFrame);
+
+        section.frame = sectionFrame;
+        
+        contentSize = CGRectUnion(CGRectMake(0.f, 0.f, contentSize.width, contentSize.height), sectionFrame).size;
+    }
     
     //	global footer
     CGRect globalFooterFrame =  self.layoutInfo.footerFrame;

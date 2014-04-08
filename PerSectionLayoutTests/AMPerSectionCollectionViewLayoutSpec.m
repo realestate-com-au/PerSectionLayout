@@ -347,7 +347,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         }
     });
     
-    context(@"updateItemsLayout", ^{
+    context(@"updateItemsLayout with one section", ^{
         
         __block UICollectionView *collectionView = nil;
         __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
@@ -409,6 +409,75 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             
             it(@"should compute the total frame", ^{
                [[theValue(layoutSection.frame) should] equal:theValue(CGRectMake(0.f, 30.f, 250.f, 390.f))];
+            });
+        });
+    });
+    
+    context(@"updateItemsLayout with multiple sections", ^{
+        
+        __block UICollectionView *collectionView = nil;
+        __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
+        __block AMPerSectionCollectionViewLayoutSection *layoutSection = nil;
+        
+        beforeEach(^{
+            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 200.f, 500.f) collectionViewLayout:layout];
+            delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
+            
+            
+            delegateDataSource.numberOfSections = 5;
+            delegateDataSource.numberOfItemsInSection = 3;
+            delegateDataSource.itemSize = CGSizeMake(50.f, 50.f);
+            delegateDataSource.sectionMinimumWidth = 100;
+            
+            collectionView.delegate = delegateDataSource;
+            collectionView.dataSource = delegateDataSource;
+            
+            [layout prepareLayout];
+        });
+        
+        it(@"should compute the collection view content size", ^{
+            [[theValue([layout collectionViewContentSize]) should] equal:theValue(CGSizeMake(200.f, 300.f))];
+        });
+        
+        context(@"first section", ^{
+            beforeEach(^{
+                layoutSection = [layout sectionAtIndex:0];
+            });
+            
+            it(@"should computer the body frame", ^{
+                [[theValue(layoutSection.bodyFrame) should] equal:theValue(CGRectMake(0.f, 0.f, 100.f, 100.f))];
+            });
+            
+            it(@"should compute the total frame", ^{
+                [[theValue(layoutSection.frame) should] equal:theValue(CGRectMake(0.f, 0.f, 100.f, 100.f))];
+            });
+        });
+        
+        context(@"fourth section", ^{
+            beforeEach(^{
+                layoutSection = [layout sectionAtIndex:3];
+            });
+            
+            it(@"should computer the body frame", ^{
+                [[theValue(layoutSection.bodyFrame) should] equal:theValue(CGRectMake(0.f, 0.f, 100.f, 100.f))];
+            });
+            
+            it(@"should compute the total frame", ^{
+                [[theValue(layoutSection.frame) should] equal:theValue(CGRectMake(100.f, 100.f, 100.f, 100.f))];
+            });
+        });
+        
+        context(@"last section", ^{
+            beforeEach(^{
+                layoutSection = [layout sectionAtIndex:4];
+            });
+            
+            it(@"should computer the body frame", ^{
+                [[theValue(layoutSection.bodyFrame) should] equal:theValue(CGRectMake(0.f, 0.f, 100.f, 100.f))];
+            });
+            
+            it(@"should compute the total frame", ^{
+                [[theValue(layoutSection.frame) should] equal:theValue(CGRectMake(0.f, 200.f, 100.f, 100.f))];
             });
         });
     });
