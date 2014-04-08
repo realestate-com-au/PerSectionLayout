@@ -4,8 +4,11 @@
 
 #import "AMMainCollectionViewController.h"
 #import "AMSectionsProvider.h"
-#import "AMListSectionController.h"
 #import "AMPerSectionCollectionViewLayout.h"
+#import "AMMapSectionController.h"
+#import "AMListSectionController.h"
+#import "AMOFISectionController.h"
+#import "AMGraphSectionController.h"
 
 @interface AMMainCollectionViewController ()
 @property (nonatomic, strong) AMSectionsProvider *sectionsProvider;
@@ -19,7 +22,10 @@
     if (self)
     {
         self.sectionsProvider = [[AMSectionsProvider alloc] init];
-       [self.sectionsProvider addSectionControllerForClass:[AMListSectionController class]];
+        [self.sectionsProvider addSectionControllerForClass:[AMMapSectionController class]];
+        [self.sectionsProvider addSectionControllerForClass:[AMListSectionController class]];
+        [self.sectionsProvider addSectionControllerForClass:[AMOFISectionController class]];
+        [self.sectionsProvider addSectionControllerForClass:[AMGraphSectionController class]];
     }
     
     return self;

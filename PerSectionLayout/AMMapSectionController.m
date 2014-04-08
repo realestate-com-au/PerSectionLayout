@@ -2,14 +2,13 @@
 //  Copyright (c) 2014 Dblechoc. All rights reserved.
 //
 
-#import "AMListSectionController.h"
-#import "MainSections.h"
+#import "AMMapSectionController.h"
 
-@implementation AMListSectionController
+@implementation AMMapSectionController
 
 - (NSInteger)section
 {
-    return MainSectionList;
+    return MainSectionMap;
 }
 
 - (void)registerCustomElementsForCollectionView:(UICollectionView *)collectionView
@@ -26,13 +25,13 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    return 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor yellowColor];
+    cell.backgroundColor = [UIColor purpleColor];
     
     return cell;
 }

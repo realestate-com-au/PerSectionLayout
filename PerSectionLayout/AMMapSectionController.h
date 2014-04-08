@@ -5,6 +5,6 @@
 @import Foundation;
 #import "AMSectionController.h"
 
-@interface AMListSectionController : NSObject <AMSectionController>
+@interface AMMapSectionController : NSObject <AMSectionController>
 
 @end

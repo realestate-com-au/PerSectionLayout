@@ -3,5 +3,8 @@
 //
 
 typedef NS_ENUM(NSInteger, MainSection) {
-    MainSectionWithHeaderFooterAndItems = 0,
+    MainSectionMap = 0,
+    MainSectionList,
+    MainSectionOFI,
+    MainSectionGraph,
 };

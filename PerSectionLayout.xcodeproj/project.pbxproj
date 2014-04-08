@@ -36,6 +36,9 @@
 		5FD1A21B18EFE23500B2ECE1 /* AMSectionsProviderSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A21A18EFE23500B2ECE1 /* AMSectionsProviderSpec.m */; };
 		5FD1A21D18EFEFE400B2ECE1 /* AMMainCollectionViewControllerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A21C18EFEFE400B2ECE1 /* AMMainCollectionViewControllerSpec.m */; };
 		5FD1A22218EFF54F00B2ECE1 /* AMFakeSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A22118EFF54F00B2ECE1 /* AMFakeSectionController.m */; };
+		5FE11B8718F37C1000525441 /* AMMapSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE11B8618F37C0F00525441 /* AMMapSectionController.m */; };
+		5FE11B8A18F37D6C00525441 /* AMOFISectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE11B8918F37D6C00525441 /* AMOFISectionController.m */; };
+		5FE11B8D18F37DEC00525441 /* AMGraphSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE11B8C18F37DEC00525441 /* AMGraphSectionController.m */; };
 		B117182D10F74CBC96B213A2 /* libPods-PerSectionLayoutTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +101,12 @@
 		5FD1A21C18EFEFE400B2ECE1 /* AMMainCollectionViewControllerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMainCollectionViewControllerSpec.m; sourceTree = "<group>"; };
 		5FD1A22018EFF54F00B2ECE1 /* AMFakeSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFakeSectionController.h; sourceTree = "<group>"; };
 		5FD1A22118EFF54F00B2ECE1 /* AMFakeSectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFakeSectionController.m; sourceTree = "<group>"; };
+		5FE11B8518F37C0F00525441 /* AMMapSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMapSectionController.h; sourceTree = "<group>"; };
+		5FE11B8618F37C0F00525441 /* AMMapSectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMapSectionController.m; sourceTree = "<group>"; };
+		5FE11B8818F37D6C00525441 /* AMOFISectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOFISectionController.h; sourceTree = "<group>"; };
+		5FE11B8918F37D6C00525441 /* AMOFISectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMOFISectionController.m; sourceTree = "<group>"; };
+		5FE11B8B18F37DEC00525441 /* AMGraphSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMGraphSectionController.h; sourceTree = "<group>"; };
+		5FE11B8C18F37DEC00525441 /* AMGraphSectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMGraphSectionController.m; sourceTree = "<group>"; };
 		9EC34173783C42079FC09F3D /* libPods-PerSectionLayoutTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PerSectionLayoutTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3EFB879D4FA4147B115279E /* Pods-PerSectionLayoutTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PerSectionLayoutTests.xcconfig"; path = "Pods/Pods-PerSectionLayoutTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -246,8 +255,14 @@
 				5FD1A21518EFDBF800B2ECE1 /* AMSectionController.h */,
 				5FD1A21718EFE07B00B2ECE1 /* AMSectionsProvider.h */,
 				5FD1A21818EFE07B00B2ECE1 /* AMSectionsProvider.m */,
+				5FE11B8518F37C0F00525441 /* AMMapSectionController.h */,
+				5FE11B8618F37C0F00525441 /* AMMapSectionController.m */,
 				5F8DE2BD18F2BB280072300C /* AMListSectionController.h */,
 				5F8DE2BE18F2BB280072300C /* AMListSectionController.m */,
+				5FE11B8818F37D6C00525441 /* AMOFISectionController.h */,
+				5FE11B8918F37D6C00525441 /* AMOFISectionController.m */,
+				5FE11B8B18F37DEC00525441 /* AMGraphSectionController.h */,
+				5FE11B8C18F37DEC00525441 /* AMGraphSectionController.m */,
 			);
 			name = Sections;
 			sourceTree = "<group>";
@@ -404,15 +419,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FE11B8718F37C1000525441 /* AMMapSectionController.m in Sources */,
 				5F8DE25718F22A720072300C /* AMPerSectionCollectionViewLayoutRow.m in Sources */,
 				5FD1A21918EFE07B00B2ECE1 /* AMSectionsProvider.m in Sources */,
 				5F709C8A18EFAD0B00799CAA /* AMAppDelegate.m in Sources */,
+				5FE11B8A18F37D6C00525441 /* AMOFISectionController.m in Sources */,
 				5F0BD45C18F0DDFC00771ADF /* AMPerSectionCollectionViewLayoutSection.m in Sources */,
 				5F0BD43F18F0189900771ADF /* AMPerSectionCollectionViewLayout.m in Sources */,
 				5F709C9318EFAD0B00799CAA /* AMMainCollectionViewController.m in Sources */,
 				5F0BD44618F01A0400771ADF /* AMPerSectionCollectionViewLayoutInfo.m in Sources */,
 				5F709C8618EFAD0B00799CAA /* main.m in Sources */,
 				5F0BD46118F0F56B00771ADF /* AMPerSectionCollectionViewLayoutItem.m in Sources */,
+				5FE11B8D18F37DEC00525441 /* AMGraphSectionController.m in Sources */,
 				5F8DE2BF18F2BB280072300C /* AMListSectionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
