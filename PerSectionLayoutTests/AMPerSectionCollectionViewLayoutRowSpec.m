@@ -7,143 +7,158 @@
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 #import "AMPerSectionCollectionViewLayoutSection.h"
 
-@interface AMPerSectionCollectionViewLayoutRow (AMPerSectionCollectionViewLayoutRowSpec)
-@property (nonatomic, assign) BOOL isInvalid;
-@end
-
 SPEC_BEGIN(AMPerSectionCollectionViewLayoutRowSpec)
 
 describe(@"AMPerSectionCollectionViewLayoutRow", ^{
-    
-    __block AMPerSectionCollectionViewLayoutRow *row = nil;
-    
-    beforeEach(^{
-        row = [[AMPerSectionCollectionViewLayoutRow alloc] init];
-    });
-    
-    context(@"items", ^{
-        it(@"should have none by default", ^{
-            [[row.layoutSectionItems should] beEmpty];
-        });
-        
-        context(@"addItem", ^{
-            
-            __block AMPerSectionCollectionViewLayoutItem *item = nil;
-            
-            beforeEach(^{
-                item = [[AMPerSectionCollectionViewLayoutItem alloc] init];
-                [row addItem:item];
-            });
-            
-            it(@"should add a new layout item the array of items", ^{
-                [[row.layoutSectionItems should] contain:item];
-            });
-            
-            it(@"should set itelf as the item row object", ^{
-                AMPerSectionCollectionViewLayoutRow *itemRow = item.row;
-                [[row should] equal:itemRow];
-            });
-        });
-    });
-    
-    context(@"description", ^{
-        it(@"should have a meaningful desciption", ^{
-            NSString *description = [row description];
-            [[description should] beNonNil];
-        });
-    });
-    
-    context(@"itemsCount", ^{
-        __block NSInteger itemsCount = 0;
-        
+    __block AMPerSectionCollectionViewLayoutRow *row;
+
+    context(@"adding an item", ^{
+        __block AMPerSectionCollectionViewLayoutItem *item;
+
         beforeEach(^{
-            itemsCount = 10;
-            row.itemsCount = itemsCount;
+            row = [[AMPerSectionCollectionViewLayoutRow alloc] init];
+            item = [[AMPerSectionCollectionViewLayoutItem alloc] init];
+            [row addItem:item];
         });
-        
-        it(@"should remember the row frame", ^{
-            [[theValue(row.itemsCount) should] equal:theValue(itemsCount)];
+
+        it(@"should add a new layout item the array of items", ^{
+            [[row.layoutSectionItems should] contain:item];
         });
-    });
-    
-    context(@"frame", ^{
-        __block CGRect frame = CGRectZero;
-        
-        beforeEach(^{
-            frame = CGRectMake(10.f, 20.f, 250.f, 150.f);
-            row.frame = frame;
-        });
-        
-        it(@"should remember the row frame", ^{
-            [[theValue(row.frame) should] equal:theValue(frame)];
+
+        it(@"should set itelf as the item row object", ^{
+            AMPerSectionCollectionViewLayoutRow *itemRow = item.row;
+            [[row should] equal:itemRow];
         });
     });
-    
-    context(@"index", ^{
-        __block NSInteger index = 0;
-        
-        beforeEach(^{
-            index = 100;
-            row.index = index;
-        });
-        
-        it(@"should remember the row index", ^{
-            [[theValue(row.index) should] equal:theValue(index)];
-        });
-    });
-    
+
     context(@"invalidate", ^{
-        it(@"should be valid by default", ^{
-            [[theValue(row.isInvalid) should] beFalse];
+        beforeEach(^{
+            row = [[AMPerSectionCollectionViewLayoutRow alloc] init];
+            row.size = CGSizeMake(100, 100);
+            row.frame = CGRectMake(1, 1, 1, 1);
         });
-        
-        context(@"once invalidated", ^{
-            beforeEach(^{
-                [row invalidate];
-            });
-            
-            it(@"should flag the layout info has invalid", ^{
-                [[theValue(row.isInvalid) should] beTrue];
-            });
-            
-            it(@"should reset the row size", ^{
-                [[theValue(row.size) should] equal:theValue(CGSizeZero)];
-            });
-            
-            it(@"shoud rest the frame", ^{
-                [[theValue(row.frame) should] equal:theValue(CGRectZero)];
-            });
+
+        it(@"should reset the size and frame values to zeros", ^{
+            [row invalidate];
+            [[theValue(row.size) should] equal:theValue(CGSizeZero)];
+            [[theValue(row.frame) should] equal:theValue(CGRectZero)];
         });
     });
-    
-    context(@"computeLayout", ^{
-        
-        __block AMPerSectionCollectionViewLayoutInfo *layoutInfo = nil;
-        __block AMPerSectionCollectionViewLayoutSection *section = nil;
-        __block AMPerSectionCollectionViewLayoutItem *item1 = nil;
-        __block AMPerSectionCollectionViewLayoutItem *item2 = nil;
-        
+
+    context(@"row loyout", ^{
+        __block AMPerSectionCollectionViewLayoutSection *section;
+        __block AMPerSectionCollectionViewLayoutItem *item;
+
         beforeEach(^{
-            layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
-            layoutInfo.collectionViewSize = CGSizeMake(300.f, 500.f);
-            
             section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
-            section.sectionMargins = UIEdgeInsetsMake(0.f, 10.f, 0.f, 10.f);
-            section.horizontalInterstice = 10.f;
-            
-            item1 = [[AMPerSectionCollectionViewLayoutItem alloc] init];
-            item1.frame = CGRectMake(0.f, 0.f, 50.f, 50.f);
-            [row addItem:item1];
-            
-            item2 = [[AMPerSectionCollectionViewLayoutItem alloc] init];
-            item2.frame = CGRectMake(0.f, 0.f, 50.f, 50.f);
-            [row addItem:item2];
-            
-            [row computeLayout:layoutInfo inSection:section];
         });
-        
-        it(@"should compute the row size", ^{
-            [[theValue(row.size) should] equal:theValue(CGSizeMake(110.f, 50.f))];
+
+        context(@"with a single item", ^{
+
+            beforeEach(^{
+                row = [[AMPerSectionCollectionViewLayoutRow alloc] init];
+
+                item = [[AMPerSectionCollectionViewLayoutItem alloc] init];
+                item.frame = (CGRect){.size = CGSizeMake(100, 100)};
+                [row addItem:item];
+
+                [row computeLayout:nil inSection:section];
+            });
+
+            it(@"the item should have the appropriate frame", ^{
+                [[theValue(item.frame) should] equal:theValue(CGRectMake(0, 0, 100, 100))];
+            });
+
+            it(@"should have the appropriate size", ^{
+                [[theValue(row.size) should] equal:theValue(CGSizeMake(100, 100))];
+            });
+        });
+
+        context(@"with multiple items", ^{
+            __block AMPerSectionCollectionViewLayoutItem *item2;
+
+            beforeEach(^{
+                row = [[AMPerSectionCollectionViewLayoutRow alloc] init];
+
+                item = [[AMPerSectionCollectionViewLayoutItem alloc] init];
+                item.frame = (CGRect){.size = CGSizeMake(100, 100)};
+                item2 = [[AMPerSectionCollectionViewLayoutItem alloc] init];
+                item2.frame = (CGRect){.size = CGSizeMake(100, 110)};
+
+                [row addItem:item];
+                [row addItem:item2];
+
+                [row computeLayout:nil inSection:section];
+            });
+
+            it(@"should have an appropriate size as a union of all item frames", ^{
+                [[theValue(row.size) should] equal:theValue(CGSizeMake(200, 110))];
+            });
+
+            it(@"should layout items horizontally", ^{
+                [[theValue(item.frame) should] equal:theValue(CGRectMake(0, 0, 100, 100))];
+                [[theValue(item2.frame) should] equal:theValue(CGRectMake(100, 0.f, 100, 110))];
+            });
+        });
+
+        context(@"with more items", ^{
+            __block AMPerSectionCollectionViewLayoutItem *item2;
+            __block AMPerSectionCollectionViewLayoutItem *item3;
+
+            beforeEach(^{
+                row = [[AMPerSectionCollectionViewLayoutRow alloc] init];
+
+                item = [[AMPerSectionCollectionViewLayoutItem alloc] init];
+                item.frame = (CGRect){.origin = CGPointMake(1, 10), .size = CGSizeMake(100, 100)};
+                item2 = [[AMPerSectionCollectionViewLayoutItem alloc] init];
+                item2.frame = (CGRect){.origin = CGPointMake(1, 10), .size = CGSizeMake(150, 110)};
+                item3 = [[AMPerSectionCollectionViewLayoutItem alloc] init];
+                item3.frame = (CGRect){.origin = CGPointMake(1, 10), .size = CGSizeMake(200, 115)};
+
+                [row addItem:item];
+                [row addItem:item2];
+                [row addItem:item3];
+
+                [row computeLayout:nil inSection:section];
+            });
+
+            it(@"should have an appropriate size as a union of all item frames", ^{
+                [[theValue(row.size) should] equal:theValue(CGSizeMake(450, 115))];
+            });
+
+            it(@"should layout the items horizontally", ^{
+                [[theValue(item.frame) should] equal:theValue(CGRectMake(0, 0, 100, 100))];
+                [[theValue(item2.frame) should] equal:theValue(CGRectMake(100, 0, 150, 110))];
+                [[theValue(item3.frame) should] equal:theValue(CGRectMake(250, 0, 200, 115))];
+            });
+        });
+
+        context(@"with section horizontal interstice", ^{
+            __block AMPerSectionCollectionViewLayoutItem *item2;
+
+            beforeEach(^{
+                section.horizontalInterstice = 10.f;
+                row = [[AMPerSectionCollectionViewLayoutRow alloc] init];
+
+                item = [[AMPerSectionCollectionViewLayoutItem alloc] init];
+                item.frame = (CGRect){.size = CGSizeMake(100, 100)};
+                item2 = [[AMPerSectionCollectionViewLayoutItem alloc] init];
+                item2.frame = (CGRect){.size = CGSizeMake(100, 100)};
+
+                [row addItem:item];
+                [row addItem:item2];
+
+                [row computeLayout:nil inSection:section];
+            });
+
+            it(@"should have an appropriate size as a union of all item frames", ^{
+                [[theValue(row.size) should] equal:theValue(CGSizeMake(210, 100))];
+            });
+
+            it(@"should layout the items taking into account the hozontal interstice", ^{
+                [[theValue(item.frame) should] equal:theValue(CGRectMake(0, 0, 100, 100))];
+                [[theValue(item2.frame) should] equal:theValue(CGRectMake(110, 0, 100, 100))];
+            });
         });
     });
 });

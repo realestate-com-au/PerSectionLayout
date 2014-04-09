@@ -11,10 +11,10 @@
 
 - (NSArray *)layoutSectionItems;
 - (void)addItem:(AMPerSectionCollectionViewLayoutItem *)item;
-- (void)invalidate;
 - (void)computeLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo inSection:(AMPerSectionCollectionViewLayoutSection *)section;
+- (void)invalidate;
 
-@property (nonatomic, assign) NSInteger itemsCount;
+@property (nonatomic, readonly) NSInteger itemsCount;
 @property (nonatomic, assign) CGSize size;
 @property (nonatomic, assign) CGRect frame;
 @property (nonatomic, assign) NSInteger index;
