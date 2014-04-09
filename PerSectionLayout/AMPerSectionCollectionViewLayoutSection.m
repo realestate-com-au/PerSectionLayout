@@ -6,7 +6,6 @@
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 
 @interface AMPerSectionCollectionViewLayoutSection ()
-@property (nonatomic, assign) BOOL isInvalid;
 @property (nonatomic, strong) NSMutableArray *items;
 @property (nonatomic, strong) NSMutableArray *rows;
 @end
@@ -15,8 +14,7 @@
 
 - (id)init
 {
-    self = [super init];
-    if (self)
+    if (self = [super init])
     {
         _items = [NSMutableArray array];
         _rows = [NSMutableArray array];
@@ -31,6 +29,7 @@
 {
     return [self.items copy];
 }
+
 - (NSInteger)itemsCount
 {
     return (NSInteger)self.items.count;
@@ -59,22 +58,20 @@
     return layoutItem;
 }
 
-#pragma mark - Layout
-
 - (void)invalidate
 {
-    self.isInvalid = YES;
-    self.rows = [NSMutableArray array];
+    [self.rows removeAllObjects];
 }
 
-- (void)computeLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo
+#pragma mark - Layout
+
+- (void)computeLayout:(__unused AMPerSectionCollectionViewLayoutInfo *)layoutInfo
 {
     // iterate over all items, turning them into rows.
     CGPoint bodyOrigin = CGPointZero;
     CGSize bodySize = CGSizeZero;
     NSInteger rowIndex = 0;
     NSInteger itemIndex = 0;
-    NSInteger itemsByRowCount = 0;
     CGFloat dimensionLeft = 0;
     AMPerSectionCollectionViewLayoutRow *row = nil;
     
@@ -83,12 +80,19 @@
     // get available space for section body, compensate for section margins
     CGFloat dimension = self.width;
     
-    dimension -= self.sectionMargins.left + self.sectionMargins.right;
+    dimension -= (self.sectionMargins.left + self.sectionMargins.right);
     bodySize.width = dimension;
     
-    if (CGRectIsEmpty(self.headerFrame))
+    if (CGRectIsEmpty(self.headerFrame)) //no header frame
+    {
         bodyOrigin = CGPointMake(self.sectionMargins.left, self.sectionMargins.top);
-    else {
+    }
+    else
+    {
+        //Restrict the header width to our section width
+        CGRect normalisedHeaderFrame = (CGRect){.origin = CGPointZero, .size = CGSizeMake(self.width, self.headerFrame.size.height)};
+        self.headerFrame = normalisedHeaderFrame;
+
         bodyOrigin.x = 0;
         bodyOrigin.x += self.sectionMargins.left;
         bodyOrigin.y = self.headerFrame.size.height;
@@ -97,10 +101,11 @@
     
     CGFloat currentRowPoint = bodyOrigin.y;
     
-    do {
+    do
+    {
         BOOL finishCycle = (itemIndex >= self.itemsCount);
         
-        AMPerSectionCollectionViewLayoutItem *item = nil;
+        AMPerSectionCollectionViewLayoutItem *item;
         if (!finishCycle)
         {
             item = self.items[(NSUInteger)itemIndex];
@@ -116,10 +121,12 @@
             if (row)
             {
                 // compensate last row
-                row.itemsCount = itemsByRowCount;
                 [row computeLayout:layoutInfo inSection:self];
                 row.frame = CGRectMake(bodyOrigin.x, currentRowPoint, row.size.width, row.size.height);
-                if (rowIndex > 0) bodySize.height += self.verticalInterstice;
+                if (rowIndex > 0)
+                {
+                    bodySize.height += self.verticalInterstice;
+                }
                 bodySize.height += row.size.height;
                 currentRowPoint += row.size.height + self.verticalInterstice;
             }
@@ -129,10 +136,10 @@
                 row = [self addRow];
                 row.index = rowIndex;
                 rowIndex++;
-                itemsByRowCount = 0;
                 dimensionLeft = dimension;
             }
         }
+
         dimensionLeft -= itemDimension;
         
         if (item)
@@ -140,25 +147,27 @@
             [row addItem:item];
         }
         itemIndex++;
-        itemsByRowCount++;
+
     } while (itemIndex <= self.itemsCount); // cycle once more to finish last row
     
     self.bodyFrame = (CGRect){.origin = bodyOrigin, .size = bodySize};
     
-    CGRect ff = self.footerFrame;
-    CGFloat footerOrigin = bodyOrigin.y + bodySize.height + self.sectionMargins.bottom;;
-    
-    if (CGRectGetHeight(ff) > 0)
+    CGFloat footerOrigin = bodyOrigin.y + bodySize.height + self.sectionMargins.bottom;
+
+    CGRect footerframe = self.footerFrame;
+    if (!CGRectIsEmpty(footerframe))
     {
-        ff.origin.x = 0;
-        ff.origin.y = footerOrigin;
-        self.footerFrame = ff;
+        footerframe.origin.x = 0;
+        footerframe.origin.y = footerOrigin;
+        footerframe.size.width = self.width;
+        self.footerFrame = footerframe;
     }
-    
+
+
     CGPoint sectionOrigin = CGPointZero;
     CGSize sectionSize = CGSizeZero;
-    sectionSize.width = MAX(self.headerFrame.size.width, bodySize.width + self.sectionMargins.left + self.sectionMargins.right);
-    sectionSize.height = footerOrigin + ff.size.height;
+    sectionSize.width = self.width;
+    sectionSize.height = footerOrigin + footerframe.size.height;
     self.frame = (CGRect){.origin = sectionOrigin, .size = sectionSize};
 }
 
