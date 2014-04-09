@@ -9,6 +9,7 @@
 #import "AMListSectionController.h"
 #import "AMOFISectionController.h"
 #import "AMGraphSectionController.h"
+#import "AMADSectionController.h"
 #import "UIDevice+Utilities.h"
 
 @interface AMMainCollectionViewController ()
@@ -27,6 +28,7 @@
         [self.sectionsProvider addSectionControllerForClass:[AMListSectionController class]];
         [self.sectionsProvider addSectionControllerForClass:[AMOFISectionController class]];
         [self.sectionsProvider addSectionControllerForClass:[AMGraphSectionController class]];
+        [self.sectionsProvider addSectionControllerForClass:[AMADSectionController class]];
     }
     
     return self;

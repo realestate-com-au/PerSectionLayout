@@ -17,6 +17,7 @@
 		5F0BD46318F0F58D00771ADF /* AMPerSectionCollectionViewLayoutItemSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0BD46218F0F58D00771ADF /* AMPerSectionCollectionViewLayoutItemSpec.m */; };
 		5F0BD47718F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0BD47618F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.m */; };
 		5F14D89218F3E55300839F1E /* UIDevice+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F14D89118F3E55300839F1E /* UIDevice+Utilities.m */; };
+		5F14D89518F4DAF200839F1E /* AMADSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F14D89418F4DAF200839F1E /* AMADSectionController.m */; };
 		5F709C7A18EFAD0B00799CAA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7918EFAD0B00799CAA /* Foundation.framework */; };
 		5F709C7C18EFAD0B00799CAA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7B18EFAD0B00799CAA /* CoreGraphics.framework */; };
 		5F709C7E18EFAD0B00799CAA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7D18EFAD0B00799CAA /* UIKit.framework */; };
@@ -69,6 +70,8 @@
 		5F0BD47618F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFakeCollectionViewDelegateDataSource.m; sourceTree = "<group>"; };
 		5F14D89018F3E55300839F1E /* UIDevice+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Utilities.h"; sourceTree = "<group>"; };
 		5F14D89118F3E55300839F1E /* UIDevice+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Utilities.m"; sourceTree = "<group>"; };
+		5F14D89318F4DAF200839F1E /* AMADSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMADSectionController.h; sourceTree = "<group>"; };
+		5F14D89418F4DAF200839F1E /* AMADSectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMADSectionController.m; sourceTree = "<group>"; };
 		5F709C7618EFAD0B00799CAA /* PerSectionLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerSectionLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F709C7918EFAD0B00799CAA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5F709C7B18EFAD0B00799CAA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -273,6 +276,8 @@
 				5FE11B8918F37D6C00525441 /* AMOFISectionController.m */,
 				5FE11B8B18F37DEC00525441 /* AMGraphSectionController.h */,
 				5FE11B8C18F37DEC00525441 /* AMGraphSectionController.m */,
+				5F14D89318F4DAF200839F1E /* AMADSectionController.h */,
+				5F14D89418F4DAF200839F1E /* AMADSectionController.m */,
 			);
 			name = Sections;
 			sourceTree = "<group>";
@@ -430,6 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FE11B8718F37C1000525441 /* AMMapSectionController.m in Sources */,
+				5F14D89518F4DAF200839F1E /* AMADSectionController.m in Sources */,
 				5F8DE25718F22A720072300C /* AMPerSectionCollectionViewLayoutRow.m in Sources */,
 				5FD1A21918EFE07B00B2ECE1 /* AMSectionsProvider.m in Sources */,
 				5F709C8A18EFAD0B00799CAA /* AMAppDelegate.m in Sources */,
