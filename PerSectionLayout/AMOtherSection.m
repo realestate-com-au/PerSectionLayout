@@ -2,14 +2,14 @@
 //  Copyright (c) 2014 Dblechoc. All rights reserved.
 //
 
-#import "AMADSectionController.h"
+#import "AMOtherSection.h"
 #import "UIDevice+Utilities.h"
 
-@implementation AMADSectionController
+@implementation AMOtherSection
 
 - (NSInteger)section
 {
-    return MainSectionAd;
+    return MainSectionOther;
 }
 
 - (void)registerCustomElementsForCollectionView:(UICollectionView *)collectionView

@@ -7,5 +7,6 @@ typedef NS_ENUM(NSInteger, MainSection) {
     MainSectionList,
     MainSectionOFI,
     MainSectionGraph,
-    MainSectionAd
+    MainSectionAd,
+    MainSectionOther
 };
