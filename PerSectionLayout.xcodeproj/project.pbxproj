@@ -16,6 +16,7 @@
 		5F0BD46118F0F56B00771ADF /* AMPerSectionCollectionViewLayoutItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0BD46018F0F56B00771ADF /* AMPerSectionCollectionViewLayoutItem.m */; };
 		5F0BD46318F0F58D00771ADF /* AMPerSectionCollectionViewLayoutItemSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0BD46218F0F58D00771ADF /* AMPerSectionCollectionViewLayoutItemSpec.m */; };
 		5F0BD47718F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0BD47618F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.m */; };
+		5F14D89218F3E55300839F1E /* UIDevice+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F14D89118F3E55300839F1E /* UIDevice+Utilities.m */; };
 		5F709C7A18EFAD0B00799CAA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7918EFAD0B00799CAA /* Foundation.framework */; };
 		5F709C7C18EFAD0B00799CAA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7B18EFAD0B00799CAA /* CoreGraphics.framework */; };
 		5F709C7E18EFAD0B00799CAA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F709C7D18EFAD0B00799CAA /* UIKit.framework */; };
@@ -66,6 +67,8 @@
 		5F0BD46218F0F58D00771ADF /* AMPerSectionCollectionViewLayoutItemSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPerSectionCollectionViewLayoutItemSpec.m; sourceTree = "<group>"; };
 		5F0BD47518F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFakeCollectionViewDelegateDataSource.h; sourceTree = "<group>"; };
 		5F0BD47618F117D000771ADF /* AMFakeCollectionViewDelegateDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFakeCollectionViewDelegateDataSource.m; sourceTree = "<group>"; };
+		5F14D89018F3E55300839F1E /* UIDevice+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Utilities.h"; sourceTree = "<group>"; };
+		5F14D89118F3E55300839F1E /* UIDevice+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Utilities.m"; sourceTree = "<group>"; };
 		5F709C7618EFAD0B00799CAA /* PerSectionLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerSectionLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F709C7918EFAD0B00799CAA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5F709C7B18EFAD0B00799CAA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -163,6 +166,15 @@
 			name = "Custom Layout";
 			sourceTree = "<group>";
 		};
+		5F14D88E18F3E4D800839F1E /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5F14D89018F3E55300839F1E /* UIDevice+Utilities.h */,
+				5F14D89118F3E55300839F1E /* UIDevice+Utilities.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		5F709C6D18EFAD0B00799CAA = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +220,7 @@
 				5F709C9218EFAD0B00799CAA /* AMMainCollectionViewController.m */,
 				5FD1A21418EFDBC600B2ECE1 /* Sections */,
 				5F0BD44218F019B300771ADF /* Custom Layout */,
+				5F14D88E18F3E4D800839F1E /* Utilities */,
 				5F709C9418EFAD0B00799CAA /* Images.xcassets */,
 				5F709C8018EFAD0B00799CAA /* Supporting Files */,
 			);
@@ -422,6 +435,7 @@
 				5F709C8A18EFAD0B00799CAA /* AMAppDelegate.m in Sources */,
 				5FE11B8A18F37D6C00525441 /* AMOFISectionController.m in Sources */,
 				5F0BD45C18F0DDFC00771ADF /* AMPerSectionCollectionViewLayoutSection.m in Sources */,
+				5F14D89218F3E55300839F1E /* UIDevice+Utilities.m in Sources */,
 				5F0BD43F18F0189900771ADF /* AMPerSectionCollectionViewLayout.m in Sources */,
 				5F709C9318EFAD0B00799CAA /* AMMainCollectionViewController.m in Sources */,
 				5F0BD44618F01A0400771ADF /* AMPerSectionCollectionViewLayoutInfo.m in Sources */,
