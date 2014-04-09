@@ -4,6 +4,7 @@
 
 #import "AMListSectionController.h"
 #import "MainSections.h"
+#import "UIDevice+Utilities.h"
 
 @implementation AMListSectionController
 
@@ -37,9 +38,21 @@
     return cell;
 }
 
+#pragma mark - AMPerSectionCollectionViewLayoutDelegate
+
+- (CGFloat)maxWidthForCollectionView:(UICollectionView *)collectionView
+{
+    return [[UIDevice currentDevice] isiPad] ? 768.f : CGRectGetWidth(collectionView.frame);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
+{
+    return CGSizeMake([self maxWidthForCollectionView:collectionView], 50.f);
+}
+
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section
 {
-    return 150;
+    return [self maxWidthForCollectionView:collectionView];
 }
 
 @end

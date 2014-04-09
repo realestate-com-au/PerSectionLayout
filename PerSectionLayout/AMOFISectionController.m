@@ -3,6 +3,7 @@
 //
 
 #import "AMOFISectionController.h"
+#import "UIDevice+Utilities.h"
 
 @implementation AMOFISectionController
 
@@ -25,7 +26,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 1;
+    return 7;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -36,5 +37,21 @@
     return cell;
 }
 
+#pragma mark - AMPerSectionCollectionViewLayoutDelegate
+
+- (CGFloat)maxWidthForCollectionView:(UICollectionView *)collectionView
+{
+    return [[UIDevice currentDevice] isiPad] ? 1024.f - 768.f : CGRectGetWidth(collectionView.frame);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
+{
+    return CGSizeMake(40.f, 40.f);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section
+{
+    return [self maxWidthForCollectionView:collectionView];
+}
 
 @end

@@ -9,6 +9,7 @@
 #import "AMListSectionController.h"
 #import "AMOFISectionController.h"
 #import "AMGraphSectionController.h"
+#import "UIDevice+Utilities.h"
 
 @interface AMMainCollectionViewController ()
 @property (nonatomic, strong) AMSectionsProvider *sectionsProvider;
@@ -182,5 +183,12 @@
     
     [self.collectionViewLayout invalidateLayout];
 }
+
+//#pragma mark - Orientation
+//
+//- (NSUInteger)supportedInterfaceOrientations
+//{
+//    return [[UIDevice currentDevice] isiPad]  ? UIInterfaceOrientationMaskAll : UIInterfaceOrientationMaskPortrait;
+//}
 
 @end

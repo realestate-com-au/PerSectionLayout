@@ -36,9 +36,12 @@
     return cell;
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section
+#pragma mark - AMPerSectionCollectionViewLayoutDelegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    return 100;
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), 200.f);
+    
 }
 
 @end
