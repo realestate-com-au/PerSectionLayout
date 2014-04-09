@@ -25,6 +25,7 @@
 - (AMPerSectionCollectionViewLayoutSection *)sectionAtIndex:(NSInteger)section;
 - (AMPerSectionCollectionViewLayoutItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (BOOL)layoutInfoFrame:(CGRect)layoutInfoFrame requiresLayoutAttritbutesForRect:(CGRect)rect;
+- (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point;
 
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
 
@@ -229,6 +230,38 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
     });
     
+    context(@"firstSectionAtPoint", ^{
+        
+        __block AMPerSectionCollectionViewLayoutSection *sectionContainedInPoint = nil;
+        
+        beforeEach(^{
+            AMPerSectionCollectionViewLayoutInfo *layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
+            layout.layoutInfo = layoutInfo;
+            
+            CGFloat sectionsWidth = 200.f;
+            
+            AMPerSectionCollectionViewLayoutSection *firstSection = [layout.layoutInfo addSection];
+            firstSection.frame = CGRectMake(0.f, 0.f, sectionsWidth, 400.f);
+            
+            sectionContainedInPoint = [layout.layoutInfo addSection];
+            sectionContainedInPoint.frame = CGRectMake(0.f, 400.f, sectionsWidth, 300.f);
+            
+            AMPerSectionCollectionViewLayoutSection *thirdSection = [layout.layoutInfo addSection];
+            thirdSection.frame = CGRectMake(0.f, 700.f, sectionsWidth, 200.f);
+        });
+        
+        it(@"should return a section if point is contained insection section frame", ^{
+            AMPerSectionCollectionViewLayoutSection *section = [layout firstSectionAtPoint:CGPointMake(40.f, 450.f)];
+            [[section should] beNonNil];
+            [[section should] equal:sectionContainedInPoint];
+        });
+        
+        it(@"should not return a section if point is contained insection section frame", ^{
+            AMPerSectionCollectionViewLayoutSection *section = [layout firstSectionAtPoint:CGPointMake(1040.f, 450.f)];
+            [[section should] beNil];
+        });
+    });
+    
     context(@"fetchItemsInfo", ^{
         it(@"should get the sizing infos", ^{
             [[layout should] receive:@selector(getSizingInfos)];
@@ -384,7 +417,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
         
         it(@"should compute the global footer frame", ^{
-             [[theValue([layout.layoutInfo footerFrame]) should] equal:theValue(CGRectMake(0.f, 420.f, 250.f, 40.f))];
+            [[theValue([layout.layoutInfo footerFrame]) should] equal:theValue(CGRectMake(0.f, 420.f, 250.f, 40.f))];
         });
         
         context(@"first section", ^{
@@ -408,7 +441,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             });
             
             it(@"should compute the total frame", ^{
-               [[theValue(layoutSection.frame) should] equal:theValue(CGRectMake(0.f, 30.f, 250.f, 390.f))];
+                [[theValue(layoutSection.frame) should] equal:theValue(CGRectMake(0.f, 30.f, 250.f, 390.f))];
             });
         });
     });
