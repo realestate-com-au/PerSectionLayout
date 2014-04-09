@@ -26,9 +26,11 @@
 - (AMPerSectionCollectionViewLayoutItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (BOOL)layoutInfoFrame:(CGRect)layoutInfoFrame requiresLayoutAttritbutesForRect:(CGRect)rect;
 - (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point;
+- (BOOL)hasStickyHeaderOverSection:(NSInteger)section;
+- (CGFloat)adjustedCollectionViewContentOffset;
+- (NSInteger)firstSectionIndexBelowHeader;
 
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
-
 
 @end
 
@@ -74,8 +76,12 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             [[theValue(layout.minimumInteritemSpacing) should] equal:theValue(5.f)];
         });
         
-        it(@"should have a default section minimu with", ^{
+        it(@"should have a default section minimum with", ^{
             [[theValue(layout.sectionMinimumWidth) should] equal:theValue(NAN)];
+        });
+        
+        it(@"should have by default non stick header", ^{
+            [[theValue(layout.hasStickyHeader) should] equal:theValue(NO)];
         });
     });
     
@@ -142,6 +148,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             it(@"minimumInteritemSpacing", ^{
                 [[theValue([layout minimumInteritemSpacingForSectionAtIndex:0]) should] equal:theValue(layout.minimumInteritemSpacing)];
             });
+            
+            it(@"hasStickyHeaderOverSection", ^{
+                [[theValue([layout hasStickyHeaderOverSection:0]) should] equal:theValue(layout.hasStickyHeader)];
+            });
         });
         
         context(@"with a delegate that doesn't implement any of the optional methods", ^{
@@ -198,6 +208,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             
             it(@"minimumInteritemSpacing", ^{
                 [[theValue([layout minimumInteritemSpacingForSectionAtIndex:0]) should] equal:theValue(delegateDataSource.minimumInteritemSpacing)];
+            });
+            
+            it(@"hasStickyHeaderOverSection", ^{
+                [[theValue([layout hasStickyHeaderOverSection:0]) should] equal:theValue(delegateDataSource.hasStickyHeader)];
             });
         });
     });
@@ -260,6 +274,70 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             AMPerSectionCollectionViewLayoutSection *section = [layout firstSectionAtPoint:CGPointMake(1040.f, 450.f)];
             [[section should] beNil];
         });
+    });
+    
+    context(@"firstSectionIndexBelowHeader", ^{
+        
+        __block AMPerSectionCollectionViewLayoutSection *firstSection = nil;
+        __block CGFloat sectionsWidth = 0;
+        
+        beforeEach(^{
+            AMPerSectionCollectionViewLayoutInfo *layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
+            layout.layoutInfo = layoutInfo;
+            
+            sectionsWidth = 200.f;
+            
+            layoutInfo.headerFrame = CGRectMake(0.f, 0.f, sectionsWidth, 40.f);
+            
+            firstSection = [layout.layoutInfo addSection];
+            firstSection.frame = CGRectMake(0.f, 40.f, sectionsWidth, 360.f);
+            
+            AMPerSectionCollectionViewLayoutSection *secondSection = [layout.layoutInfo addSection];
+            secondSection.frame = CGRectMake(0.f, 400.f, sectionsWidth, 300.f);
+            
+            AMPerSectionCollectionViewLayoutSection *thirdSection = [layout.layoutInfo addSection];
+            thirdSection.frame = CGRectMake(0.f, 700.f, sectionsWidth, 200.f);
+        });
+        
+        context(@"if there is a section located below header", ^{
+            it(@"should return a valid index if a section is localed below global header", ^{
+                [[theValue([layout firstSectionIndexBelowHeader]) should] equal:theValue(0)];
+            });
+        });
+        
+        context(@"when scrolled till second section is visible", ^{
+            beforeEach(^{
+                CGFloat yOffset = CGRectGetHeight(layout.layoutInfo.headerFrame) + 400;
+                [layout stub:@selector(adjustedCollectionViewContentOffset) andReturn:theValue(yOffset)];
+            });
+            
+            it(@"should return a valid index if a section is localed below global header", ^{
+                [[theValue([layout firstSectionIndexBelowHeader]) should] equal:theValue(1)];
+            });
+        });
+        
+        context(@"if there isn't a section located below header", ^{
+            firstSection.frame = CGRectMake(0.f, 100.f, sectionsWidth, 360.f);
+            
+            it(@"should return the first section index", ^{
+                [[theValue([layout firstSectionIndexBelowHeader]) should] equal:theValue(0)];
+            });
+        });
+    });
+    
+    context(@"adjustedCollectionViewContentOffset", ^{
+        __block UICollectionView *collectionView = nil;
+        
+        beforeEach(^{
+            collectionView = [UICollectionView nullMock];
+            [collectionView stub:@selector(bounds) andReturn:theValue(CGRectMake(0.f, 0.f, 70.f, 130.f))];
+            [collectionView stub:@selector(contentOffset) andReturn:theValue(CGPointMake(0.f, 40.f))];
+            [collectionView stub:@selector(contentInset) andReturn:theValue(UIEdgeInsetsMake(20.f, 10.f, 30.f, 40.f))];
+            
+            [layout stub:@selector(collectionView) andReturn:collectionView];
+        });
+        
+        [[theValue([layout adjustedCollectionViewContentOffset]) should] equal:theValue(60.f)];
     });
     
     context(@"fetchItemsInfo", ^{
@@ -595,6 +673,47 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             delegateDataSource.minimumLineSpacing = 10.f;
             delegateDataSource.minimumInteritemSpacing = 10.f;
             delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
+            delegateDataSource.stickyHeader = YES;
+            delegateDataSource.lastSectionWithStickyHeader = 1;
+            
+            collectionView.delegate = delegateDataSource;
+            collectionView.dataSource = delegateDataSource;
+            
+            [layout prepareLayout];
+        });
+        
+        context(@"sticky header", ^{
+            it(@"should enable on the layout info sticky header", ^{
+                [[theValue(layout.layoutInfo.hasStickyHeader) should] equal:theValue(delegateDataSource.hasStickyHeader)];
+            });
+            
+            it(@"should set the layout info last section with sticky header", ^{
+                [[theValue(layout.layoutInfo.lastSectionWithStickyHeader) should] equal:theValue(delegateDataSource.lastSectionWithStickyHeader)];
+            });
+        });
+    });
+    
+    context(@"layout methods to override", ^{
+        __block UICollectionView *collectionView = nil;
+        __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
+        
+        beforeEach(^{
+            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 250.f, 500.f) collectionViewLayout:layout];
+            delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
+            
+            
+            delegateDataSource.numberOfSections = 3;
+            delegateDataSource.numberOfItemsInSection = 10;
+            delegateDataSource.itemSize = CGSizeMake(50.f, 50.f);
+            delegateDataSource.headerReferenceSize = CGSizeMake(25.f, 30.f);
+            delegateDataSource.footerReferenceSize = CGSizeMake(25.f, 40.f);
+            delegateDataSource.sectionHeaderReferenceSize = CGSizeMake(27.f, 50.f);
+            delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
+            delegateDataSource.minimumLineSpacing = 10.f;
+            delegateDataSource.minimumInteritemSpacing = 10.f;
+            delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
+            delegateDataSource.stickyHeader = YES;
+            delegateDataSource.lastSectionWithStickyHeader = 1;
             
             collectionView.delegate = delegateDataSource;
             collectionView.dataSource = delegateDataSource;
@@ -612,15 +731,32 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         context(@"layoutAttributesForElementsInRect", ^{
             __block NSArray *layoutAttributesForElementsInRect = nil;
             
-            beforeEach(^{
-                layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f, 0.f, layout.collectionViewContentSize.width, layout.collectionViewContentSize.height)];
+            context(@"given the collection view content size", ^{
+                beforeEach(^{
+                    layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f, 0.f, layout.collectionViewContentSize.width, layout.collectionViewContentSize.height)];
+                });
+                
+                it(@"should return all elements", ^{
+                    [[layoutAttributesForElementsInRect should] beNonNil];
+                    
+                    // header + footer + 30 * (rows) + 3 * header + footer ==> 38
+                    [[layoutAttributesForElementsInRect should] haveCountOf:38];
+                });
             });
             
-            it(@"should return all elements", ^{
-                [[layoutAttributesForElementsInRect should] beNonNil];
+            context(@"emulating a scroll", ^{
+                beforeEach(^{
+                    CGFloat yOffset = delegateDataSource.headerReferenceSize.height + 60;
+                    
+                    [layout stub:@selector(adjustedCollectionViewContentOffset) andReturn:theValue(yOffset)];
+                    layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f,  yOffset, layout.collectionViewContentSize.width,  layout.collectionViewContentSize.height - yOffset)];
+                });
                 
-                // header + footer + 30 * (rows) + 3 * header + footer ==> 38
-                [[layoutAttributesForElementsInRect should] haveCountOf:38];
+                it(@"should return the sticky header", ^{
+                    [[layoutAttributesForElementsInRect should] beNonNil];
+                    
+                    [[[layoutAttributesForElementsInRect valueForKey:@"elementKind"] should] contain:AMPerSectionCollectionElementKindHeader];
+                });
             });
         });
         
@@ -732,7 +868,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         
         context(@"shouldInvalidateLayoutForBoundsChange", ^{
             it(@"should not invalide layout for bounds change", ^{
-                [[theValue([layout shouldInvalidateLayoutForBoundsChange:CGRectMake(0.f, 0.f, 40.f, 50.f)]) should] beFalse];
+                [[theValue([layout shouldInvalidateLayoutForBoundsChange:CGRectMake(0.f, 0.f, 40.f, 50.f)]) should] beTrue];
             });
             
             // FIXME: what if bounds width / height differ ?

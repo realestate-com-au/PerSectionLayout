@@ -15,5 +15,7 @@
 @property (nonatomic, assign) CGSize collectionViewSize;
 @property (nonatomic, assign) CGRect headerFrame;
 @property (nonatomic, assign) CGRect footerFrame;
+@property (nonatomic, assign, getter = hasStickyHeader) BOOL stickyHeader;
+@property (nonatomic, assign) NSInteger lastSectionWithStickyHeader;
 
 @end

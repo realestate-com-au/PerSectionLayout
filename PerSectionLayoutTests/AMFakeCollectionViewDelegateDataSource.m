@@ -75,4 +75,14 @@
     return self.minimumInteritemSpacing;
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasStickyHeaderOverSection:(NSInteger)section
+{
+    if (section <= self.lastSectionWithStickyHeader)
+    {
+        return self.hasStickyHeader;
+    }
+    
+    return NO;
+}
+
 @end

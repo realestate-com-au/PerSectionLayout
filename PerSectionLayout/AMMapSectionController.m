@@ -44,4 +44,9 @@
     
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasStickyHeaderOverSection:(NSInteger)section
+{
+    return YES;
+}
+
 @end

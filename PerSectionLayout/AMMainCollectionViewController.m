@@ -181,6 +181,17 @@
     return collectionViewLayout.sectionMinimumWidth;
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasStickyHeaderOverSection:(NSInteger)section
+{
+    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
+    if ([sectionController respondsToSelector:@selector(collectionView:layout:hasStickyHeaderOverSection:)])
+    {
+        return [sectionController collectionView:collectionView layout:collectionViewLayout hasStickyHeaderOverSection:section];
+    }
+    
+    return collectionViewLayout.hasStickyHeader;
+}
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];

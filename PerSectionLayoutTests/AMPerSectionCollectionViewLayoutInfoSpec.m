@@ -76,6 +76,48 @@ describe(@"AMPerSectionCollectionViewLayoutInfo", ^{
         });
     });
     
+    context(@"sticky header", ^{
+        context(@"default value", ^{
+            it(@"should have not sticky header by default", ^{
+                [[theValue(layoutInfo.hasStickyHeader) should] beNo];
+            });
+        });
+        
+        context(@"once set", ^{
+            __block BOOL hasStickyHeader = NO;
+            
+            beforeEach(^{
+                hasStickyHeader = YES;
+                layoutInfo.stickyHeader = hasStickyHeader;
+            });
+            
+            it(@"should remember the last section with a sticky header", ^{
+                [[theValue(layoutInfo.hasStickyHeader) should] equal:theValue(hasStickyHeader)];
+            });
+        });
+    });
+    
+    context(@"last section with a sticky header", ^{
+        context(@"default value", ^{
+            it(@"should be zero by default", ^{
+                [[theValue(layoutInfo.lastSectionWithStickyHeader) should] equal:theValue(0)];
+            });
+        });
+        
+        context(@"once set", ^{
+            __block NSInteger lastSectionWithStickyHeader = 0;
+            
+            beforeEach(^{
+                lastSectionWithStickyHeader = 4;
+                layoutInfo.lastSectionWithStickyHeader = 4;
+            });
+            
+            it(@"should remember the last section with a sticky header", ^{
+                [[theValue(layoutInfo.lastSectionWithStickyHeader) should] equal:theValue(lastSectionWithStickyHeader)];
+            });
+        });
+    });
+    
     context(@"invalidate", ^{
         it(@"should be valid by default", ^{
             [[theValue(layoutInfo.isInvalid) should] beFalse];

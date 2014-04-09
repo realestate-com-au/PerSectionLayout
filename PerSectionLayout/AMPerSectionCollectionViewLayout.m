@@ -11,6 +11,8 @@ NSString * const AMPerSectionCollectionElementKindFooter = @"AMPerSectionCollect
 NSString * const AMPerSectionCollectionElementKindSectionHeader = @"AMPerSectionCollectionElementKindSectionHeader";
 NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSectionCollectionElementKindSectionFooter";
 
+static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
+
 @interface AMPerSectionCollectionViewLayout ()
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
 @end
@@ -80,6 +82,26 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     return ((CGRectGetHeight(layoutInfoFrame) > 0) && CGRectIntersectsRect(layoutInfoFrame, rect));
 }
 
+#pragma mark - Sticky Header
+
+- (CGFloat)adjustedCollectionViewContentOffset
+{
+    return self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
+}
+
+- (NSInteger)firstSectionIndexBelowHeader
+{
+    AMPerSectionCollectionViewLayoutSection *firstSection = [self firstSectionAtPoint:CGPointMake(0.f, [self adjustedCollectionViewContentOffset] + CGRectGetMaxY(self.layoutInfo.headerFrame))];
+    
+    NSInteger firstSectionIndex = (NSInteger)[self.layoutInfo.layoutInfoSections indexOfObject:firstSection];
+    if (firstSectionIndex == NSNotFound)
+    {
+        firstSectionIndex = 0;
+    }
+    
+    return firstSectionIndex;
+}
+
 #pragma mark - Layout attributes
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
@@ -88,10 +110,26 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     
 	// header
 	CGRect normalizedHeaderFrame = self.layoutInfo.headerFrame;
+    
+    if (self.layoutInfo.hasStickyHeader)
+    {
+        NSInteger lastSectionWithStickyHeader = self.layoutInfo.lastSectionWithStickyHeader;
+        if ([self firstSectionIndexBelowHeader] <= lastSectionWithStickyHeader)
+        {
+            normalizedHeaderFrame.origin.y = [self adjustedCollectionViewContentOffset];
+        }
+        else
+        {
+            NSInteger previousSectionIndex = lastSectionWithStickyHeader;
+            normalizedHeaderFrame.origin.y = CGRectGetMaxY([self sectionAtIndex:previousSectionIndex].frame) - CGRectGetHeight(normalizedHeaderFrame);
+        }
+    }
+    
 	if ([self layoutInfoFrame:normalizedHeaderFrame requiresLayoutAttritbutesForRect:rect])
     {
 		UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
 		layoutAttributes.frame = normalizedHeaderFrame;
+        layoutAttributes.zIndex = AMPerSectionCollectionElementAlwaysShowOnTopIndex;
 		[layoutAttributesArray addObject:layoutAttributes];
 	}
 	
@@ -191,6 +229,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 	if ([kind isEqualToString:AMPerSectionCollectionElementKindHeader])
     {
 		layoutAttributes.frame = self.layoutInfo.headerFrame;
+        layoutAttributes.zIndex = AMPerSectionCollectionElementAlwaysShowOnTopIndex;
 	}
     else if ([kind isEqualToString:AMPerSectionCollectionElementKindFooter])
     {
@@ -258,6 +297,19 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     
     return footerReferenceSize;
 }
+
+- (BOOL)hasStickyHeaderOverSection:(NSInteger)section
+{
+    BOOL hasStickyHeaderOverSection = self.hasStickyHeader;
+    if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:hasStickyHeaderOverSection:)])
+    {
+        hasStickyHeaderOverSection = [self.collectionViewDelegate collectionView:self.collectionView layout:self hasStickyHeaderOverSection:section];
+
+    }
+    
+    return hasStickyHeaderOverSection;
+}
+
 - (CGSize)sizeForHeaderInSection:(NSInteger)section
 {
     CGSize sectionHeaderReferenceSize = self.sectionHeaderReferenceSize;
@@ -328,7 +380,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
 {
-    return NO;
+    return YES;
 }
 
 - (void)invalidateLayout
@@ -359,7 +411,13 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     NSInteger numberOfSections =(NSInteger) [self.collectionView numberOfSections];
 	for (NSInteger section = 0; section < numberOfSections; section++)
     {
-		AMPerSectionCollectionViewLayoutSection *layoutSection = [self.layoutInfo addSection];
+		if ([self hasStickyHeaderOverSection:section])
+        {
+            self.layoutInfo.stickyHeader = YES;
+            self.layoutInfo.lastSectionWithStickyHeader = section;
+        }
+        
+        AMPerSectionCollectionViewLayoutSection *layoutSection = [self.layoutInfo addSection];
 		
 		layoutSection.headerFrame = (CGRect){.size = [self sizeForHeaderInSection:section]};
         layoutSection.footerFrame = (CGRect){.size = [self sizeForFooterInSection:section]};
