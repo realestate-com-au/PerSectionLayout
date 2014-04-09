@@ -56,6 +56,11 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 		return nil;
 	}
     
+    if (section < 0 || section >= (NSInteger)self.layoutInfo.layoutInfoSections.count)
+    {
+		return nil;
+	}
+    
     return self.layoutInfo.layoutInfoSections[(NSUInteger)section];
 }
 
@@ -399,7 +404,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 		[section computeLayout:self.layoutInfo];
         
         CGRect sectionFrame = section.frame;
-
+        
         CGRect headerFrame = section.headerFrame;
         if (CGRectGetHeight(headerFrame) > 0)
         {
@@ -414,36 +419,31 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
             section.footerFrame = footerFrame;
         }
 	}
-
-    CGPoint nextOrigin = CGPointMake(0.f, contentSize.height);
-    CGFloat leftOverWidth = CGRectGetWidth(self.collectionView.bounds);
     
-    NSInteger sectionsCount = (NSInteger)self.layoutInfo.layoutInfoSections.count;
-    for (NSInteger sectionIndex = 0; sectionIndex < sectionsCount; sectionIndex++)
+    CGPoint nextOrigin = CGPointMake(0.f, contentSize.height);
+    for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
     {
-        AMPerSectionCollectionViewLayoutSection *section = [self sectionAtIndex:sectionIndex];
-        
         CGRect sectionFrame = section.frame;
+        
         sectionFrame.origin = nextOrigin;
         section.frame = sectionFrame;
         
-        contentSize.width = CGRectGetMaxX(sectionFrame);
-        contentSize.height = CGRectGetMaxY(sectionFrame);
+        contentSize.width = MAX(CGRectGetMaxX(sectionFrame), contentSize.width);
+        contentSize.height = MAX(CGRectGetMaxY(sectionFrame), contentSize.height);
         
-        AMPerSectionCollectionViewLayoutSection *nextSection = [self sectionAtIndex:sectionIndex + 1];
-        if (nextSection)
+        if (CGRectGetMaxX(section.frame) >= CGRectGetWidth(self.collectionView.bounds))
         {
-            leftOverWidth -= CGRectGetWidth(sectionFrame);
-            if (leftOverWidth >= CGRectGetWidth(nextSection.frame))
-            {
-                nextOrigin.x = CGRectGetMaxX(sectionFrame);
-            }
-            else
-            {
-                // reset and go to new line
-                leftOverWidth = CGRectGetWidth(self.collectionView.bounds);
-                nextOrigin.y = CGRectGetMaxY(sectionFrame);
-            }
+            // go to new line
+            nextOrigin.y = CGRectGetMaxY(section.frame);
+            
+            // reset x
+            AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
+            nextOrigin.x = CGRectGetMaxX(sectionInMyWay.frame);
+        }
+        else
+        {
+            nextOrigin.x = CGRectGetMaxX(section.frame);
+            nextOrigin.y = CGRectGetMinY(section.frame);
         }
     }
     
@@ -459,6 +459,19 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
     
 	contentSize.height += CGRectGetHeight(self.layoutInfo.footerFrame);
     self.layoutInfo.contentSize = contentSize;
+}
+
+- (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point
+{
+    for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
+    {
+        if (!CGPointEqualToPoint(section.frame.origin, CGPointZero) && CGRectContainsPoint(section.frame, point))
+        {
+            return section;
+        }
+    }
+    
+    return nil;
 }
 
 #pragma mark - Content Size
