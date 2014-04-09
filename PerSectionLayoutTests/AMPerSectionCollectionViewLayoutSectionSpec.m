@@ -8,237 +8,224 @@
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 #import "AMPerSectionCollectionViewLayoutRow.h"
 
-@interface AMPerSectionCollectionViewLayout (AMPerSectionCollectionViewLayoutSectionSpec)
-@property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
-@end
-
-@interface AMPerSectionCollectionViewLayoutSection (AMPerSectionCollectionViewLayoutSectionSpec)
-@property (nonatomic, assign) BOOL isInvalid;
+@interface AMPerSectionCollectionViewLayoutSection (KIWIPrivateAccess)
+- (void)computeLayout:(__unused AMPerSectionCollectionViewLayoutInfo *)layoutInfo;
 @end
 
 SPEC_BEGIN(AMPerSectionCollectionViewLayoutSectionSpec)
 
 describe(@"AMPerSectionCollectionViewLayoutSection", ^{
     
-    __block AMPerSectionCollectionViewLayoutSection *section = nil;
-    
-    beforeEach(^{
-        section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
-    });
-    
-    context(@"items", ^{
-        it(@"should have none by default", ^{
-            [[section.layoutSectionItems should] beEmpty];
-        });
-        
-        context(@"addItem", ^{
-            it(@"should return an layout item object", ^{
-                [[[section addItem] should] beNonNil];
-            });
-            
-            it(@"should add a new layout item the array of items", ^{
-                AMPerSectionCollectionViewLayoutItem *object = [section addItem];
-                [[section.layoutSectionItems should] contain:object];
-                [[object should] beKindOfClass:[AMPerSectionCollectionViewLayoutItem class]];
-            });
-        });
-    });
-    
-    context(@"rows", ^{
-        it(@"should have none by default", ^{
-            [[section.layoutSectionRows should] beEmpty];
-        });
-        
-        context(@"addItem", ^{
-            it(@"should return an layout item object", ^{
-                [[[section addRow] should] beNonNil];
-            });
-            
-            it(@"should add a new layout item the array of items", ^{
-                AMPerSectionCollectionViewLayoutRow *object = [section addRow];
-                [[section.layoutSectionRows should] contain:object];
-                [[object should] beKindOfClass:[AMPerSectionCollectionViewLayoutRow class]];
-            });
-        });
-    });
-    
-    context(@"description", ^{
-        it(@"should have a meaningful desciption", ^{
-            NSString *description = [section description];
-            [[description should] beNonNil];
-        });
-    });
-    
-    context(@"itemsCount", ^{
+    __block AMPerSectionCollectionViewLayoutSection *section;
+
+    context(@"Adding a new item", ^{
+        __block id addedItem ;
+
         beforeEach(^{
-            [section addItem];
-            [section addItem];
+            section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
+            addedItem = [section addItem];
         });
-        
-        it(@"should be in sync with the number of items", ^{
-            [[theValue(section.itemsCount) should] equal:theValue(section.layoutSectionItems.count)];
+
+        it(@"should return the added item", ^{
+            [[addedItem should] beNonNil];
+        });
+
+        it(@"should add a new layout item to the array of section items", ^{
+            [[section.layoutSectionItems should] contain:addedItem];
+        });
+
+        it(@"should be a kind of AMPerSectionCollectionViewLayoutItem", ^{
+            [[addedItem should] beKindOfClass:[AMPerSectionCollectionViewLayoutItem class]];
         });
     });
-    
-    context(@"verticalInterstice", ^{
-        
-        __block CGFloat verticalInterstice = 0;
-        
+
+    context(@"adding a new row", ^{
+        __block id addedItem;
+
         beforeEach(^{
-            verticalInterstice = 20.f;
-            section.verticalInterstice = verticalInterstice;
+            section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
+            addedItem = [section addRow];
         });
-        
-        it(@"should remember the vertical interstice", ^{
-            [[theValue(section.verticalInterstice) should] equal:theValue(verticalInterstice)];
+
+        it(@"addRow should return the added row", ^{
+            [[addedItem should] beNonNil];
+        });
+
+        it(@"should add a new layout row to the array of section rows", ^{
+            [[section.layoutSectionRows should] contain:addedItem];
+        });
+
+        it(@"should add a kind of AMPerSectionCollectionViewLayoutRow", ^{
+            [[addedItem should] beKindOfClass:[AMPerSectionCollectionViewLayoutRow class]];
         });
     });
-    
-    context(@"horizontalInterstice", ^{
-        
-        __block CGFloat horizontalInterstice = 0;
-        
+
+    context(@"invalidation", ^{
         beforeEach(^{
-            horizontalInterstice = 20.f;
-            section.horizontalInterstice = horizontalInterstice;
-        });
-        
-        it(@"should remember the vertical interstice", ^{
-            [[theValue(section.horizontalInterstice) should] equal:theValue(horizontalInterstice)];
-        });
-    });
-    
-    context(@"sectionMargins", ^{
-        
-        __block UIEdgeInsets sectionMargins = UIEdgeInsetsZero;
-        
-        beforeEach(^{
-            sectionMargins = UIEdgeInsetsMake(10.f, 0.f, 40.f, 50.f);
-            section.sectionMargins = sectionMargins;
-        });
-        
-        it(@"should remember the section margins", ^{
-            [[theValue(section.sectionMargins) should] equal:theValue(sectionMargins)];
-        });
-    });
-    
-    context(@"width", ^{
-        
-        __block CGFloat width = 0.f;
-        
-        beforeEach(^{
-            width = 200;
-            section.width = width;
-        });
-        
-        it(@"should remember the section margins", ^{
-            [[theValue(section.width) should] equal:theValue(width)];
-        });
-    });
-    
-    context(@"invalidate", ^{
-        it(@"should be valid by default", ^{
-            [[theValue(section.isInvalid) should] beFalse];
-        });
-        
-        it(@"should flag the layout info has invalid", ^{
+            section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
+            [section addRow];
             [section invalidate];
-            [[theValue(section.isInvalid) should] beTrue];
+        });
+
+        it(@"should clear any computed rows", ^{
+            [[[section layoutSectionRows] should] beEmpty];
         });
     });
-    
-    context(@"headerFrame", ^{
-        __block CGRect headerFrame = CGRectZero;
-        
+
+    context(@"a standard layout", ^{
+
         beforeEach(^{
-            headerFrame = CGRectMake(0.f, 10.f, 20.f, 40.f);
-            section.headerFrame = headerFrame;
+            section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
+            section.width = 300;
+
+            //add a few items
+            AMPerSectionCollectionViewLayoutItem *item1 = [section addItem];;
+            item1.frame = CGRectMake(0, 0, 100, 100);
+
+            AMPerSectionCollectionViewLayoutItem *item2 = [section addItem];;
+            item2.frame = CGRectMake(0, 0, 100, 150);
+
+            AMPerSectionCollectionViewLayoutItem *item3 = [section addItem];;
+            item3.frame = CGRectMake(0, 0, 100, 150);
+
+            AMPerSectionCollectionViewLayoutItem *item4 = [section addItem];;
+            item4.frame = CGRectMake(0, 0, 100, 100);
+
+            [section computeLayout:nil];
         });
-        
-        it(@"should remember the header frame", ^{
-            [[theValue(section.headerFrame) should] equal:theValue(headerFrame)];
+
+        it(@"should create two rows", ^{
+            [[section.layoutSectionRows should] haveCountOf:2];
         });
-    });
-    context(@"footerFrame", ^{
-        __block CGRect footerFrame = CGRectZero;
-        
-        beforeEach(^{
-            footerFrame = CGRectMake(0.f, 10.f, 20.f, 40.f);
-            section.footerFrame = footerFrame;
+
+        it(@"should have a body frame that accounts for the layout of the two rows", ^{
+            [[theValue(section.bodyFrame) should] equal:theValue(CGRectMake(0, 0, 300, 250))];
         });
-        
-        it(@"should remember the footer frame", ^{
-            [[theValue(section.footerFrame) should] equal:theValue(footerFrame)];
+
+        it(@"should have a frame that accounts for the body frame an no headers", ^{
+            [[theValue(section.frame) should] equal:theValue(CGRectMake(0, 0, 300, 250))];
         });
-    });
-    
-    context(@"computeLayout", ^{
-        
-        __block UICollectionView *collectionView = nil;
-        __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
-        __block AMPerSectionCollectionViewLayout *layout;
-        __block AMPerSectionCollectionViewLayoutSection *firstSection;
-        
-        beforeEach(^{
-            layout = [[AMPerSectionCollectionViewLayout alloc] init];
-            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 250.f, 500.f) collectionViewLayout:layout];
-            delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
-            
-            delegateDataSource.numberOfSections = 1;
-            delegateDataSource.numberOfItemsInSection = 10;
-            delegateDataSource.itemSize = CGSizeMake(50.f, 50.f);
-            delegateDataSource.sectionHeaderReferenceSize = CGSizeMake(27.f, 50.f);
-            delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
-            delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
-            delegateDataSource.minimumLineSpacing = 10.f;
-            delegateDataSource.minimumInteritemSpacing = 10.f;
-            
-            collectionView.delegate = delegateDataSource;
-            collectionView.dataSource = delegateDataSource;
-            [delegateDataSource registerCustomElementsForCollectionView:collectionView];
-            
-            [layout prepareLayout];
-            
-            firstSection = layout.layoutInfo.layoutInfoSections[0];
+
+        it(@"should have no header or footer frame", ^{
+            [[theValue(section.headerFrame) should] equal:theValue(CGRectZero)];
+            [[theValue(section.footerFrame) should] equal:theValue(CGRectZero)];
         });
-        
-        it(@"should have a frame", ^{
-            [[theValue(firstSection.frame) should] equal:theValue(CGRectMake(0.f, 0.f, 250.f, 300.f))];
+
+        it(@"should size the two rows and lay them out vertically", ^{
+            NSArray *rows = section.layoutSectionRows;
+
+            AMPerSectionCollectionViewLayoutRow *firstRow = rows[0];
+            [[theValue([firstRow itemsCount]) should] equal:@3];
+            [[theValue(firstRow.index) should] equal:theValue(0)];
+            [[theValue(firstRow.frame) should] equal:theValue(CGRectMake(0, 0, 300, 150))];
+
+            AMPerSectionCollectionViewLayoutRow *secondRow = rows[1];
+            [[theValue([secondRow itemsCount]) should] equal:@1];
+            [[theValue(secondRow.index) should] equal:theValue(1)];
+            [[theValue(secondRow.frame) should] equal:theValue(CGRectMake(0, 150, 100, 100))];
         });
-        
-        it(@"should have a body frame", ^{
-            [[theValue(firstSection.bodyFrame) should] equal:theValue(CGRectMake(0.f, 50.f, 250.f, 180.f))];
-        });
-        
-        it(@"should have a header frame", ^{
-            [[theValue(firstSection.headerFrame) should] equal:theValue(CGRectMake(0.f, 0.f, 250.f, 50.f))];
-        });
-        
-        it(@"should have a footer frame", ^{
-            [[theValue(firstSection.footerFrame) should] equal:theValue(CGRectMake(0.f, 230.f, 250.f, 70.f))];
-        });
-        
-        context(@"with no section footer frame", ^{
+
+        context(@"with a footer frame", ^{
             beforeEach(^{
-                delegateDataSource.sectionFooterReferenceSize = CGSizeZero;
-                [layout prepareLayout];
-                firstSection = layout.layoutInfo.layoutInfoSections[0];
+                section.footerFrame = CGRectMake(0, 0, 400, 50);
+                [section invalidate];
+                [section computeLayout:nil];
             });
-            
-            it(@"should have a frame", ^{
-                [[theValue(firstSection.frame) should] equal:theValue(CGRectMake(0.f, 0.f, 250.f, 230.f))];
+
+            it(@"should place the footer frame at the bottom of the body frame with the width set to the overall width of the section", ^{
+                [[theValue(section.footerFrame) should] equal:theValue(CGRectMake(0, 250, 300, 50))];
             });
-            
-            it(@"should have a body frame", ^{
-                [[theValue(firstSection.bodyFrame) should] equal:theValue(CGRectMake(0.f, 50.f, 250.f, 180.f))];
+
+            it(@"should size the frame to take into account the footer frame", ^{
+                [[theValue(section.frame) should] equal:theValue(CGRectMake(0, 0, 300, 300))];
             });
-            
-            it(@"should have a footer frame", ^{
-                [[theValue(firstSection.footerFrame) should] equal:theValue(CGRectZero)];
-            });
-            
         });
-        
+
+        context(@"with a header frame", ^{
+            beforeEach(^{
+                section.headerFrame = CGRectMake(100, 100, 400, 50);
+                [section invalidate];
+                [section computeLayout:nil];
+            });
+
+            it(@"should place the header at the top of the frame, keeping it's size bound to the section width",^{
+                 [[theValue(section.headerFrame) should] equal:theValue(CGRectMake(0, 0, 300, 50))];
+            });
+
+            it(@"should place the body underneath the header",^{
+                 [[theValue(section.bodyFrame) should] equal:theValue(CGRectMake(0, 50, 300, 250))];
+            });
+
+            it(@"it should size the frame to take into account the header frame",^{
+                [[theValue(section.frame) should] equal:theValue(CGRectMake(0, 0, 300, 300))];
+            });
+        });
+
+        context(@"with section margins", ^{
+            beforeEach(^{
+                section.sectionMargins = UIEdgeInsetsMake(5, 10, 5, 10);
+                [section invalidate];
+                [section computeLayout:nil];
+            });
+
+            it(@"should inset the body frame", ^{
+                //third item is 150 high.
+                [[theValue(section.bodyFrame) should] equal:theValue(CGRectMake(10, 5, 280, 300))];
+            });
+
+            it(@"should have a frame that accounts for the margins", ^{
+                [[theValue(section.frame) should] equal:theValue(CGRectMake(0, 0, 300, 310))];
+            });
+
+            it(@"should cause the third item to move to the second row because of the constrained width",^{
+                NSArray *rows = section.layoutSectionRows;
+                AMPerSectionCollectionViewLayoutRow *firstRow = rows[0];
+                [[theValue([firstRow itemsCount]) should] equal:theValue(2)];
+
+                AMPerSectionCollectionViewLayoutRow *secondRow = rows[1];
+                [[theValue([secondRow itemsCount]) should] equal:theValue(2)];
+            });
+
+            context(@"with a header frame", ^{
+                beforeEach(^{
+                    section.headerFrame = CGRectMake(100, 100, 400, 50);
+                    [section invalidate];
+                    [section computeLayout:nil];
+                });
+
+                it(@"should still be the full width of the section and be at the top ignoring the margins", ^{
+                    [[theValue(section.headerFrame) should] equal:theValue(CGRectMake(0, 0, 300, 50))];
+                });
+            });
+        });
+
+        context(@"with a vertical interstice", ^{
+            beforeEach(^{
+                section.verticalInterstice = 10;
+                [section invalidate];
+                [section computeLayout:nil];
+            });
+
+            it(@"should place the second row the right number of points below the first line", ^{
+                NSArray *rows = section.layoutSectionRows;
+
+                AMPerSectionCollectionViewLayoutRow *firstRow = rows[0];
+                [[theValue(firstRow.frame) should] equal:theValue(CGRectMake(0, 0, 300, 150))];
+
+                AMPerSectionCollectionViewLayoutRow *secondRow = rows[1];
+                [[theValue(secondRow.frame) should] equal:theValue(CGRectMake(0, 160, 100, 100))];
+            });
+
+            it(@"should have a body frame that accounts for the layout of the two rows", ^{
+                [[theValue(section.bodyFrame) should] equal:theValue(CGRectMake(0, 0, 300, 270))];
+            });
+
+            it(@"should have a frame that accounts for the body frame an no headers", ^{
+                [[theValue(section.frame) should] equal:theValue(CGRectMake(0, 0, 300, 270))];
+            });
+        });
+
+        //HorizontalInterstice is tested as part of the row
     });
 });
 
