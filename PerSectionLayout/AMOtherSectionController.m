@@ -2,10 +2,10 @@
 //  Copyright (c) 2014 Dblechoc. All rights reserved.
 //
 
-#import "AMOtherSection.h"
+#import "AMOtherSectionController.h"
 #import "UIDevice+Utilities.h"
 
-@implementation AMOtherSection
+@implementation AMOtherSectionController
 
 - (NSInteger)section
 {
