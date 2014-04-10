@@ -82,14 +82,15 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
 	
 	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
     {
-		if (CGRectIntersectsRect(section.frame, rect))
+        CGRect normalizedSectionFrame = [section stickyFrameForYOffset:[self adjustedCollectionViewContentOffset]];
+		if (CGRectIntersectsRect(normalizedSectionFrame, rect))
         {
-			NSInteger sectionIndex = (NSInteger)[self.layoutInfo.layoutInfoSections indexOfObject:section];
-			
+             NSInteger sectionIndex = (NSInteger)[self.layoutInfo.layoutInfoSections indexOfObject:section];
+            
 			// section header
 			CGRect normalizedSectionHeaderFrame = section.headerFrame;
-            normalizedSectionHeaderFrame.origin.x += CGRectGetMinX(section.frame);
-            normalizedSectionHeaderFrame.origin.y += CGRectGetMinY(section.frame);
+            normalizedSectionHeaderFrame.origin.x += CGRectGetMinX(normalizedSectionFrame);
+            normalizedSectionHeaderFrame.origin.y += CGRectGetMinY(normalizedSectionFrame);
             if ([self layoutInfoFrame:normalizedSectionHeaderFrame requiresLayoutAttritbutesForRect:rect])
             {
                 UICollectionViewLayoutAttributes *layoutAttributes;
@@ -103,8 +104,8 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
             {
 				//	figure out row's frame in global layout measurements
 				CGRect normalizedRowFrame = row.frame;
-				normalizedRowFrame.origin.x += section.frame.origin.x;
-				normalizedRowFrame.origin.y += section.frame.origin.y;
+				normalizedRowFrame.origin.x += normalizedSectionFrame.origin.x;
+				normalizedRowFrame.origin.y += normalizedSectionFrame.origin.y;
 				
 				if (CGRectIntersectsRect(normalizedRowFrame, rect))
                 {
@@ -126,8 +127,8 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
             
             // section footer
 			CGRect normalizedSectionFooterFrame = section.footerFrame;
-            normalizedSectionFooterFrame.origin.x += CGRectGetMinX(section.frame);
-            normalizedSectionFooterFrame.origin.y += CGRectGetMinY(section.frame);
+            normalizedSectionFooterFrame.origin.x += CGRectGetMinX(normalizedSectionFrame);
+            normalizedSectionFooterFrame.origin.y += CGRectGetMinY(normalizedSectionFrame);
             if ([self layoutInfoFrame:normalizedSectionFooterFrame requiresLayoutAttritbutesForRect:rect])
             {
                 UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionIndex]];
@@ -323,6 +324,17 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
     return minimumInteritemSpacing;
 }
 
+- (BOOL)isSectionStickyAtIndex:(NSInteger)section
+{
+    BOOL isSectionStickyAtIndex = NO;
+    if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:isSectionStickyAtIndex:)])
+    {
+        isSectionStickyAtIndex = [self.collectionViewDelegate collectionView:self.collectionView layout:self isSectionStickyAtIndex:section];
+    }
+    
+    return isSectionStickyAtIndex;
+}
+
 #pragma mark - Layout
 
 
@@ -393,6 +405,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
         layoutSection.verticalInterstice = [self minimumLineSpacingForSectionAtIndex:section];
         layoutSection.horizontalInterstice = [self minimumInteritemSpacingForSectionAtIndex:section];
         layoutSection.width = [self miniumWidthForSectionAtIndex:section];
+        layoutSection.sticky = [self isSectionStickyAtIndex:section];
         
 		NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:section];
         CGSize itemSize = [self itemSize];

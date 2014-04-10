@@ -196,6 +196,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             it(@"hasStickyHeaderOverSection", ^{
                 [[theValue([layout hasStickyHeaderOverSection:0]) should] equal:theValue(layout.hasStickyHeader)];
             });
+            
+            it(@"isSectionStickyAtIndex", ^{
+                [[theValue([layout hasStickyHeaderOverSection:0]) should] beFalse];
+            });
         });
         
         context(@"with a delegate that doesn't implement any of the optional methods", ^{
@@ -256,6 +260,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             
             it(@"hasStickyHeaderOverSection", ^{
                 [[theValue([layout hasStickyHeaderOverSection:0]) should] equal:theValue(delegateDataSource.hasStickyHeader)];
+            });
+            
+            it(@"isSectionStickyAtIndex", ^{
+                [[theValue([layout hasStickyHeaderOverSection:0]) should] equal:theValue(delegateDataSource.hasStickyHeaderOverSection)];
             });
         });
     });
