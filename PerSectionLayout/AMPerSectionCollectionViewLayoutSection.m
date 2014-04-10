@@ -14,7 +14,8 @@
 
 - (id)init
 {
-    if (self = [super init])
+    self = [super init];
+    if (self)
     {
         _items = [NSMutableArray array];
         _rows = [NSMutableArray array];
@@ -120,7 +121,6 @@
             // finish current row
             if (row)
             {
-                // compensate last row
                 [row computeLayout:layoutInfo inSection:self];
                 row.frame = CGRectMake(bodyOrigin.x, currentRowPoint, row.size.width, row.size.height);
                 if (rowIndex > 0)
@@ -162,7 +162,6 @@
         footerframe.size.width = self.width;
         self.footerFrame = footerframe;
     }
-
 
     CGPoint sectionOrigin = CGPointZero;
     CGSize sectionSize = CGSizeZero;
