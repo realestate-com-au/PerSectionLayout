@@ -11,7 +11,6 @@
 @end
 
 @implementation AMPerSectionCollectionViewLayoutRow
-@dynamic itemsCount;
 
 - (id)init
 {
