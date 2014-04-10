@@ -119,6 +119,90 @@
     return normalizedHeaderFrame;
 }
 
+#pragma mark - Layout Calculation
+
+- (void)updateItemsLayout
+{
+    CGSize contentSize = CGSizeZero;
+
+    // global header
+    CGRect globalHeaderFrame = self.headerFrame;
+    if (CGRectGetWidth(globalHeaderFrame) > 0)
+    {
+        globalHeaderFrame.size.width = self.collectionViewSize.width;
+        self.headerFrame = globalHeaderFrame;
+    }
+
+    contentSize.width = MAX(contentSize.width, CGRectGetWidth(self.headerFrame));
+    contentSize.height += CGRectGetHeight(self.headerFrame);
+
+    // first pass, compute all of the frames, ignoring position
+	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfoSections)
+    {
+        CGFloat sectionWidth = section.width;
+        //FIXME: JC - I don't like this NAN
+        section.width = (isnan(sectionWidth)) ? self.collectionViewSize.width : sectionWidth;
+        //FIXME: Unused layoutInfo in computeLayout
+		[section computeLayout:self];
+
+        CGRect sectionFrame = section.frame;
+
+        CGRect headerFrame = section.headerFrame;
+        if (CGRectGetHeight(headerFrame) > 0)
+        {
+            headerFrame.size.width = CGRectGetWidth(sectionFrame);
+            section.headerFrame = headerFrame;
+        }
+
+        CGRect footerFrame = section.footerFrame;
+        if (CGRectGetHeight(footerFrame) > 0)
+        {
+            footerFrame.size.width = CGRectGetWidth(sectionFrame);
+            section.footerFrame = footerFrame;
+        }
+	}
+
+    CGPoint nextOrigin = CGPointMake(0.f, contentSize.height);
+    for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfoSections)
+    {
+        CGRect sectionFrame = section.frame;
+
+        sectionFrame.origin = nextOrigin;
+        section.frame = sectionFrame;
+
+        contentSize.width = MAX(CGRectGetMaxX(sectionFrame), contentSize.width);
+        contentSize.height = MAX(CGRectGetMaxY(sectionFrame), contentSize.height);
+
+        if (CGRectGetMaxX(section.frame) >= self.collectionViewSize.width)
+        {
+            // go to new line
+            nextOrigin.y = CGRectGetMaxY(section.frame);
+
+            // reset x
+            AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
+            nextOrigin.x = CGRectGetMaxX(sectionInMyWay.frame);
+        }
+        else
+        {
+            nextOrigin.x = CGRectGetMaxX(section.frame);
+            nextOrigin.y = CGRectGetMinY(section.frame);
+        }
+    }
+
+    // global footer
+    CGRect globalFooterFrame =  self.footerFrame;
+    if (CGRectGetWidth(globalFooterFrame) > 0)
+    {
+        globalFooterFrame.origin.x = 0;
+        globalFooterFrame.origin.y = contentSize.height;
+        globalFooterFrame.size.width = self.collectionViewSize.width;
+        self.footerFrame = globalFooterFrame;
+    }
+
+	contentSize.height += CGRectGetHeight(self.footerFrame);
+    self.contentSize = contentSize;
+}
+
 #pragma mark - NSObject
 
 - (NSString *)description
