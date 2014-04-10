@@ -195,17 +195,6 @@
     return collectionViewLayout.hasStickyHeader;
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasSectionDecorationBackgroundAtIndex:(NSInteger)section
-{
-    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:hasSectionDecorationBackgroundAtIndex:)])
-    {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout hasSectionDecorationBackgroundAtIndex:section];
-    }
-    
-    return collectionViewLayout.hasSectionDecorationBackground;
-}
-
 - (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout isSectionStickyAtIndex:(NSInteger)section
 {
     id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];

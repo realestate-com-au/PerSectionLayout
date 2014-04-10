@@ -224,31 +224,6 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
             });
         });
         
-        context(@"decorationBackground", ^{
-            beforeEach(^{
-                section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
-            });
-            
-            context(@"by default", ^{
-                it(@"should not be sticky by default", ^{
-                    [[theValue(section.hasDecorationBackground) should] beFalse];
-                });
-            });
-            
-            context(@"once set", ^{
-                __block BOOL decorationBackground = NO;
-                
-                beforeEach(^{
-                    decorationBackground = YES;
-                    section.decorationBackground = decorationBackground;
-                });
-                
-                it(@"should remember if is sticky or not", ^{
-                    [[theValue(section.decorationBackground) should] equal:theValue(decorationBackground)];
-                });
-            });
-        });
-        
         context(@"sticky", ^{
             beforeEach(^{
                 section = [[AMPerSectionCollectionViewLayoutSection alloc] init];

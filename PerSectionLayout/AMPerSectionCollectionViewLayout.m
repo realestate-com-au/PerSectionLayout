@@ -15,7 +15,6 @@ NSString * const AMPerSectionCollectionElementKindSectionBackground = @"AMPerSec
 
 static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
 static const NSInteger AMPerSectionCollectionElementStickySectionIndex = -2048;
-static const NSInteger AMPerSectionCollectionElementAlwaysShowBelowIndex = -1024;
 
 @interface AMPerSectionCollectionViewLayout ()
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
@@ -89,15 +88,6 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowBelowIndex = -1024
 		if (CGRectIntersectsRect(normalizedSectionFrame, rect))
         {
             NSInteger sectionIndex = (NSInteger)[self.layoutInfo.layoutInfoSections indexOfObject:section];
-            
-            // background decoration
-            if (section.hasDecorationBackground)
-            {
-                UICollectionViewLayoutAttributes *decorationLayoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:AMPerSectionCollectionElementKindSectionBackground withIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionIndex]];
-                decorationLayoutAttributes.frame = normalizedSectionFrame;
-                decorationLayoutAttributes.zIndex = AMPerSectionCollectionElementAlwaysShowBelowIndex;
-                [layoutAttributesArray addObject:decorationLayoutAttributes];
-            }
             
 			// section header
 			CGRect normalizedSectionHeaderFrame = section.headerFrame;
@@ -233,17 +223,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowBelowIndex = -1024
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString *)decorationViewKind atIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:decorationViewKind withIndexPath:indexPath];
-	
-	if ([decorationViewKind isEqualToString:AMPerSectionCollectionElementKindSectionBackground])
-    {
-        AMPerSectionCollectionViewLayoutSection *section = [self.layoutInfo sectionAtIndex:indexPath.section];
-        
-		layoutAttributes.frame = section.frame;
-        layoutAttributes.zIndex = AMPerSectionCollectionElementAlwaysShowBelowIndex;
-	}
-    
-    return layoutAttributes;
+    return nil;
 }
 
 #pragma mark - AMPerSectionCollectionViewLayoutDelegate
@@ -375,17 +355,6 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowBelowIndex = -1024
     return isSectionStickyAtIndex;
 }
 
-- (BOOL)hasSectionDecorationBackgroundAtIndex:(NSInteger)section
-{
-    BOOL hasSectionDecorationBackgroundAtIndex = self.hasSectionDecorationBackground;
-    if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:hasSectionDecorationBackgroundAtIndex:)])
-    {
-        hasSectionDecorationBackgroundAtIndex = [self.collectionViewDelegate collectionView:self.collectionView layout:self hasSectionDecorationBackgroundAtIndex:section];
-    }
-    
-    return hasSectionDecorationBackgroundAtIndex;
-}
-
 #pragma mark - Layout
 
 
@@ -452,7 +421,6 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowBelowIndex = -1024
         layoutSection.horizontalInterstice = [self minimumInteritemSpacingForSectionAtIndex:section];
         layoutSection.width = [self miniumWidthForSectionAtIndex:section];
         layoutSection.sticky = [self isSectionStickyAtIndex:section];
-        layoutSection.decorationBackground = [self hasSectionDecorationBackgroundAtIndex:section];
         
 		NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:section];
         CGSize itemSize = [self itemSize];

@@ -38,8 +38,6 @@
     [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withReuseIdentifier:@"header"];
     [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withReuseIdentifier:@"footer"];
     
-    [collectionView.collectionViewLayout registerClass:[AMBackgroundSectionView class] forDecorationViewOfKind:AMPerSectionCollectionElementKindSectionBackground];
-    
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -97,11 +95,6 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section
 {
     return [self maxWidthForCollectionView:collectionView];
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasSectionDecorationBackgroundAtIndex:(NSInteger)section
-{
-    return YES;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForHeaderInSection:(NSInteger)section

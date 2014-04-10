@@ -35,6 +35,7 @@ SPEC_BEGIN(AMPerSectionCollectionViewLayoutSpec)
 
 describe(@"AMPerSectionCollectionViewLayout", ^{
     __block AMPerSectionCollectionViewLayout *layout;
+    __block UICollectionView *collectionView = nil;
     
     beforeEach(^{
         layout = [[AMPerSectionCollectionViewLayout alloc] init];
@@ -79,10 +80,6 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         
         it(@"should have by default non stick header", ^{
             [[theValue(layout.hasStickyHeader) should] equal:theValue(NO)];
-        });
-        
-        it(@"should have by default no section decoration background", ^{
-            [[theValue(layout.hasSectionDecorationBackground) should] equal:theValue(NO)];
         });
     });
     
@@ -134,9 +131,6 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
     });
     
     context(@"AMPerSectionCollectionViewLayoutDelegate", ^{
-        
-        __block UICollectionView *collectionView = nil;
-        
         beforeEach(^{
             collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 250.f) collectionViewLayout:layout];
         });
@@ -204,10 +198,6 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             it(@"isSectionStickyAtIndex", ^{
                 [[theValue([layout isSectionStickyAtIndex:0]) should] beFalse];
             });
-            
-            it(@"hasSectionDecorationBackground", ^{
-                [[theValue(layout.hasSectionDecorationBackground) should] equal:theValue(layout.hasSectionDecorationBackground)];
-            });
         });
         
         context(@"with a delegate that doesn't implement any of the optional methods", ^{
@@ -274,348 +264,283 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             it(@"isSectionStickyAtIndex", ^{
                 [[theValue([layout isSectionStickyAtIndex:0]) should] beTrue];
             });
-            
-            it(@"hasSectionDecorationBackground", ^{
-                [[theValue(layout.hasSectionDecorationBackground) should] equal:theValue(delegateDataSource.hasSectionDecorationBackground)];
-            });
-        });
-    });
-    
-    context(@"prepareLayout", ^{
-        
-        __block UICollectionView *collectionView = nil;
-        
-        beforeEach(^{
-            collectionView = [UICollectionView nullMock];
-            [collectionView stub:@selector(bounds) andReturn:theValue(CGRectMake(0.f, 0.f, 70.f, 130.f))];
-            
-            [layout stub:@selector(collectionView) andReturn:collectionView];
-            [layout prepareLayout];
         });
         
-        it(@"should fetch items info only if has no layout info", ^{
-            layout.layoutInfo = nil;
-            [[layout should] receive:@selector(getSizingInfos:)];
-            [layout prepareLayout];
-        });
-        
-        it(@"should not fetch items info if has a layout info", ^{
-            [[layout shouldNot] receive:@selector(getSizingInfos:)];
-            [layout prepareLayout];
-        });
-        
-        context(@"layout info", ^{
-            it(@"should have one", ^{
-                [[layout.layoutInfo should] beNonNil];
-            });
-            
-            it(@"should be given the collection view size", ^{
-                [[theValue(layout.layoutInfo.collectionViewSize) should] equal:theValue(collectionView.bounds.size)];
-            });
-        });
-    });
-    
-    context(@"adjustedCollectionViewContentOffset", ^{
-        __block UICollectionView *collectionView = nil;
-        
-        beforeEach(^{
-            collectionView = [UICollectionView nullMock];
-            [collectionView stub:@selector(bounds) andReturn:theValue(CGRectMake(0.f, 0.f, 70.f, 130.f))];
-            [collectionView stub:@selector(contentOffset) andReturn:theValue(CGPointMake(0.f, 40.f))];
-            [collectionView stub:@selector(contentInset) andReturn:theValue(UIEdgeInsetsMake(20.f, 10.f, 30.f, 40.f))];
-            
-            [layout stub:@selector(collectionView) andReturn:collectionView];
-        });
-        
-        [[theValue([layout adjustedCollectionViewContentOffset]) should] equal:theValue(60.f)];
-    });
-        
-    context(@"layout attributes frame validation", ^{
-        
-        __block CGRect layoutInfoFrame = CGRectZero;
-        __block CGRect rect = CGRectZero;
-        
-        context(@"when both rects intersect", ^{
+        context(@"prepareLayout", ^{
             beforeEach(^{
-                rect = CGRectMake(0.f, 0.f, 100.f, 100.f);
+                collectionView = [UICollectionView nullMock];
+                [collectionView stub:@selector(bounds) andReturn:theValue(CGRectMake(0.f, 0.f, 70.f, 130.f))];
+                
+                [layout stub:@selector(collectionView) andReturn:collectionView];
+                [layout prepareLayout];
             });
             
-            it(@"should be true if layoutInfoFrame height is greater than zero", ^{
-                layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 70.f);
-                [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beTrue];
+            it(@"should fetch items info only if has no layout info", ^{
+                layout.layoutInfo = nil;
+                [[layout should] receive:@selector(getSizingInfos:)];
+                [layout prepareLayout];
             });
             
-            it(@"should be false if layoutInfoFrame height of zero", ^{
-                layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 0.f);
-                [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beFalse];
+            it(@"should not fetch items info if has a layout info", ^{
+                [[layout shouldNot] receive:@selector(getSizingInfos:)];
+                [layout prepareLayout];
+            });
+            
+            context(@"layout info", ^{
+                it(@"should have one", ^{
+                    [[layout.layoutInfo should] beNonNil];
+                });
+                
+                it(@"should be given the collection view size", ^{
+                    [[theValue(layout.layoutInfo.collectionViewSize) should] equal:theValue(collectionView.bounds.size)];
+                });
             });
         });
         
-        context(@"when rects don't intersect", ^{
+        context(@"adjustedCollectionViewContentOffset", ^{
             beforeEach(^{
-                rect = CGRectMake(1000.f, 1000.f, 100.f, 100.f);
+                collectionView = [UICollectionView nullMock];
+                [collectionView stub:@selector(bounds) andReturn:theValue(CGRectMake(0.f, 0.f, 70.f, 130.f))];
+                [collectionView stub:@selector(contentOffset) andReturn:theValue(CGPointMake(0.f, 40.f))];
+                [collectionView stub:@selector(contentInset) andReturn:theValue(UIEdgeInsetsMake(20.f, 10.f, 30.f, 40.f))];
+                
+                [layout stub:@selector(collectionView) andReturn:collectionView];
             });
             
-            it(@"should be false if layoutInfoFrame height is greater than zero", ^{
-                layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 70.f);
-                [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beFalse];
-            });
-            
-            it(@"should be false if layoutInfoFrame height of zero", ^{
-                layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 0.f);
-                [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beFalse];
-            });
-        });
-    });
-    
-    context(@"getSizingInfos", ^{
-        
-        __block UICollectionView *collectionView = nil;
-        __block AMFakeCollectionViewDelegateDataSource *delegate = nil;
-        
-        beforeEach(^{
-            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 250.f) collectionViewLayout:layout];
-            delegate = [[AMFakeCollectionViewDelegateDataSource alloc] init];
-            
-            delegate.numberOfSections = 1;
-            delegate.numberOfItemsInSection = 5;
-            
-            delegate.itemSize = CGSizeMake(70.f, 80.f);
-            delegate.headerReferenceSize = CGSizeMake(27.f, 48.f);
-            delegate.footerReferenceSize = CGSizeMake(17.f, 58.f);
-            delegate.sectionHeaderReferenceSize = CGSizeMake(227.f, 148.f);
-            delegate.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
-            delegate.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
-            delegate.minimumLineSpacing = 8.f;
-            delegate.minimumInteritemSpacing = 10.f;
-            
-            collectionView.delegate = delegate;
-            [layout prepareLayout];
+            [[theValue([layout adjustedCollectionViewContentOffset]) should] equal:theValue(60.f)];
         });
         
-        it(@"should set the header frame size", ^{
-            [[theValue(layout.layoutInfo.headerFrame.size) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), [layout sizeForHeader].height))];
+        context(@"layout attributes frame validation", ^{
+            
+            __block CGRect layoutInfoFrame = CGRectZero;
+            __block CGRect rect = CGRectZero;
+            
+            context(@"when both rects intersect", ^{
+                beforeEach(^{
+                    rect = CGRectMake(0.f, 0.f, 100.f, 100.f);
+                });
+                
+                it(@"should be true if layoutInfoFrame height is greater than zero", ^{
+                    layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 70.f);
+                    [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beTrue];
+                });
+                
+                it(@"should be false if layoutInfoFrame height of zero", ^{
+                    layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 0.f);
+                    [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beFalse];
+                });
+            });
+            
+            context(@"when rects don't intersect", ^{
+                beforeEach(^{
+                    rect = CGRectMake(1000.f, 1000.f, 100.f, 100.f);
+                });
+                
+                it(@"should be false if layoutInfoFrame height is greater than zero", ^{
+                    layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 70.f);
+                    [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beFalse];
+                });
+                
+                it(@"should be false if layoutInfoFrame height of zero", ^{
+                    layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 0.f);
+                    [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beFalse];
+                });
+            });
         });
         
-        it(@"should set the footer frame size", ^{
-            [[theValue(layout.layoutInfo.footerFrame.size) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), [layout sizeForFooter].height))];
-        });
-        
-        for (NSInteger section = 0; section < [collectionView numberOfSections]; section++)
-        {
-            AMPerSectionCollectionViewLayoutSection *layoutSection = layout.layoutInfo.layoutInfoSections[(NSUInteger)section];
+        context(@"getSizingInfos", ^{
             
-            it(@"should set the section header frame size", ^{
-                [[theValue(layoutSection.headerFrame.size) should] equal:theValue([layout sizeForHeaderInSection:section])];
+            __block AMFakeCollectionViewDelegateDataSource *delegate = nil;
+            
+            beforeEach(^{
+                collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 250.f) collectionViewLayout:layout];
+                delegate = [[AMFakeCollectionViewDelegateDataSource alloc] init];
+                
+                delegate.numberOfSections = 1;
+                delegate.numberOfItemsInSection = 5;
+                
+                delegate.itemSize = CGSizeMake(70.f, 80.f);
+                delegate.headerReferenceSize = CGSizeMake(27.f, 48.f);
+                delegate.footerReferenceSize = CGSizeMake(17.f, 58.f);
+                delegate.sectionHeaderReferenceSize = CGSizeMake(227.f, 148.f);
+                delegate.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
+                delegate.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
+                delegate.minimumLineSpacing = 8.f;
+                delegate.minimumInteritemSpacing = 10.f;
+                
+                collectionView.delegate = delegate;
+                [layout prepareLayout];
             });
             
-            it(@"should set the section footer frame size", ^{
-                [[theValue(layoutSection.footerFrame.size) should] equal:theValue([layout sizeForFooterInSection:section])];
+            it(@"should set the header frame size", ^{
+                [[theValue(layout.layoutInfo.headerFrame.size) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), [layout sizeForHeader].height))];
             });
             
-            it(@"should set the section margin", ^{
-                [[theValue(layoutSection.sectionMargins) should] equal:theValue([layout insetForSectionAtIndex:section])];
+            it(@"should set the footer frame size", ^{
+                [[theValue(layout.layoutInfo.footerFrame.size) should] equal:theValue(CGSizeMake(CGRectGetWidth(collectionView.frame), [layout sizeForFooter].height))];
             });
             
-            it(@"should set the vertical interstice", ^{
-                [[theValue(layoutSection.verticalInterstice) should] equal:theValue([layout minimumLineSpacingForSectionAtIndex:section])];
-            });
-            
-            it(@"should set the horizontal interstice", ^{
-                [[theValue(layoutSection.horizontalInterstice) should] equal:theValue([layout minimumInteritemSpacingForSectionAtIndex:section])];
-            });
-            
-            
-            for (NSInteger item = 0; item < [collectionView numberOfItemsInSection:section]; item++)
+            for (NSInteger section = 0; section < [collectionView numberOfSections]; section++)
             {
-                AMPerSectionCollectionViewLayoutItem *layoutItem = layoutSection.layoutSectionItems[(NSUInteger)item];
+                AMPerSectionCollectionViewLayoutSection *layoutSection = layout.layoutInfo.layoutInfoSections[(NSUInteger)section];
                 
-                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:section];
-                [[theValue(layoutItem.frame) should] equal:theValue([layout sizeForItemAtIndexPath:indexPath])];
+                it(@"should set the section header frame size", ^{
+                    [[theValue(layoutSection.headerFrame.size) should] equal:theValue([layout sizeForHeaderInSection:section])];
+                });
+                
+                it(@"should set the section footer frame size", ^{
+                    [[theValue(layoutSection.footerFrame.size) should] equal:theValue([layout sizeForFooterInSection:section])];
+                });
+                
+                it(@"should set the section margin", ^{
+                    [[theValue(layoutSection.sectionMargins) should] equal:theValue([layout insetForSectionAtIndex:section])];
+                });
+                
+                it(@"should set the vertical interstice", ^{
+                    [[theValue(layoutSection.verticalInterstice) should] equal:theValue([layout minimumLineSpacingForSectionAtIndex:section])];
+                });
+                
+                it(@"should set the horizontal interstice", ^{
+                    [[theValue(layoutSection.horizontalInterstice) should] equal:theValue([layout minimumInteritemSpacingForSectionAtIndex:section])];
+                });
+                
+                
+                for (NSInteger item = 0; item < [collectionView numberOfItemsInSection:section]; item++)
+                {
+                    AMPerSectionCollectionViewLayoutItem *layoutItem = layoutSection.layoutSectionItems[(NSUInteger)item];
+                    
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:section];
+                    [[theValue(layoutItem.frame) should] equal:theValue([layout sizeForItemAtIndexPath:indexPath])];
+                }
             }
-        }
-    });
-    
-    context(@"layout methods to override", ^{
-        __block UICollectionView *collectionView = nil;
-        __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
-        
-        beforeEach(^{
-            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 250.f, 500.f) collectionViewLayout:layout];
-            delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
-            
-            
-            delegateDataSource.numberOfSections = 3;
-            delegateDataSource.numberOfItemsInSection = 10;
-            delegateDataSource.itemSize = CGSizeMake(50.f, 50.f);
-            delegateDataSource.headerReferenceSize = CGSizeMake(25.f, 30.f);
-            delegateDataSource.footerReferenceSize = CGSizeMake(25.f, 40.f);
-            delegateDataSource.sectionHeaderReferenceSize = CGSizeMake(27.f, 50.f);
-            delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
-            delegateDataSource.minimumLineSpacing = 10.f;
-            delegateDataSource.minimumInteritemSpacing = 10.f;
-            delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
-            delegateDataSource.stickyHeader = YES;
-            delegateDataSource.lastSectionWithStickyHeader = 1;
-            
-            collectionView.delegate = delegateDataSource;
-            collectionView.dataSource = delegateDataSource;
-            
-            [layout prepareLayout];
         });
         
-        context(@"sticky header", ^{
-            it(@"should enable on the layout info sticky header", ^{
-                [[theValue(layout.layoutInfo.hasStickyHeader) should] equal:theValue(delegateDataSource.hasStickyHeader)];
+        context(@"layout methods to override", ^{
+            
+            __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
+            
+            beforeEach(^{
+                collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 250.f, 500.f) collectionViewLayout:layout];
+                delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
+                
+                
+                delegateDataSource.numberOfSections = 3;
+                delegateDataSource.numberOfItemsInSection = 10;
+                delegateDataSource.itemSize = CGSizeMake(50.f, 50.f);
+                delegateDataSource.headerReferenceSize = CGSizeMake(25.f, 30.f);
+                delegateDataSource.footerReferenceSize = CGSizeMake(25.f, 40.f);
+                delegateDataSource.sectionHeaderReferenceSize = CGSizeMake(27.f, 50.f);
+                delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
+                delegateDataSource.minimumLineSpacing = 10.f;
+                delegateDataSource.minimumInteritemSpacing = 10.f;
+                delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
+                delegateDataSource.stickyHeader = YES;
+                delegateDataSource.lastSectionWithStickyHeader = 1;
+                
+                collectionView.delegate = delegateDataSource;
+                collectionView.dataSource = delegateDataSource;
+                
+                [layout prepareLayout];
             });
             
-            it(@"should set the layout info last section with sticky header", ^{
-                [[theValue(layout.layoutInfo.lastSectionWithStickyHeader) should] equal:theValue(delegateDataSource.lastSectionWithStickyHeader)];
-            });
-        });
-    });
-    
-    context(@"layout methods to override", ^{
-        __block UICollectionView *collectionView = nil;
-        __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
-        
-        beforeEach(^{
-            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 250.f, 500.f) collectionViewLayout:layout];
-            delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
-            
-            
-            delegateDataSource.numberOfSections = 3;
-            delegateDataSource.numberOfItemsInSection = 10;
-            delegateDataSource.itemSize = CGSizeMake(50.f, 50.f);
-            delegateDataSource.headerReferenceSize = CGSizeMake(25.f, 30.f);
-            delegateDataSource.footerReferenceSize = CGSizeMake(25.f, 40.f);
-            delegateDataSource.sectionHeaderReferenceSize = CGSizeMake(27.f, 50.f);
-            delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
-            delegateDataSource.minimumLineSpacing = 10.f;
-            delegateDataSource.minimumInteritemSpacing = 10.f;
-            delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
-            delegateDataSource.stickyHeader = YES;
-            delegateDataSource.lastSectionWithStickyHeader = 1;
-            delegateDataSource.stickySectionIndex = 0;
-            delegateDataSource.sectionDecorationBackground = YES;
-            
-            collectionView.delegate = delegateDataSource;
-            collectionView.dataSource = delegateDataSource;
-            
-            [layout prepareLayout];
-        });
-        
-        context(@"collectionViewContentSize", ^{
-            it(@"should ask the layout info for the collection view content size", ^{
-                [[theValue(layout.collectionViewContentSize) should] equal:theValue(layout.layoutInfo.contentSize)];
-            });
-        });
-        
-        context(@"layoutAttributesForElementsInRect", ^{
-            __block NSArray *layoutAttributesForElementsInRect = nil;
-            
-            context(@"given the collection view content size", ^{
-                beforeEach(^{
-                    layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f, 0.f, layout.collectionViewContentSize.width, layout.collectionViewContentSize.height)];
+            context(@"sticky header", ^{
+                it(@"should enable on the layout info sticky header", ^{
+                    [[theValue(layout.layoutInfo.hasStickyHeader) should] equal:theValue(delegateDataSource.hasStickyHeader)];
                 });
                 
-                it(@"should return all elements", ^{
-                    [[layoutAttributesForElementsInRect should] beNonNil];
-                    
-                    // header + footer + 30 * (rows) + 3 * header + footer  + 3 setions background ==> 41
-                    [[layoutAttributesForElementsInRect should] haveCountOf:41];
-                });
-            });
-            
-            context(@"emulating a scroll", ^{
-                beforeEach(^{
-                    CGFloat yOffset = delegateDataSource.headerReferenceSize.height + 60;
-                    
-                    [layout stub:@selector(adjustedCollectionViewContentOffset) andReturn:theValue(yOffset)];
-                    layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f,  yOffset, layout.collectionViewContentSize.width,  layout.collectionViewContentSize.height - yOffset)];
-                });
-                
-                it(@"should return the sticky header", ^{
-                    [[layoutAttributesForElementsInRect should] beNonNil];
-                    
-                    [[[layoutAttributesForElementsInRect valueForKey:@"elementKind"] should] contain:AMPerSectionCollectionElementKindHeader];
+                it(@"should set the layout info last section with sticky header", ^{
+                    [[theValue(layout.layoutInfo.lastSectionWithStickyHeader) should] equal:theValue(delegateDataSource.lastSectionWithStickyHeader)];
                 });
             });
         });
         
-        context(@"layoutAttributesForItemAtIndexPath", ^{
-            __block UICollectionViewLayoutAttributes *attributes;
+        context(@"layout methods to override", ^{
             
-            context(@"first indexPath", ^{
-                beforeEach(^{
-                    attributes = [layout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-                });
+            __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
+            
+            beforeEach(^{
+                collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 250.f, 500.f) collectionViewLayout:layout];
+                delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
                 
-                it(@"should return a layout attributes", ^{
-                    [[attributes should] beNonNil];
-                });
                 
-                it(@"should have a frame", ^{
-                    [[theValue(attributes.frame) should] equal:theValue(CGRectMake(0.f, 80.f, 50.f, 50.f))];
+                delegateDataSource.numberOfSections = 3;
+                delegateDataSource.numberOfItemsInSection = 10;
+                delegateDataSource.itemSize = CGSizeMake(50.f, 50.f);
+                delegateDataSource.headerReferenceSize = CGSizeMake(25.f, 30.f);
+                delegateDataSource.footerReferenceSize = CGSizeMake(25.f, 40.f);
+                delegateDataSource.sectionHeaderReferenceSize = CGSizeMake(27.f, 50.f);
+                delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
+                delegateDataSource.minimumLineSpacing = 10.f;
+                delegateDataSource.minimumInteritemSpacing = 10.f;
+                delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
+                delegateDataSource.stickyHeader = YES;
+                delegateDataSource.lastSectionWithStickyHeader = 1;
+                delegateDataSource.stickySectionIndex = 0;
+                
+                collectionView.delegate = delegateDataSource;
+                collectionView.dataSource = delegateDataSource;
+                
+                [layout prepareLayout];
+            });
+            
+            context(@"collectionViewContentSize", ^{
+                it(@"should ask the layout info for the collection view content size", ^{
+                    [[theValue(layout.collectionViewContentSize) should] equal:theValue(layout.layoutInfo.contentSize)];
                 });
             });
             
-            context(@"last indexPath", ^{
-                beforeEach(^{
-                    attributes = [layout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:9 inSection:2]];
-                });
+            context(@"layoutAttributesForElementsInRect", ^{
+                __block NSArray *layoutAttributesForElementsInRect = nil;
                 
-                it(@"should return a layout attributes", ^{
-                    [[attributes should] beNonNil];
-                });
-                
-                it(@"should return a layout attributes with a frame", ^{
-                    [[theValue(attributes.frame) should] equal:theValue(CGRectMake(60.f, 800.f, 50.f, 50.f))];
-                });
-            });
-        });
-        
-        context(@"layoutAttributesForSupplementaryViewOfKind", ^{
-            __block UICollectionViewLayoutAttributes *attributes;
-            
-            context(@"AMPerSectionCollectionElementKindHeader", ^{
-                beforeEach(^{
-                    attributes = [layout layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-                });
-                
-                it(@"should return a layout attributes", ^{
-                    [[attributes should] beNonNil];
-                });
-                
-                it(@"should return a layout attributes with a frame", ^{
-                    [[theValue(attributes.frame) should] equal:theValue(layout.layoutInfo.headerFrame)];
-                });
-            });
-            
-            context(@"AMPerSectionCollectionElementKindFooter", ^{
-                beforeEach(^{
-                    attributes = [layout layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-                });
-                
-                it(@"should return a layout attributes", ^{
-                    [[attributes should] beNonNil];
-                });
-                
-                it(@"should return a layout attributes with a frame", ^{
-                    [[theValue(attributes.frame) should] equal:theValue(layout.layoutInfo.footerFrame)];
-                });
-            });
-            
-            context(@"for a given section", ^{
-                __block AMPerSectionCollectionViewLayoutSection *section = nil;
-                
-                beforeEach(^{
-                    section = [layout.layoutInfo sectionAtIndex:1];
-                });
-                
-                context(@"AMPerSectionCollectionElementKindSectionHeader", ^{
+                context(@"given the collection view content size", ^{
                     beforeEach(^{
-                        attributes = [layout layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];
+                        layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f, 0.f, layout.collectionViewContentSize.width, layout.collectionViewContentSize.height)];
+                    });
+                    
+                    it(@"should return all elements", ^{
+                        [[layoutAttributesForElementsInRect should] beNonNil];
+                        
+                        // header + footer + 30 * (rows) + 3 * header + footer ==> 38
+                        [[layoutAttributesForElementsInRect should] haveCountOf:38];
+                    });
+                });
+                
+                context(@"emulating a scroll", ^{
+                    beforeEach(^{
+                        CGFloat yOffset = delegateDataSource.headerReferenceSize.height + 60;
+                        
+                        [layout stub:@selector(adjustedCollectionViewContentOffset) andReturn:theValue(yOffset)];
+                        layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f,  yOffset, layout.collectionViewContentSize.width,  layout.collectionViewContentSize.height - yOffset)];
+                    });
+                    
+                    it(@"should return the sticky header", ^{
+                        [[layoutAttributesForElementsInRect should] beNonNil];
+                        
+                        [[[layoutAttributesForElementsInRect valueForKey:@"elementKind"] should] contain:AMPerSectionCollectionElementKindHeader];
+                    });
+                });
+            });
+            
+            context(@"layoutAttributesForItemAtIndexPath", ^{
+                __block UICollectionViewLayoutAttributes *attributes;
+                
+                context(@"first indexPath", ^{
+                    beforeEach(^{
+                        attributes = [layout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+                    });
+                    
+                    it(@"should return a layout attributes", ^{
+                        [[attributes should] beNonNil];
+                    });
+                    
+                    it(@"should have a frame", ^{
+                        [[theValue(attributes.frame) should] equal:theValue(CGRectMake(0.f, 80.f, 50.f, 50.f))];
+                    });
+                });
+                
+                context(@"last indexPath", ^{
+                    beforeEach(^{
+                        attributes = [layout layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:9 inSection:2]];
                     });
                     
                     it(@"should return a layout attributes", ^{
@@ -623,13 +548,17 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                     });
                     
                     it(@"should return a layout attributes with a frame", ^{
-                        [[theValue(attributes.frame) should] equal:theValue(CGRectMake(0.f, 330.f, 250.f, 50.f))];
+                        [[theValue(attributes.frame) should] equal:theValue(CGRectMake(60.f, 800.f, 50.f, 50.f))];
                     });
                 });
+            });
+            
+            context(@"layoutAttributesForSupplementaryViewOfKind", ^{
+                __block UICollectionViewLayoutAttributes *attributes;
                 
-                context(@"AMPerSectionCollectionElementKindSectionFooter", ^{
+                context(@"AMPerSectionCollectionElementKindHeader", ^{
                     beforeEach(^{
-                        attributes = [layout layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];
+                        attributes = [layout layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
                     });
                     
                     it(@"should return a layout attributes", ^{
@@ -637,35 +566,81 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                     });
                     
                     it(@"should return a layout attributes with a frame", ^{
-                        [[theValue(attributes.frame) should] equal:theValue(CGRectMake(0.f, 560.f, 250.f, 70.f))];
+                        [[theValue(attributes.frame) should] equal:theValue(layout.layoutInfo.headerFrame)];
                     });
                 });
-            });
-            
-            context(@"layoutAttributesForDecorationViewOfKind", ^{
+                
+                context(@"AMPerSectionCollectionElementKindFooter", ^{
+                    beforeEach(^{
+                        attributes = [layout layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+                    });
+                    
+                    it(@"should return a layout attributes", ^{
+                        [[attributes should] beNonNil];
+                    });
+                    
+                    it(@"should return a layout attributes with a frame", ^{
+                        [[theValue(attributes.frame) should] equal:theValue(layout.layoutInfo.footerFrame)];
+                    });
+                });
+                
                 context(@"for a given section", ^{
                     __block AMPerSectionCollectionViewLayoutSection *section = nil;
                     
                     beforeEach(^{
                         section = [layout.layoutInfo sectionAtIndex:1];
+                    });
+                    
+                    context(@"AMPerSectionCollectionElementKindSectionHeader", ^{
+                        beforeEach(^{
+                            attributes = [layout layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];
+                        });
                         
-                        attributes = [layout layoutAttributesForDecorationViewOfKind:AMPerSectionCollectionElementKindSectionBackground atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];
+                        it(@"should return a layout attributes", ^{
+                            [[attributes should] beNonNil];
+                        });
+                        
+                        it(@"should return a layout attributes with a frame", ^{
+                            [[theValue(attributes.frame) should] equal:theValue(CGRectMake(0.f, 330.f, 250.f, 50.f))];
+                        });
                     });
                     
-                    it(@"should return a layout attributes", ^{
-                        [[attributes should] beNonNil];
+                    context(@"AMPerSectionCollectionElementKindSectionFooter", ^{
+                        beforeEach(^{
+                            attributes = [layout layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];
+                        });
+                        
+                        it(@"should return a layout attributes", ^{
+                            [[attributes should] beNonNil];
+                        });
+                        
+                        it(@"should return a layout attributes with a frame", ^{
+                            [[theValue(attributes.frame) should] equal:theValue(CGRectMake(0.f, 560.f, 250.f, 70.f))];
+                        });
                     });
-                    
-                    it(@"should return a layout attributes with a frame", ^{
-                        [[theValue(attributes.frame) should] equal:theValue(section.frame)];
+                });
+                
+                context(@"layoutAttributesForDecorationViewOfKind", ^{
+                    context(@"for a given section", ^{
+                        __block AMPerSectionCollectionViewLayoutSection *section = nil;
+                        
+                        beforeEach(^{
+                            section = [layout.layoutInfo sectionAtIndex:1];
+                            
+                            attributes = [layout layoutAttributesForDecorationViewOfKind:AMPerSectionCollectionElementKindSectionBackground atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];
+                        });
+                        
+                        it(@"should return a layout attributes", ^{
+                            [[attributes should] beNil];
+                        });
                     });
                 });
             });
-        });
-        
-        context(@"shouldInvalidateLayoutForBoundsChange", ^{
-            it(@"should not invalide layout for bounds change", ^{
-                [[theValue([layout shouldInvalidateLayoutForBoundsChange:CGRectMake(0.f, 0.f, 40.f, 50.f)]) should] beTrue];
+            
+            context(@"shouldInvalidateLayoutForBoundsChange", ^{
+                it(@"should not invalide layout for bounds change", ^{
+                    [[theValue([layout shouldInvalidateLayoutForBoundsChange:CGRectMake(0.f, 0.f, 40.f, 50.f)]) should] beTrue];
+                });
             });
         });
     });
