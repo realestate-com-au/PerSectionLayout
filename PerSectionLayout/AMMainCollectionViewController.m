@@ -12,6 +12,7 @@
 #import "AMADSectionController.h"
 #import "AMOtherSectionController.h"
 #import "UIDevice+Utilities.h"
+#import "AMMapExpandedCollectionViewController.h"
 
 @interface AMMainCollectionViewController ()
 @property (nonatomic, strong) AMSectionsProvider *sectionsProvider;
@@ -47,6 +48,20 @@
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withReuseIdentifier:@"header"];
     [self.sectionsProvider registerCustomElementsForCollectionView:self.collectionView];
+    
+    UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Push Layout" style:UIBarButtonItemStylePlain target:self action:@selector(pushViewControllerWithNewLayout)];
+    self.navigationItem.rightBarButtonItem = rightBarButtonItem;
+}
+
+- (void)pushViewControllerWithNewLayout
+{
+    AMPerSectionCollectionViewLayout *expandedLayout = [[AMPerSectionCollectionViewLayout alloc] init];
+    expandedLayout.expanded = YES;
+    
+    AMMapExpandedCollectionViewController *viewController = [[AMMapExpandedCollectionViewController alloc] initWithCollectionViewLayout:expandedLayout];
+    viewController.sectionsProvider = self.sectionsProvider;
+    viewController.useLayoutToLayoutNavigationTransitions = YES;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark - Utilities
@@ -55,6 +70,13 @@
 {
     return ([kind isEqualToString:AMPerSectionCollectionElementKindHeader] ||
             [kind isEqualToString:AMPerSectionCollectionElementKindFooter]);
+}
+
+#pragma mark -  AMPerSectionCollectionViewLayoutDelegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView sizeForHeaderInLayout:(AMPerSectionCollectionViewLayout *)collectionViewLayout
+{
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), 50);
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -98,119 +120,6 @@
     }
     
     return nil;
-}
-
-#pragma mark -  AMPerSectionCollectionViewLayoutDelegate
-
-- (CGSize)collectionView:(UICollectionView *)collectionView sizeForHeaderInLayout:(AMPerSectionCollectionViewLayout *)collectionViewLayout
-{
-    return CGSizeMake(CGRectGetWidth(collectionView.frame), 50);
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:indexPath.section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:sizeForItemAtIndexPath:)])
-    {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout sizeForItemAtIndexPath:indexPath];
-    }
-    
-    return collectionViewLayout.itemSize;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForHeaderInSection:(NSInteger)section
-{
-    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:sizeForHeaderInSection:)])
-    {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout sizeForHeaderInSection:section];
-    }
-    
-    return collectionViewLayout.sectionHeaderReferenceSize;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForFooterInSection:(NSInteger)section
-{
-    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:sizeForHeaderInSection:)])
-    {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout sizeForHeaderInSection:section];
-    }
-    
-    return collectionViewLayout.sectionFooterReferenceSize;
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)])
-    {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:section];
-    }
-    
-    return collectionViewLayout.sectionInset;
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
-{
-    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:minimumLineSpacingForSectionAtIndex:)])
-    {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout minimumLineSpacingForSectionAtIndex:section];
-    }
-    
-    return collectionViewLayout.minimumLineSpacing;
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
-{
-    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:minimumInteritemSpacingForSectionAtIndex:)])
-    {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout minimumInteritemSpacingForSectionAtIndex:section];
-    }
-    
-    return collectionViewLayout.minimumInteritemSpacing;
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section
-{
-    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:minimumWidthForSectionAtIndex:)])
-    {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout minimumWidthForSectionAtIndex:section];
-    }
-    
-    return collectionViewLayout.sectionMinimumWidth;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasStickyHeaderOverSection:(NSInteger)section
-{
-    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:hasStickyHeaderOverSection:)])
-    {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout hasStickyHeaderOverSection:section];
-    }
-    
-    return collectionViewLayout.hasStickyHeader;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout isSectionStickyAtIndex:(NSInteger)section
-{
-    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:isSectionStickyAtIndex:)])
-    {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout isSectionStickyAtIndex:section];
-    }
-    
-    return NO;
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
-    [self.collectionViewLayout invalidateLayout];
 }
 
 @end

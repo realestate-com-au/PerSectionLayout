@@ -5,6 +5,6 @@
 @import UIKit;
 #import "AMCollectionProviderDelegateViewController.h"
 
-@interface AMMainCollectionViewController : AMCollectionProviderDelegateViewController
+@interface AMMapExpandedCollectionViewController : AMCollectionProviderDelegateViewController
 
 @end

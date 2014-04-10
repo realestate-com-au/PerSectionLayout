@@ -40,6 +40,13 @@
     
 }
 
+#pragma mark - Utilities
+
+- (CGFloat)maxWidthForCollectionView:(UICollectionView *)collectionView
+{
+    return [[UIDevice currentDevice] isiPad] ? 768.f : CGRectGetWidth(collectionView.frame);
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -81,11 +88,6 @@
 }
 
 #pragma mark - AMPerSectionCollectionViewLayoutDelegate
-
-- (CGFloat)maxWidthForCollectionView:(UICollectionView *)collectionView
-{
-    return [[UIDevice currentDevice] isiPad] ? 768.f : CGRectGetWidth(collectionView.frame);
-}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
 {

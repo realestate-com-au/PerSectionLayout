@@ -356,6 +356,13 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 
 #pragma mark - Layout
 
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset
+{
+    return CGPointMake(0.f, -64.f);
+    
+    CGPoint targetOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset];
+    return targetOffset;
+}
 
 + (Class)invalidationContextClass
 {

@@ -3,6 +3,7 @@
 //
 
 #import "AMMapSectionController.h"
+#import "UIDevice+Utilities.h"
 
 @implementation AMMapSectionController
 
@@ -14,6 +15,18 @@
 - (void)registerCustomElementsForCollectionView:(UICollectionView *)collectionView
 {
     [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+}
+
+#pragma mark - Utilities
+
+- (CGFloat)maxCellHeight:(BOOL)expanded
+{
+    if ([[UIDevice currentDevice] isiPad])
+    {
+        return  (expanded) ? 400.f : 200.f;
+    }
+    
+    return (expanded) ? 300.f : 200.f;
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -40,7 +53,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    return CGSizeMake(CGRectGetWidth(collectionView.frame), 200.f);
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), [self maxCellHeight:collectionViewLayout.isExpanded]);
     
 }
 

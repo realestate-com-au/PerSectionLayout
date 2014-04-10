@@ -37,6 +37,8 @@
 		5F8DE2BF18F2BB280072300C /* AMListSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DE2BE18F2BB280072300C /* AMListSectionController.m */; };
 		5F93047618F61878008C1C69 /* AMPerSectionCollectionViewLayoutInvalidationContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F93047518F61878008C1C69 /* AMPerSectionCollectionViewLayoutInvalidationContext.m */; };
 		5F93047818F618C0008C1C69 /* AMPerSectionCollectionViewLayoutInvalidationContextSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F93047718F618C0008C1C69 /* AMPerSectionCollectionViewLayoutInvalidationContextSpec.m */; };
+		5F9304A618F6A74C008C1C69 /* AMMapExpandedCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9304A518F6A74C008C1C69 /* AMMapExpandedCollectionViewController.m */; };
+		5FB8E32218F77F1F00653413 /* AMCollectionProviderDelegateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8E32118F77F1F00653413 /* AMCollectionProviderDelegateViewController.m */; };
 		5FD1A21918EFE07B00B2ECE1 /* AMSectionsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A21818EFE07B00B2ECE1 /* AMSectionsProvider.m */; };
 		5FD1A21B18EFE23500B2ECE1 /* AMSectionsProviderSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A21A18EFE23500B2ECE1 /* AMSectionsProviderSpec.m */; };
 		5FD1A22218EFF54F00B2ECE1 /* AMFakeSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A22118EFF54F00B2ECE1 /* AMFakeSectionController.m */; };
@@ -104,6 +106,10 @@
 		5F93047418F61878008C1C69 /* AMPerSectionCollectionViewLayoutInvalidationContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPerSectionCollectionViewLayoutInvalidationContext.h; sourceTree = "<group>"; };
 		5F93047518F61878008C1C69 /* AMPerSectionCollectionViewLayoutInvalidationContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPerSectionCollectionViewLayoutInvalidationContext.m; sourceTree = "<group>"; };
 		5F93047718F618C0008C1C69 /* AMPerSectionCollectionViewLayoutInvalidationContextSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPerSectionCollectionViewLayoutInvalidationContextSpec.m; sourceTree = "<group>"; };
+		5F9304A418F6A74C008C1C69 /* AMMapExpandedCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMapExpandedCollectionViewController.h; sourceTree = "<group>"; };
+		5F9304A518F6A74C008C1C69 /* AMMapExpandedCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMapExpandedCollectionViewController.m; sourceTree = "<group>"; };
+		5FB8E32018F77F1F00653413 /* AMCollectionProviderDelegateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCollectionProviderDelegateViewController.h; sourceTree = "<group>"; };
+		5FB8E32118F77F1F00653413 /* AMCollectionProviderDelegateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCollectionProviderDelegateViewController.m; sourceTree = "<group>"; };
 		5FD1A20018EFD44600B2ECE1 /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
 		5FD1A21218EFD46700B2ECE1 /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
 		5FD1A21318EFD6EA00B2ECE1 /* Test.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Test.xcconfig; sourceTree = "<group>"; };
@@ -233,8 +239,7 @@
 				5F709C8818EFAD0B00799CAA /* AMAppDelegate.h */,
 				5F709C8918EFAD0B00799CAA /* AMAppDelegate.m */,
 				5F709C8B18EFAD0B00799CAA /* Main.storyboard */,
-				5F709C9118EFAD0B00799CAA /* AMMainCollectionViewController.h */,
-				5F709C9218EFAD0B00799CAA /* AMMainCollectionViewController.m */,
+				5FB8E32418F781D600653413 /* Controllers */,
 				5FD1A21418EFDBC600B2ECE1 /* Sections */,
 				5F0BD44218F019B300771ADF /* Custom Layout */,
 				5F14D88E18F3E4D800839F1E /* Utilities */,
@@ -273,6 +278,19 @@
 				5F709CA418EFAD0B00799CAA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5FB8E32418F781D600653413 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5FB8E32018F77F1F00653413 /* AMCollectionProviderDelegateViewController.h */,
+				5FB8E32118F77F1F00653413 /* AMCollectionProviderDelegateViewController.m */,
+				5F709C9118EFAD0B00799CAA /* AMMainCollectionViewController.h */,
+				5F709C9218EFAD0B00799CAA /* AMMainCollectionViewController.m */,
+				5F9304A418F6A74C008C1C69 /* AMMapExpandedCollectionViewController.h */,
+				5F9304A518F6A74C008C1C69 /* AMMapExpandedCollectionViewController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		5FD1A21418EFDBC600B2ECE1 /* Sections */ = {
@@ -460,12 +478,14 @@
 				5F0BD45C18F0DDFC00771ADF /* AMPerSectionCollectionViewLayoutSection.m in Sources */,
 				5F14D89218F3E55300839F1E /* UIDevice+Utilities.m in Sources */,
 				5F0BD43F18F0189900771ADF /* AMPerSectionCollectionViewLayout.m in Sources */,
+				5FB8E32218F77F1F00653413 /* AMCollectionProviderDelegateViewController.m in Sources */,
 				5F709C9318EFAD0B00799CAA /* AMMainCollectionViewController.m in Sources */,
 				5F0BD44618F01A0400771ADF /* AMPerSectionCollectionViewLayoutInfo.m in Sources */,
 				5F709C8618EFAD0B00799CAA /* main.m in Sources */,
 				5F0BD46118F0F56B00771ADF /* AMPerSectionCollectionViewLayoutItem.m in Sources */,
 				5FE11B8D18F37DEC00525441 /* AMGraphSectionController.m in Sources */,
 				5F93047618F61878008C1C69 /* AMPerSectionCollectionViewLayoutInvalidationContext.m in Sources */,
+				5F9304A618F6A74C008C1C69 /* AMMapExpandedCollectionViewController.m in Sources */,
 				5F8DE2BF18F2BB280072300C /* AMListSectionController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
