@@ -84,7 +84,7 @@ describe(@"AMPerSectionCollectionViewInfoCalculation", ^{
         });
 
         it(@"should compute the correct content size", ^{
-            [[theValue(layoutInfo.contentSize) should] equal:theValue(CGSizeMake(918, 1000))];
+            [[theValue(layoutInfo.contentSize) should] equal:theValue(CGSizeMake(918, 1010))];
         });
     });
 
