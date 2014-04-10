@@ -62,7 +62,7 @@
 {
     for (AMPerSectionCollectionViewLayoutSection *section in self.sections)
     {
-        if (CGRectContainsPoint(section.frame, point))
+        if (!CGPointEqualToPoint(section.frame.origin, CGPointZero) && CGRectContainsPoint(section.frame, point))
         {
             return section;
         }

@@ -81,7 +81,7 @@ describe(@"AMPerSectionCollectionViewLayoutInfo", ^{
             layoutInfo.valid = YES;
 
             section = [layoutInfo addSection];
-            section.frame = CGRectMake(0, 0, 100, 100);
+            section.frame = CGRectMake(0, 10, 100, 100);
 
             section2 = [layoutInfo addSection];
             section2.frame = CGRectMake(0, 100, 100, 100);
