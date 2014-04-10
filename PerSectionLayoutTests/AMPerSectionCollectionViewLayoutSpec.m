@@ -7,6 +7,7 @@
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 #import "AMFakeCollectionViewDelegateDataSource.h"
 #import "math.h"
+#import "AMPerSectionCollectionViewLayoutInvalidationContext.h"
 
 @interface AMPerSectionCollectionViewLayout ()
 
@@ -78,6 +79,53 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         
         it(@"should have by default non stick header", ^{
             [[theValue(layout.hasStickyHeader) should] equal:theValue(NO)];
+        });
+    });
+    
+    context(@"layout invalidation", ^{
+        context(@"invalidationContextClass", ^{
+            it(@"should be a custom class", ^{
+                [[[AMPerSectionCollectionViewLayout invalidationContextClass] should] equal:[AMPerSectionCollectionViewLayoutInvalidationContext class]];
+            });
+        });
+        
+        context(@"invalidationContextForBoundsChange", ^{
+            it(@"should set invalidateHeader to YES", ^{
+                AMPerSectionCollectionViewLayoutInvalidationContext *context = (AMPerSectionCollectionViewLayoutInvalidationContext *)[layout invalidationContextForBoundsChange:CGRectMake(0.f, 0.f, 200.f, 50.f)];
+                [[theValue(context.invalidateHeader) should] beTrue];
+            });
+        });
+        
+        context(@"invalidateLayoutWithContext", ^{
+            
+            __block AMPerSectionCollectionViewLayoutInvalidationContext *invalidationContext = nil;
+            
+            beforeEach(^{
+                invalidationContext = [[AMPerSectionCollectionViewLayoutInvalidationContext alloc] init];
+                layout.layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
+            });
+            
+            context(@"invalidateHeader is Yes", ^{
+                beforeEach(^{
+                    invalidationContext.invalidateHeader = YES;
+                    [layout invalidateLayoutWithContext:invalidationContext];
+                });
+                
+                it(@"should keep layout info", ^{
+                    [[layout.layoutInfo should] beNonNil];
+                });
+            });
+            
+            context(@"invalidateHeader is No", ^{
+                beforeEach(^{
+                    invalidationContext.invalidateHeader = NO;
+                    [layout invalidateLayoutWithContext:invalidationContext];
+                });
+                
+                it(@"should nil layout info", ^{
+                    [[layout.layoutInfo should] beNil];
+                });
+            });
         });
     });
     
@@ -224,8 +272,14 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             [layout prepareLayout];
         });
         
-        it(@"should fetch items info", ^{
+        it(@"should fetch items info only if has no layout info", ^{
+            layout.layoutInfo = nil;
             [[layout should] receive:@selector(fetchItemsInfo:)];
+            [layout prepareLayout];
+        });
+        
+        it(@"should not fetch items info if has a layout info", ^{
+            [[layout shouldNot] receive:@selector(fetchItemsInfo:)];
             [layout prepareLayout];
         });
         
@@ -505,17 +559,6 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             it(@"should compute the total frame", ^{
                 [[theValue(layoutSection.frame) should] equal:theValue(CGRectMake(0.f, 200.f, 100.f, 100.f))];
             });
-        });
-    });
-    
-    context(@"invalidateLayout", ^{
-        beforeEach(^{
-            [layout prepareLayout];
-        });
-        
-        it(@"should invalidate it's layout info", ^{
-            [[layout.layoutInfo should] receive:@selector(invalidate)];
-            [layout invalidateLayout];
         });
     });
     

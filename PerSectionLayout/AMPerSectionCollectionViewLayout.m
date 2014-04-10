@@ -5,6 +5,7 @@
 #import "AMPerSectionCollectionViewLayout.h"
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 #import "math.h"
+#import "AMPerSectionCollectionViewLayoutInvalidationContext.h"
 
 NSString * const AMPerSectionCollectionElementKindHeader = @"AMPerSectionCollectionElementKindHeader";
 NSString * const AMPerSectionCollectionElementKindFooter = @"AMPerSectionCollectionElementKindFooter";
@@ -324,23 +325,44 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
 
 #pragma mark - Layout
 
+
++ (Class)invalidationContextClass
+{
+    return [AMPerSectionCollectionViewLayoutInvalidationContext class];
+}
+
+- (UICollectionViewLayoutInvalidationContext *)invalidationContextForBoundsChange:(CGRect)newBounds
+{
+    AMPerSectionCollectionViewLayoutInvalidationContext *invalidationContext = (AMPerSectionCollectionViewLayoutInvalidationContext *)[super invalidationContextForBoundsChange:newBounds];
+    invalidationContext.invalidateHeader = YES;
+    
+    return invalidationContext;
+}
+
+- (void)invalidateLayoutWithContext:(UICollectionViewLayoutInvalidationContext *)context
+{
+    AMPerSectionCollectionViewLayoutInvalidationContext *invalidationContext = (AMPerSectionCollectionViewLayoutInvalidationContext *)context;
+    if (!invalidationContext.invalidateHeader)
+    {
+        self.layoutInfo = nil;
+    }
+    
+    [super invalidateLayoutWithContext:context];
+}
+
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
 {
     return YES;
 }
 
-- (void)invalidateLayout
-{
-	[super invalidateLayout];
-    
-    [self.layoutInfo invalidate];
-}
-
 - (void)prepareLayout
 {
-	self.layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
-    self.layoutInfo.collectionViewSize = self.collectionView.bounds.size;
-    [self fetchItemsInfo:self.layoutInfo];
+    if (!self.layoutInfo)
+    {
+        self.layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
+        self.layoutInfo.collectionViewSize = self.collectionView.bounds.size;
+        [self fetchItemsInfo:self.layoutInfo];
+    }
 }
 
 - (void)fetchItemsInfo:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo
