@@ -640,8 +640,6 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             it(@"should not invalide layout for bounds change", ^{
                 [[theValue([layout shouldInvalidateLayoutForBoundsChange:CGRectMake(0.f, 0.f, 40.f, 50.f)]) should] beTrue];
             });
-            
-            // FIXME: what if bounds width / height differ ?
         });
     });
 });
