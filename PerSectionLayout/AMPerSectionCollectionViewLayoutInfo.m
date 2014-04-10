@@ -129,6 +129,7 @@
     CGRect globalHeaderFrame = self.headerFrame;
     if (CGRectGetWidth(globalHeaderFrame) > 0)
     {
+        globalHeaderFrame.origin = CGPointZero;
         globalHeaderFrame.size.width = self.collectionViewSize.width;
         self.headerFrame = globalHeaderFrame;
     }

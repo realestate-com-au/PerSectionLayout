@@ -88,7 +88,7 @@
     NSInteger rowIndex = 0;
     NSInteger itemIndex = 0;
     CGFloat dimensionLeft = 0;
-    AMPerSectionCollectionViewLayoutRow *row = nil;
+    AMPerSectionCollectionViewLayoutRow *row;
     
     //	header origin is 0, 0. nothing to do
     
