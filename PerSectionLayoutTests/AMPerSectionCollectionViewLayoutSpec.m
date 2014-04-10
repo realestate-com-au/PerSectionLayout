@@ -269,10 +269,8 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
     });
     
-    xit(@"prepareLayout", ^{
-
-        //FIXME: This test should be reworked after the invalidaiton work is done
-
+    context(@"prepareLayout", ^{
+        
         __block UICollectionView *collectionView = nil;
         
         beforeEach(^{
@@ -283,11 +281,25 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             [layout prepareLayout];
         });
         
-        it(@"should set the layoutInfo property if it doesn't have one", ^{
+        it(@"should fetch items info only if has no layout info", ^{
+            layout.layoutInfo = nil;
+            [[layout should] receive:@selector(getSizingInfos:)];
+            [layout prepareLayout];
         });
-
-        it(@"should be given the collection view size", ^{
-            [[theValue(layout.layoutInfo.collectionViewSize) should] equal:theValue(collectionView.bounds.size)];
+        
+        it(@"should not fetch items info if has a layout info", ^{
+            [[layout shouldNot] receive:@selector(getSizingInfos:)];
+            [layout prepareLayout];
+        });
+        
+        context(@"layout info", ^{
+            it(@"should have one", ^{
+                [[layout.layoutInfo should] beNonNil];
+            });
+            
+            it(@"should be given the collection view size", ^{
+                [[theValue(layout.layoutInfo.collectionViewSize) should] equal:theValue(collectionView.bounds.size)];
+            });
         });
     });
     
