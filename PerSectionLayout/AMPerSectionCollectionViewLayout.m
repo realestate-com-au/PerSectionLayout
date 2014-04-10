@@ -14,6 +14,7 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 NSString * const AMPerSectionCollectionElementKindSectionBackground = @"AMPerSectionCollectionElementKindSectionBackground";
 
 static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
+static const NSInteger AMPerSectionCollectionElementStickySectionIndex = -2048;
 static const NSInteger AMPerSectionCollectionElementAlwaysShowBelowIndex = -1024;
 
 @interface AMPerSectionCollectionViewLayout ()
@@ -115,8 +116,8 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowBelowIndex = -1024
             {
 				//	figure out row's frame in global layout measurements
 				CGRect normalizedRowFrame = row.frame;
-				normalizedRowFrame.origin.x += normalizedSectionFrame.origin.x;
-				normalizedRowFrame.origin.y += normalizedSectionFrame.origin.y;
+				normalizedRowFrame.origin.x += CGRectGetMinX(normalizedSectionFrame);
+				normalizedRowFrame.origin.y += CGRectGetMinY(normalizedSectionFrame);
 				
 				if (CGRectIntersectsRect(normalizedRowFrame, rect))
                 {
@@ -131,6 +132,10 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowBelowIndex = -1024
 															CGRectGetMinY(normalizedRowFrame) + CGRectGetMinY(itemFrame),
 															CGRectGetWidth(itemFrame),
 															CGRectGetHeight(itemFrame));
+                        if (section.isSticky)
+                        {
+                            layoutAttributes.zIndex = AMPerSectionCollectionElementStickySectionIndex;
+                        }
 						[layoutAttributesArray addObject:layoutAttributes];
 					}
 				}
@@ -172,11 +177,18 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowBelowIndex = -1024
 	
 	UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
 	
+    CGRect sectionFrame = [section stickyFrameForYOffset:[self adjustedCollectionViewContentOffset]];
+    
 	// calculate item rect
 	CGRect normalizedRowFrame = row.frame;
-	normalizedRowFrame.origin.x += CGRectGetMinX(section.frame);
-	normalizedRowFrame.origin.y += CGRectGetMinY(section.frame);
+	normalizedRowFrame.origin.x += CGRectGetMinX(sectionFrame);
+	normalizedRowFrame.origin.y += CGRectGetMinY(sectionFrame);
 	layoutAttributes.frame = CGRectMake(CGRectGetMinX(normalizedRowFrame) + CGRectGetMinX(itemFrame), CGRectGetMinY(normalizedRowFrame) + CGRectGetMinY(itemFrame), CGRectGetWidth(itemFrame), CGRectGetHeight(itemFrame));
+    
+    if (section.isSticky)
+    {
+        layoutAttributes.zIndex = AMPerSectionCollectionElementStickySectionIndex;
+    }
 	
 	return layoutAttributes;
 }
@@ -187,25 +199,32 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowBelowIndex = -1024
 	
 	if ([kind isEqualToString:AMPerSectionCollectionElementKindHeader])
     {
-		layoutAttributes.frame = self.layoutInfo.headerFrame;
+		layoutAttributes.frame = [self.layoutInfo stickyHeaderFrameForYOffset:[self adjustedCollectionViewContentOffset]];;
         layoutAttributes.zIndex = AMPerSectionCollectionElementAlwaysShowOnTopIndex;
 	}
     else if ([kind isEqualToString:AMPerSectionCollectionElementKindFooter])
     {
 		layoutAttributes.frame = self.layoutInfo.footerFrame;
-        
-	}
+    }
     else
     {
 		AMPerSectionCollectionViewLayoutSection *section = [self.layoutInfo sectionAtIndex:indexPath.section];
+        CGRect normalizedSectionFrame = [section stickyFrameForYOffset:[self adjustedCollectionViewContentOffset]];
+        
 		if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionHeader])
         {
-			layoutAttributes.frame = section.headerFrame;
+            CGRect normalizedSectionHeaderFrame = section.headerFrame;
+            normalizedSectionHeaderFrame.origin.x += CGRectGetMinX(normalizedSectionFrame);
+            normalizedSectionHeaderFrame.origin.y += CGRectGetMinY(normalizedSectionFrame);
+			layoutAttributes.frame = normalizedSectionHeaderFrame;
             
 		}
         else if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionFooter])
         {
-			layoutAttributes.frame = section.footerFrame;
+            CGRect normalizedSectionHeaderFrame = section.footerFrame;
+            normalizedSectionHeaderFrame.origin.x += CGRectGetMinX(normalizedSectionFrame);
+            normalizedSectionHeaderFrame.origin.y += CGRectGetMinY(normalizedSectionFrame);
+			layoutAttributes.frame = normalizedSectionHeaderFrame;
 		}
 	}
     

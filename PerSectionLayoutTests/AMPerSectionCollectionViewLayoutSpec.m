@@ -623,7 +623,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                     });
                     
                     it(@"should return a layout attributes with a frame", ^{
-                        [[theValue(attributes.frame) should] equal:theValue(section.headerFrame)];
+                        [[theValue(attributes.frame) should] equal:theValue(CGRectMake(0.f, 330.f, 250.f, 50.f))];
                     });
                 });
                 
@@ -637,7 +637,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                     });
                     
                     it(@"should return a layout attributes with a frame", ^{
-                        [[theValue(attributes.frame) should] equal:theValue(section.footerFrame)];
+                        [[theValue(attributes.frame) should] equal:theValue(CGRectMake(0.f, 560.f, 250.f, 70.f))];
                     });
                 });
             });
