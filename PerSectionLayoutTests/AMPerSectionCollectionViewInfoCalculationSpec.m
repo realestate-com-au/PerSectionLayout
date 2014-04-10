@@ -13,7 +13,82 @@ SPEC_BEGIN(AMPerSectionCollectionViewInfoCalculationSpec)
 describe(@"AMPerSectionCollectionViewInfoCalculation", ^{
     __block AMPerSectionCollectionViewLayoutInfo *layoutInfo;
 
-    context(@"updateItemsLayout with one section", ^{
+    xit(@"a standard layout", ^{
+        beforeEach(^{
+            layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
+            layoutInfo.collectionViewSize = CGSizeMake(300, 300);
+
+            //AMPerSectionCollectionViewLayoutSection *section = [layoutInfo addSection];
+            //AMPerSectionCollectionViewLayoutSection *section2 = [layoutInfo addSection];
+        });
+
+        //it should have a content size that accounts for the sections
+
+        //it should layout the sections accordingly
+
+        context(@"without section widths", ^{
+            //it should set the section widths to the collectionViewSize.width
+        });
+
+        context(@"with a header frame", ^{
+            beforeEach(^{
+            });
+
+            //it should set the header frame width to the width of the collectionViewSize
+        });
+
+        context(@"with a footer frame", ^{
+            beforeEach(^{
+            });
+            //it should
+        });
+    });
+
+    context(@"a complex layout with sizes that should stack", ^{
+
+        beforeEach(^{
+            layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
+            layoutInfo.collectionViewSize = CGSizeMake(1024, 768);
+
+            AMPerSectionCollectionViewLayoutSection *sectionOne = [layoutInfo addSection];
+            sectionOne.width = 400;
+            AMPerSectionCollectionViewLayoutItem *sectionOneItem = [sectionOne addItem];
+            sectionOneItem.frame = (CGRect){.size = CGSizeMake(400, 1000)};
+
+            AMPerSectionCollectionViewLayoutSection *sectionTwo = [layoutInfo addSection];
+            sectionTwo.width = 259;
+            AMPerSectionCollectionViewLayoutItem *sectionTwoItem = [sectionTwo addItem];
+            sectionTwoItem.frame = (CGRect){.size = CGSizeMake(259, 200)};
+
+            AMPerSectionCollectionViewLayoutSection *sectionThree = [layoutInfo addSection];
+            sectionThree.width = 259;
+            AMPerSectionCollectionViewLayoutItem *sectionThreeItem = [sectionThree addItem];
+            sectionThreeItem.frame = (CGRect){.size = CGSizeMake(259, 300)};
+
+            AMPerSectionCollectionViewLayoutSection *sectionFour = [layoutInfo addSection];
+            sectionFour.width = 259;
+            AMPerSectionCollectionViewLayoutItem *sectionFourItem = [sectionFour addItem];
+            sectionFourItem.frame = (CGRect){.size = CGSizeMake(259, 300)};
+
+            AMPerSectionCollectionViewLayoutSection *sectionFive = [layoutInfo addSection];
+            sectionFive.width = 259;
+            AMPerSectionCollectionViewLayoutItem *sectionFiveItem = [sectionFive addItem];
+            sectionFiveItem.frame = (CGRect){.size = CGSizeMake(259, 300)};
+
+            for (AMPerSectionCollectionViewLayoutSection *section in [layoutInfo layoutInfoSections])
+            {
+                section.verticalInterstice = 10;
+            }
+
+            [layoutInfo updateItemsLayout];
+        });
+
+        it(@"should compute the correct content size", ^{
+            [[theValue(layoutInfo.contentSize) should] equal:theValue(CGSizeMake(918, 1000))];
+        });
+    });
+
+    context(@"layout with one section", ^{
 
         beforeEach(^{
             layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
@@ -37,7 +112,7 @@ describe(@"AMPerSectionCollectionViewInfoCalculation", ^{
             [layoutInfo updateItemsLayout];
         });
 
-        it(@"should compute the collection view content size", ^{
+        it(@"should compute the correct content size", ^{
             [[theValue(layoutInfo.contentSize) should] equal:theValue(CGSizeMake(250, 460))];
         });
 
