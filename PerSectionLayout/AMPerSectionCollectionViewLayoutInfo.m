@@ -108,7 +108,7 @@
         NSInteger lastSectionWithStickyHeader = self.lastSectionWithStickyHeader;
         if ([self firstSectionIndexBelowHeaderForYOffset:yOffset] <= lastSectionWithStickyHeader)
         {
-            normalizedHeaderFrame.origin.y = yOffset;
+            normalizedHeaderFrame.origin.y = yOffset + CGRectGetMinY(normalizedHeaderFrame);
         }
         else
         {
