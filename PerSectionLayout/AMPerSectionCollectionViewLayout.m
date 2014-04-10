@@ -415,7 +415,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
     CGRect globalHeaderFrame =  layoutInfo.headerFrame;
     if (CGRectGetWidth(globalHeaderFrame) > 0)
     {
-        globalHeaderFrame.size.width = CGRectGetWidth(self.collectionView.bounds);
+        globalHeaderFrame.size.width = self.layoutInfo.collectionViewSize.width;
         layoutInfo.headerFrame = globalHeaderFrame;
     }
     
@@ -427,8 +427,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
     {
         CGFloat sectionWidth = section.width;
         //FIXME: JC - I don't like this NAN
-        //FIXME: deep diving out to the collection view? What about having part of layoutInfo?
-        section.width = (isnan(sectionWidth)) ? CGRectGetWidth(self.collectionView.bounds) : sectionWidth; // FIXME adjust me here
+        section.width = (isnan(sectionWidth)) ? self.layoutInfo.collectionViewSize.width : sectionWidth;
         //FIXME: Unused layoutInfo in computeLayout
 		[section computeLayout:layoutInfo];
         
@@ -460,8 +459,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
         contentSize.width = MAX(CGRectGetMaxX(sectionFrame), contentSize.width);
         contentSize.height = MAX(CGRectGetMaxY(sectionFrame), contentSize.height);
 
-        //FIXME: deep diving out to the collection view? What about having part of layoutInfo?
-        if (CGRectGetMaxX(section.frame) >= CGRectGetWidth(self.collectionView.bounds))
+        if (CGRectGetMaxX(section.frame) >= self.layoutInfo.collectionViewSize.width)
         {
             // go to new line
             nextOrigin.y = CGRectGetMaxY(section.frame);
@@ -483,7 +481,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
     {
         globalFooterFrame.origin.x = 0;
         globalFooterFrame.origin.y = contentSize.height;
-        globalFooterFrame.size.width = CGRectGetWidth(self.collectionView.bounds);
+        globalFooterFrame.size.width = self.layoutInfo.collectionViewSize.width;
         layoutInfo.footerFrame = globalFooterFrame;
     }
     
