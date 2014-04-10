@@ -5,7 +5,6 @@
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 
 @interface AMPerSectionCollectionViewLayoutInfo ()
-@property (nonatomic, assign, getter = isInvalid) BOOL invalid;
 @property (nonatomic, strong) NSMutableArray *sections;
 @end
 
@@ -17,6 +16,7 @@
     if (self)
     {
         _sections = [NSMutableArray array];
+        [self invalidate];
     }
     
     return self;
@@ -24,7 +24,7 @@
 
 - (void)invalidate
 {
-    self.invalid = YES;
+    self.valid = NO;
 }
 
 #pragma mark - Sections
@@ -60,9 +60,9 @@
 
 - (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point
 {
-    for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfoSections)
+    for (AMPerSectionCollectionViewLayoutSection *section in self.sections)
     {
-        if (!CGPointEqualToPoint(section.frame.origin, CGPointZero) && CGRectContainsPoint(section.frame, point))
+        if (CGRectContainsPoint(section.frame, point))
         {
             return section;
         }

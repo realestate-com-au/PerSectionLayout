@@ -22,6 +22,7 @@
 @property (nonatomic) CGFloat minimumInteritemSpacing;
 @property (nonatomic) CGFloat sectionMinimumWidth;
 @property (nonatomic, assign, getter = hasStickyHeader) BOOL stickyHeader;
+//TODO: JC - consider making this an indexSet, or NSRange
 @property (nonatomic, assign) NSInteger lastSectionWithStickyHeader;
 
 @end

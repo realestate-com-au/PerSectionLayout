@@ -16,6 +16,8 @@
 - (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point;
 - (CGRect)stickyHeaderFrameForYOffset:(CGFloat)yOffset;
 
+@property (nonatomic, assign, getter = isValid) BOOL valid;
+
 @property (nonatomic, assign) CGSize contentSize;
 @property (nonatomic, assign) CGSize collectionViewSize;
 @property (nonatomic, assign) CGRect headerFrame;
