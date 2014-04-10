@@ -19,13 +19,13 @@
 - (CGFloat)minimumLineSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)miniumWidthForSectionAtIndex:(NSInteger)section;
-- (void)fetchItemsInfo;
-- (void)getSizingInfos;
-- (void)updateItemsLayout;
+- (void)fetchItemsInfo:(id)arg;
+- (void)getSizingInfos:(id)arg;
+- (void)updateItemsLayout:(id)arg;
 - (AMPerSectionCollectionViewLayoutSection *)sectionAtIndex:(NSInteger)section;
 - (AMPerSectionCollectionViewLayoutItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (BOOL)layoutInfoFrame:(CGRect)layoutInfoFrame requiresLayoutAttritbutesForRect:(CGRect)rect;
-- (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point;
+- (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point layoutInfo:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo;
 - (BOOL)hasStickyHeaderOverSection:(NSInteger)section;
 - (CGFloat)adjustedCollectionViewContentOffset;
 - (NSInteger)firstSectionIndexBelowHeader;
@@ -229,7 +229,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
         
         it(@"should fetch items info", ^{
-            [[layout should] receive:@selector(fetchItemsInfo)];
+            [[layout should] receive:@selector(fetchItemsInfo:)];
             [layout prepareLayout];
         });
         
@@ -265,13 +265,13 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
         
         it(@"should return a section if point is contained insection section frame", ^{
-            AMPerSectionCollectionViewLayoutSection *section = [layout firstSectionAtPoint:CGPointMake(40.f, 450.f)];
+            AMPerSectionCollectionViewLayoutSection *section = [layout firstSectionAtPoint:CGPointMake(40.f, 450.f) layoutInfo:layout.layoutInfo];
             [[section should] beNonNil];
             [[section should] equal:sectionContainedInPoint];
         });
         
         it(@"should not return a section if point is contained insection section frame", ^{
-            AMPerSectionCollectionViewLayoutSection *section = [layout firstSectionAtPoint:CGPointMake(1040.f, 450.f)];
+            AMPerSectionCollectionViewLayoutSection *section = [layout firstSectionAtPoint:CGPointMake(1040.f, 450.f) layoutInfo:layout.layoutInfo];
             [[section should] beNil];
         });
     });
@@ -342,13 +342,13 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
     
     context(@"fetchItemsInfo", ^{
         it(@"should get the sizing infos", ^{
-            [[layout should] receive:@selector(getSizingInfos)];
-            [layout fetchItemsInfo];
+            [[layout should] receive:@selector(getSizingInfos:)];
+            [layout fetchItemsInfo:nil];
         });
         
         it(@"should update the items layout", ^{
-            [[layout should] receive:@selector(updateItemsLayout)];
-            [layout fetchItemsInfo];
+            [[layout should] receive:@selector(updateItemsLayout:)];
+            [layout fetchItemsInfo:nil];
         });
     });
     
