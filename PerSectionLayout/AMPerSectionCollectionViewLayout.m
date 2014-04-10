@@ -91,7 +91,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
 
 - (NSInteger)firstSectionIndexBelowHeader
 {
-    AMPerSectionCollectionViewLayoutSection *firstSection = [self firstSectionAtPoint:CGPointMake(0.f, [self adjustedCollectionViewContentOffset] + CGRectGetMaxY(self.layoutInfo.headerFrame))];
+    AMPerSectionCollectionViewLayoutSection *firstSection = [self firstSectionAtPoint:CGPointMake(0.f, [self adjustedCollectionViewContentOffset] + CGRectGetMaxY(self.layoutInfo.headerFrame)) layoutInfo:self.layoutInfo];
     
     NSInteger firstSectionIndex = (NSInteger)[self.layoutInfo.layoutInfoSections indexOfObject:firstSection];
     if (firstSectionIndex == NSNotFound)
@@ -394,30 +394,30 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
 {
 	self.layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
     self.layoutInfo.collectionViewSize = self.collectionView.bounds.size;
-    [self fetchItemsInfo];
+    [self fetchItemsInfo:self.layoutInfo];
 }
 
-- (void)fetchItemsInfo
+- (void)fetchItemsInfo:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo
 {
-	[self getSizingInfos];
-	[self updateItemsLayout];
+	[self getSizingInfos:layoutInfo];
+	[self updateItemsLayout:layoutInfo];
 }
 
-- (void)getSizingInfos
+- (void)getSizingInfos:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo
 {
-    self.layoutInfo.headerFrame = (CGRect){.size = [self sizeForHeader]};
-	self.layoutInfo.footerFrame = (CGRect){.size = [self sizeForFooter]};
+    layoutInfo.headerFrame = (CGRect){.size = [self sizeForHeader]};
+	layoutInfo.footerFrame = (CGRect){.size = [self sizeForFooter]};
     
     NSInteger numberOfSections =(NSInteger) [self.collectionView numberOfSections];
 	for (NSInteger section = 0; section < numberOfSections; section++)
     {
 		if ([self hasStickyHeaderOverSection:section])
         {
-            self.layoutInfo.stickyHeader = YES;
-            self.layoutInfo.lastSectionWithStickyHeader = section;
+            layoutInfo.stickyHeader = YES;
+            layoutInfo.lastSectionWithStickyHeader = section;
         }
         
-        AMPerSectionCollectionViewLayoutSection *layoutSection = [self.layoutInfo addSection];
+        AMPerSectionCollectionViewLayoutSection *layoutSection = [layoutInfo addSection];
 		
 		layoutSection.headerFrame = (CGRect){.size = [self sizeForHeaderInSection:section]};
         layoutSection.footerFrame = (CGRect){.size = [self sizeForFooterInSection:section]};
@@ -439,27 +439,30 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
 	}
 }
 
-- (void)updateItemsLayout
+- (void)updateItemsLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo
 {
     CGSize contentSize = CGSizeZero;
     
     //	global header
-    CGRect globalHeaderFrame =  self.layoutInfo.headerFrame;
+    CGRect globalHeaderFrame =  layoutInfo.headerFrame;
     if (CGRectGetWidth(globalHeaderFrame) > 0)
     {
         globalHeaderFrame.size.width = CGRectGetWidth(self.collectionView.bounds);
-        self.layoutInfo.headerFrame = globalHeaderFrame;
+        layoutInfo.headerFrame = globalHeaderFrame;
     }
     
-    contentSize.width = MAX(contentSize.width, CGRectGetWidth(self.layoutInfo.headerFrame));
-    contentSize.height += CGRectGetHeight(self.layoutInfo.headerFrame);
+    contentSize.width = MAX(contentSize.width, CGRectGetWidth(layoutInfo.headerFrame));
+    contentSize.height += CGRectGetHeight(layoutInfo.headerFrame);
     
     //	first pass, compute all of the frames, ignoring position
-	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
+	for (AMPerSectionCollectionViewLayoutSection *section in layoutInfo.layoutInfoSections)
     {
         CGFloat sectionWidth = section.width;
+        //FIXME: JC - I don't like this NAN
+        //FIXME: deep diving out to the collection view? What about having part of layoutInfo?
         section.width = (isnan(sectionWidth)) ? CGRectGetWidth(self.collectionView.bounds) : sectionWidth; // FIXME adjust me here
-		[section computeLayout:self.layoutInfo];
+        //FIXME: Unused layoutInfo in computeLayout
+		[section computeLayout:layoutInfo];
         
         CGRect sectionFrame = section.frame;
         
@@ -479,7 +482,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
 	}
     
     CGPoint nextOrigin = CGPointMake(0.f, contentSize.height);
-    for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
+    for (AMPerSectionCollectionViewLayoutSection *section in layoutInfo.layoutInfoSections)
     {
         CGRect sectionFrame = section.frame;
         
@@ -488,14 +491,15 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
         
         contentSize.width = MAX(CGRectGetMaxX(sectionFrame), contentSize.width);
         contentSize.height = MAX(CGRectGetMaxY(sectionFrame), contentSize.height);
-        
+
+        //FIXME: deep diving out to the collection view? What about having part of layoutInfo?
         if (CGRectGetMaxX(section.frame) >= CGRectGetWidth(self.collectionView.bounds))
         {
             // go to new line
             nextOrigin.y = CGRectGetMaxY(section.frame);
             
             // reset x
-            AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
+            AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y) layoutInfo:layoutInfo];
             nextOrigin.x = CGRectGetMaxX(sectionInMyWay.frame);
         }
         else
@@ -506,22 +510,22 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
     }
     
     //	global footer
-    CGRect globalFooterFrame =  self.layoutInfo.footerFrame;
+    CGRect globalFooterFrame =  layoutInfo.footerFrame;
     if (CGRectGetWidth(globalFooterFrame) > 0)
     {
         globalFooterFrame.origin.x = 0;
         globalFooterFrame.origin.y = contentSize.height;
         globalFooterFrame.size.width = CGRectGetWidth(self.collectionView.bounds);
-        self.layoutInfo.footerFrame = globalFooterFrame;
+        layoutInfo.footerFrame = globalFooterFrame;
     }
     
-	contentSize.height += CGRectGetHeight(self.layoutInfo.footerFrame);
-    self.layoutInfo.contentSize = contentSize;
+	contentSize.height += CGRectGetHeight(layoutInfo.footerFrame);
+    layoutInfo.contentSize = contentSize;
 }
 
-- (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point
+- (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point layoutInfo:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo
 {
-    for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
+    for (AMPerSectionCollectionViewLayoutSection *section in layoutInfo.layoutInfoSections)
     {
         if (!CGPointEqualToPoint(section.frame.origin, CGPointZero) && CGRectContainsPoint(section.frame, point))
         {
