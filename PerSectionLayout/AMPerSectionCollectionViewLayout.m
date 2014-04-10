@@ -415,7 +415,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
     CGRect globalHeaderFrame =  layoutInfo.headerFrame;
     if (CGRectGetWidth(globalHeaderFrame) > 0)
     {
-        globalHeaderFrame.size.width = self.layoutInfo.collectionViewSize.width;
+        globalHeaderFrame.size.width = layoutInfo.collectionViewSize.width;
         layoutInfo.headerFrame = globalHeaderFrame;
     }
     
@@ -427,7 +427,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
     {
         CGFloat sectionWidth = section.width;
         //FIXME: JC - I don't like this NAN
-        section.width = (isnan(sectionWidth)) ? self.layoutInfo.collectionViewSize.width : sectionWidth;
+        section.width = (isnan(sectionWidth)) ? layoutInfo.collectionViewSize.width : sectionWidth;
         //FIXME: Unused layoutInfo in computeLayout
 		[section computeLayout:layoutInfo];
         
@@ -459,13 +459,13 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
         contentSize.width = MAX(CGRectGetMaxX(sectionFrame), contentSize.width);
         contentSize.height = MAX(CGRectGetMaxY(sectionFrame), contentSize.height);
 
-        if (CGRectGetMaxX(section.frame) >= self.layoutInfo.collectionViewSize.width)
+        if (CGRectGetMaxX(section.frame) >= layoutInfo.collectionViewSize.width)
         {
             // go to new line
             nextOrigin.y = CGRectGetMaxY(section.frame);
             
             // reset x
-            AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self.layoutInfo firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
+            AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [layoutInfo firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
             nextOrigin.x = CGRectGetMaxX(sectionInMyWay.frame);
         }
         else
@@ -481,7 +481,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
     {
         globalFooterFrame.origin.x = 0;
         globalFooterFrame.origin.y = contentSize.height;
-        globalFooterFrame.size.width = self.layoutInfo.collectionViewSize.width;
+        globalFooterFrame.size.width = layoutInfo.collectionViewSize.width;
         layoutInfo.footerFrame = globalFooterFrame;
     }
     
