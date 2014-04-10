@@ -9,6 +9,7 @@ extern NSString * const AMPerSectionCollectionElementKindHeader;
 extern NSString * const AMPerSectionCollectionElementKindFooter;
 extern NSString * const AMPerSectionCollectionElementKindSectionHeader;
 extern NSString * const AMPerSectionCollectionElementKindSectionFooter;
+extern NSString * const AMPerSectionCollectionElementKindSectionBackground;
 
 @protocol AMPerSectionCollectionViewLayoutDelegate <UICollectionViewDelegate>
 @optional
@@ -23,6 +24,7 @@ extern NSString * const AMPerSectionCollectionElementKindSectionFooter;
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
 - (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout isSectionStickyAtIndex:(NSInteger)section;
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasSectionDecorationBackgroundAtIndex:(NSInteger)section;
 @end
 
 @interface AMPerSectionCollectionViewLayout : UICollectionViewLayout
@@ -37,5 +39,6 @@ extern NSString * const AMPerSectionCollectionElementKindSectionFooter;
 @property (nonatomic, assign) CGFloat sectionMinimumWidth; // default: NAN (use the collection view width)
 @property (nonatomic, assign) CGFloat minimumLineSpacing; // default: 5
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing; // default: 5
+@property (nonatomic, assign, getter = hasSectionDecorationBackground) BOOL sectionDecorationBackground; // default: NO
 
 @end

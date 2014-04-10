@@ -80,6 +80,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         it(@"should have by default non stick header", ^{
             [[theValue(layout.hasStickyHeader) should] equal:theValue(NO)];
         });
+        
+        it(@"should have by default no section decoration background", ^{
+            [[theValue(layout.hasSectionDecorationBackground) should] equal:theValue(NO)];
+        });
     });
     
     context(@"layout invalidation", ^{
@@ -200,6 +204,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             it(@"isSectionStickyAtIndex", ^{
                 [[theValue([layout isSectionStickyAtIndex:0]) should] beFalse];
             });
+            
+            it(@"hasSectionDecorationBackground", ^{
+                [[theValue(layout.hasSectionDecorationBackground) should] equal:theValue(layout.hasSectionDecorationBackground)];
+            });
         });
         
         context(@"with a delegate that doesn't implement any of the optional methods", ^{
@@ -265,6 +273,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             
             it(@"isSectionStickyAtIndex", ^{
                 [[theValue([layout isSectionStickyAtIndex:0]) should] beTrue];
+            });
+            
+            it(@"hasSectionDecorationBackground", ^{
+                [[theValue(layout.hasSectionDecorationBackground) should] equal:theValue(delegateDataSource.hasSectionDecorationBackground)];
             });
         });
     });
@@ -485,6 +497,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             delegateDataSource.stickyHeader = YES;
             delegateDataSource.lastSectionWithStickyHeader = 1;
             delegateDataSource.stickySectionIndex = 0;
+            delegateDataSource.sectionDecorationBackground = YES;
             
             collectionView.delegate = delegateDataSource;
             collectionView.dataSource = delegateDataSource;
@@ -509,8 +522,8 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 it(@"should return all elements", ^{
                     [[layoutAttributesForElementsInRect should] beNonNil];
                     
-                    // header + footer + 30 * (rows) + 3 * header + footer ==> 38
-                    [[layoutAttributesForElementsInRect should] haveCountOf:38];
+                    // header + footer + 30 * (rows) + 3 * header + footer  + 3 setions background ==> 41
+                    [[layoutAttributesForElementsInRect should] haveCountOf:41];
                 });
             });
             
@@ -628,11 +641,25 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                     });
                 });
             });
-        });
-        
-        context(@"layoutAttributesForDecorationViewOfKind", ^{
-            it(@"should return nothing", ^{
-                [[[layout layoutAttributesForDecorationViewOfKind:@"test" atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]] should] beNil];
+            
+            context(@"layoutAttributesForDecorationViewOfKind", ^{
+                context(@"for a given section", ^{
+                    __block AMPerSectionCollectionViewLayoutSection *section = nil;
+                    
+                    beforeEach(^{
+                        section = [layout.layoutInfo sectionAtIndex:1];
+                        
+                        attributes = [layout layoutAttributesForDecorationViewOfKind:AMPerSectionCollectionElementKindSectionBackground atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];
+                    });
+                    
+                    it(@"should return a layout attributes", ^{
+                        [[attributes should] beNonNil];
+                    });
+                    
+                    it(@"should return a layout attributes with a frame", ^{
+                        [[theValue(attributes.frame) should] equal:theValue(section.frame)];
+                    });
+                });
             });
         });
         

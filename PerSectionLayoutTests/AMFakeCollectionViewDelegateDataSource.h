@@ -23,6 +23,7 @@
 @property (nonatomic) CGFloat sectionMinimumWidth;
 @property (nonatomic, assign, getter = hasStickyHeader) BOOL stickyHeader;
 @property (nonatomic, assign) NSInteger stickySectionIndex;
+@property (nonatomic, assign, getter = hasSectionDecorationBackground) BOOL sectionDecorationBackground;
 
 //TODO: JC - consider making this an indexSet, or NSRange
 @property (nonatomic, assign) NSInteger lastSectionWithStickyHeader;

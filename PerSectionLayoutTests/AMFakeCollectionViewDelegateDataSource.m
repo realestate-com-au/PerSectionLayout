@@ -90,4 +90,9 @@
     return (section == self.stickySectionIndex);
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasSectionDecorationBackgroundAtIndex:(NSInteger)section
+{
+    return self.hasSectionDecorationBackground;
+}
+
 @end

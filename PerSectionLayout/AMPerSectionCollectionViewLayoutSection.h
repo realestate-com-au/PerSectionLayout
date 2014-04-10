@@ -27,5 +27,6 @@
 @property (nonatomic, assign) CGRect bodyFrame;
 @property (nonatomic, assign) CGRect footerFrame;
 @property (nonatomic, assign, getter = isSticky) BOOL sticky;
+@property (nonatomic, assign, getter = hasDecorationBackground) BOOL decorationBackground;
 
 @end
