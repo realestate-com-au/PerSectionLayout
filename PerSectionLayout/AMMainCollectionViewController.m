@@ -207,11 +207,4 @@
     [self.collectionViewLayout invalidateLayout];
 }
 
-//#pragma mark - Orientation
-//
-//- (NSUInteger)supportedInterfaceOrientations
-//{
-//    return [[UIDevice currentDevice] isiPad]  ? UIInterfaceOrientationMaskAll : UIInterfaceOrientationMaskPortrait;
-//}
-
 @end
