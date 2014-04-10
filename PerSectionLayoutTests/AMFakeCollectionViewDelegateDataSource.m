@@ -87,7 +87,7 @@
 
 - (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout isSectionStickyAtIndex:(NSInteger)section
 {
-    return self.hasStickyHeaderOverSection;
+    return (section == self.stickySectionIndex);
 }
 
 @end

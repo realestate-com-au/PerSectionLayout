@@ -21,6 +21,7 @@
 - (CGFloat)minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)miniumWidthForSectionAtIndex:(NSInteger)section;
 - (BOOL)hasStickyHeaderOverSection:(NSInteger)section;
+- (BOOL)isSectionStickyAtIndex:(NSInteger)section;
 - (void)getSizingInfos:(id)arg;
 - (void)updateItemsLayout:(id)arg;
 - (BOOL)layoutInfoFrame:(CGRect)layoutInfoFrame requiresLayoutAttritbutesForRect:(CGRect)rect;
@@ -197,7 +198,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             });
             
             it(@"isSectionStickyAtIndex", ^{
-                [[theValue([layout hasStickyHeaderOverSection:0]) should] beFalse];
+                [[theValue([layout isSectionStickyAtIndex:0]) should] beFalse];
             });
         });
         
@@ -216,6 +217,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 delegateDataSource.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
                 delegateDataSource.minimumLineSpacing = 8.f;
                 delegateDataSource.minimumInteritemSpacing = 10.f;
+                delegateDataSource.stickySectionIndex = 0;
                 
                 collectionView.delegate = delegateDataSource;
                 collectionView.dataSource = delegateDataSource;
@@ -262,7 +264,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             });
             
             it(@"isSectionStickyAtIndex", ^{
-                [[theValue([layout hasStickyHeaderOverSection:0]) should] equal:theValue(delegateDataSource.hasStickyHeaderOverSection)];
+                [[theValue([layout isSectionStickyAtIndex:0]) should] beTrue];
             });
         });
     });
@@ -470,6 +472,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
             delegateDataSource.stickyHeader = YES;
             delegateDataSource.lastSectionWithStickyHeader = 1;
+            delegateDataSource.stickySectionIndex = 0;
             
             collectionView.delegate = delegateDataSource;
             collectionView.dataSource = delegateDataSource;
