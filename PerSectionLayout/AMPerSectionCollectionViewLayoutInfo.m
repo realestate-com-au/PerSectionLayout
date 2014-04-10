@@ -5,7 +5,7 @@
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 
 @interface AMPerSectionCollectionViewLayoutInfo ()
-@property (nonatomic, assign) BOOL isInvalid;
+@property (nonatomic, assign, getter = isInvalid) BOOL invalid;
 @property (nonatomic, strong) NSMutableArray *sections;
 @end
 
@@ -20,6 +20,11 @@
     }
     
     return self;
+}
+
+- (void)invalidate
+{
+    self.invalid = YES;
 }
 
 #pragma mark - Sections
@@ -38,9 +43,80 @@
     return layoutSection;
 }
 
-- (void)invalidate
+- (AMPerSectionCollectionViewLayoutSection *)sectionAtIndex:(NSInteger)section
 {
-    self.isInvalid = YES;
+    if (section >= (NSInteger)self.layoutInfoSections.count)
+    {
+		return nil;
+	}
+    
+    if (section < 0 || section >= (NSInteger)self.layoutInfoSections.count)
+    {
+		return nil;
+	}
+    
+    return self.layoutInfoSections[(NSUInteger)section];
+}
+
+- (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point
+{
+    for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfoSections)
+    {
+        if (!CGPointEqualToPoint(section.frame.origin, CGPointZero) && CGRectContainsPoint(section.frame, point))
+        {
+            return section;
+        }
+    }
+    
+    return nil;
+}
+
+- (NSInteger)firstSectionIndexBelowHeaderForYOffset:(CGFloat)yOffset
+{
+    AMPerSectionCollectionViewLayoutSection *firstSection = [self firstSectionAtPoint:CGPointMake(0.f, yOffset + CGRectGetMaxY(self.headerFrame))];
+    
+    NSInteger firstSectionIndex = (NSInteger)[self.layoutInfoSections indexOfObject:firstSection];
+    if (firstSectionIndex == NSNotFound)
+    {
+        firstSectionIndex = 0;
+    }
+    
+    return firstSectionIndex;
+}
+
+#pragma mark - Items
+
+- (AMPerSectionCollectionViewLayoutItem *)itemAtIndexPath:(NSIndexPath *)indexPath
+{
+    AMPerSectionCollectionViewLayoutSection *section = [self sectionAtIndex:indexPath.section];
+    if (indexPath.item >= (NSInteger)section.layoutSectionItems.count)
+    {
+		return nil;
+	}
+    
+    return section.layoutSectionItems[(NSUInteger)indexPath.item];
+}
+
+#pragma mark - Sticky Header
+
+- (CGRect)stickyHeaderFrameForYOffset:(CGFloat)yOffset
+{
+    CGRect normalizedHeaderFrame = self.headerFrame;
+    
+    if (self.hasStickyHeader)
+    {
+        NSInteger lastSectionWithStickyHeader = self.lastSectionWithStickyHeader;
+        if ([self firstSectionIndexBelowHeaderForYOffset:yOffset] <= lastSectionWithStickyHeader)
+        {
+            normalizedHeaderFrame.origin.y = yOffset;
+        }
+        else
+        {
+            normalizedHeaderFrame.origin.y = CGRectGetMaxY([self sectionAtIndex:lastSectionWithStickyHeader].frame) - CGRectGetHeight(normalizedHeaderFrame);
+        }
+    }
+    
+    return normalizedHeaderFrame;
 }
 
 #pragma mark - NSObject

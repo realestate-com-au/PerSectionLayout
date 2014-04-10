@@ -10,6 +10,11 @@
 - (NSArray *)layoutInfoSections;
 - (AMPerSectionCollectionViewLayoutSection *)addSection;
 - (void)invalidate;
+- (AMPerSectionCollectionViewLayoutSection *)sectionAtIndex:(NSInteger)section;
+- (AMPerSectionCollectionViewLayoutItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
+- (NSInteger)firstSectionIndexBelowHeaderForYOffset:(CGFloat)yOffset;
+- (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point;
+- (CGRect)stickyHeaderFrameForYOffset:(CGFloat)yOffset;
 
 @property (nonatomic, assign) CGSize contentSize;
 @property (nonatomic, assign) CGSize collectionViewSize;
