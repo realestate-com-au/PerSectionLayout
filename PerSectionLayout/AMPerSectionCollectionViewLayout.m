@@ -51,55 +51,16 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
 
 #pragma mark - Utilities
 
-- (AMPerSectionCollectionViewLayoutSection *)sectionAtIndex:(NSInteger)section
-{
-    if (section >= (NSInteger)self.layoutInfo.layoutInfoSections.count)
-    {
-		return nil;
-	}
-    
-    if (section < 0 || section >= (NSInteger)self.layoutInfo.layoutInfoSections.count)
-    {
-		return nil;
-	}
-    
-    return self.layoutInfo.layoutInfoSections[(NSUInteger)section];
-}
-
-- (AMPerSectionCollectionViewLayoutItem *)itemAtIndexPath:(NSIndexPath *)indexPath
-{
-    AMPerSectionCollectionViewLayoutSection *section = [self sectionAtIndex:indexPath.section];
-    if (indexPath.item >= (NSInteger)section.layoutSectionItems.count)
-    {
-		return nil;
-	}
-    
-    return section.layoutSectionItems[(NSUInteger)indexPath.item];
-}
-
 - (BOOL)layoutInfoFrame:(CGRect)layoutInfoFrame requiresLayoutAttritbutesForRect:(CGRect)rect
 {
     return ((CGRectGetHeight(layoutInfoFrame) > 0) && CGRectIntersectsRect(layoutInfoFrame, rect));
 }
 
-#pragma mark - Sticky Header
+#pragma mark - Utilities
 
 - (CGFloat)adjustedCollectionViewContentOffset
 {
     return self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
-}
-
-- (NSInteger)firstSectionIndexBelowHeader
-{
-    AMPerSectionCollectionViewLayoutSection *firstSection = [self firstSectionAtPoint:CGPointMake(0.f, [self adjustedCollectionViewContentOffset] + CGRectGetMaxY(self.layoutInfo.headerFrame)) layoutInfo:self.layoutInfo];
-    
-    NSInteger firstSectionIndex = (NSInteger)[self.layoutInfo.layoutInfoSections indexOfObject:firstSection];
-    if (firstSectionIndex == NSNotFound)
-    {
-        firstSectionIndex = 0;
-    }
-    
-    return firstSectionIndex;
 }
 
 #pragma mark - Layout attributes
@@ -109,22 +70,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
     NSMutableArray *layoutAttributesArray = [NSMutableArray array];
     
 	// header
-	CGRect normalizedHeaderFrame = self.layoutInfo.headerFrame;
-    
-    if (self.layoutInfo.hasStickyHeader)
-    {
-        NSInteger lastSectionWithStickyHeader = self.layoutInfo.lastSectionWithStickyHeader;
-        if ([self firstSectionIndexBelowHeader] <= lastSectionWithStickyHeader)
-        {
-            normalizedHeaderFrame.origin.y = [self adjustedCollectionViewContentOffset];
-        }
-        else
-        {
-            NSInteger previousSectionIndex = lastSectionWithStickyHeader;
-            normalizedHeaderFrame.origin.y = CGRectGetMaxY([self sectionAtIndex:previousSectionIndex].frame) - CGRectGetHeight(normalizedHeaderFrame);
-        }
-    }
-    
+	CGRect normalizedHeaderFrame = [self.layoutInfo stickyHeaderFrameForYOffset:[self adjustedCollectionViewContentOffset]];
 	if ([self layoutInfoFrame:normalizedHeaderFrame requiresLayoutAttritbutesForRect:rect])
     {
 		UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
@@ -205,10 +151,10 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    AMPerSectionCollectionViewLayoutItem *item = [self itemAtIndexPath:indexPath];
+    AMPerSectionCollectionViewLayoutItem *item = [self.layoutInfo itemAtIndexPath:indexPath];
     CGRect itemFrame = item.frame;
     
-    AMPerSectionCollectionViewLayoutSection *section = [self sectionAtIndex:indexPath.section];
+    AMPerSectionCollectionViewLayoutSection *section = [self.layoutInfo sectionAtIndex:indexPath.section];
 	AMPerSectionCollectionViewLayoutRow *row = item.row;
 	
 	UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
@@ -238,7 +184,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
 	}
     else
     {
-		AMPerSectionCollectionViewLayoutSection *section = [self sectionAtIndex:indexPath.section];
+		AMPerSectionCollectionViewLayoutSection *section = [self.layoutInfo sectionAtIndex:indexPath.section];
 		if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionHeader])
         {
 			layoutAttributes.frame = section.headerFrame;
@@ -499,7 +445,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
             nextOrigin.y = CGRectGetMaxY(section.frame);
             
             // reset x
-            AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y) layoutInfo:layoutInfo];
+            AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self.layoutInfo firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
             nextOrigin.x = CGRectGetMaxX(sectionInMyWay.frame);
         }
         else
@@ -521,19 +467,6 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
     
 	contentSize.height += CGRectGetHeight(layoutInfo.footerFrame);
     layoutInfo.contentSize = contentSize;
-}
-
-- (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point layoutInfo:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo
-{
-    for (AMPerSectionCollectionViewLayoutSection *section in layoutInfo.layoutInfoSections)
-    {
-        if (!CGPointEqualToPoint(section.frame.origin, CGPointZero) && CGRectContainsPoint(section.frame, point))
-        {
-            return section;
-        }
-    }
-    
-    return nil;
 }
 
 #pragma mark - Content Size

@@ -19,16 +19,12 @@
 - (CGFloat)minimumLineSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)miniumWidthForSectionAtIndex:(NSInteger)section;
+- (BOOL)hasStickyHeaderOverSection:(NSInteger)section;
 - (void)fetchItemsInfo:(id)arg;
 - (void)getSizingInfos:(id)arg;
 - (void)updateItemsLayout:(id)arg;
-- (AMPerSectionCollectionViewLayoutSection *)sectionAtIndex:(NSInteger)section;
-- (AMPerSectionCollectionViewLayoutItem *)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (BOOL)layoutInfoFrame:(CGRect)layoutInfoFrame requiresLayoutAttritbutesForRect:(CGRect)rect;
-- (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point layoutInfo:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo;
-- (BOOL)hasStickyHeaderOverSection:(NSInteger)section;
 - (CGFloat)adjustedCollectionViewContentOffset;
-- (NSInteger)firstSectionIndexBelowHeader;
 
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
 
@@ -244,87 +240,6 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
     });
     
-    context(@"firstSectionAtPoint", ^{
-        
-        __block AMPerSectionCollectionViewLayoutSection *sectionContainedInPoint = nil;
-        
-        beforeEach(^{
-            AMPerSectionCollectionViewLayoutInfo *layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
-            layout.layoutInfo = layoutInfo;
-            
-            CGFloat sectionsWidth = 200.f;
-            
-            AMPerSectionCollectionViewLayoutSection *firstSection = [layout.layoutInfo addSection];
-            firstSection.frame = CGRectMake(0.f, 0.f, sectionsWidth, 400.f);
-            
-            sectionContainedInPoint = [layout.layoutInfo addSection];
-            sectionContainedInPoint.frame = CGRectMake(0.f, 400.f, sectionsWidth, 300.f);
-            
-            AMPerSectionCollectionViewLayoutSection *thirdSection = [layout.layoutInfo addSection];
-            thirdSection.frame = CGRectMake(0.f, 700.f, sectionsWidth, 200.f);
-        });
-        
-        it(@"should return a section if point is contained insection section frame", ^{
-            AMPerSectionCollectionViewLayoutSection *section = [layout firstSectionAtPoint:CGPointMake(40.f, 450.f) layoutInfo:layout.layoutInfo];
-            [[section should] beNonNil];
-            [[section should] equal:sectionContainedInPoint];
-        });
-        
-        it(@"should not return a section if point is contained insection section frame", ^{
-            AMPerSectionCollectionViewLayoutSection *section = [layout firstSectionAtPoint:CGPointMake(1040.f, 450.f) layoutInfo:layout.layoutInfo];
-            [[section should] beNil];
-        });
-    });
-    
-    context(@"firstSectionIndexBelowHeader", ^{
-        
-        __block AMPerSectionCollectionViewLayoutSection *firstSection = nil;
-        __block CGFloat sectionsWidth = 0;
-        
-        beforeEach(^{
-            AMPerSectionCollectionViewLayoutInfo *layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
-            layout.layoutInfo = layoutInfo;
-            
-            sectionsWidth = 200.f;
-            
-            layoutInfo.headerFrame = CGRectMake(0.f, 0.f, sectionsWidth, 40.f);
-            
-            firstSection = [layout.layoutInfo addSection];
-            firstSection.frame = CGRectMake(0.f, 40.f, sectionsWidth, 360.f);
-            
-            AMPerSectionCollectionViewLayoutSection *secondSection = [layout.layoutInfo addSection];
-            secondSection.frame = CGRectMake(0.f, 400.f, sectionsWidth, 300.f);
-            
-            AMPerSectionCollectionViewLayoutSection *thirdSection = [layout.layoutInfo addSection];
-            thirdSection.frame = CGRectMake(0.f, 700.f, sectionsWidth, 200.f);
-        });
-        
-        context(@"if there is a section located below header", ^{
-            it(@"should return a valid index if a section is localed below global header", ^{
-                [[theValue([layout firstSectionIndexBelowHeader]) should] equal:theValue(0)];
-            });
-        });
-        
-        context(@"when scrolled till second section is visible", ^{
-            beforeEach(^{
-                CGFloat yOffset = CGRectGetHeight(layout.layoutInfo.headerFrame) + 400;
-                [layout stub:@selector(adjustedCollectionViewContentOffset) andReturn:theValue(yOffset)];
-            });
-            
-            it(@"should return a valid index if a section is localed below global header", ^{
-                [[theValue([layout firstSectionIndexBelowHeader]) should] equal:theValue(1)];
-            });
-        });
-        
-        context(@"if there isn't a section located below header", ^{
-            firstSection.frame = CGRectMake(0.f, 100.f, sectionsWidth, 360.f);
-            
-            it(@"should return the first section index", ^{
-                [[theValue([layout firstSectionIndexBelowHeader]) should] equal:theValue(0)];
-            });
-        });
-    });
-    
     context(@"adjustedCollectionViewContentOffset", ^{
         __block UICollectionView *collectionView = nil;
         
@@ -503,7 +418,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             __block AMPerSectionCollectionViewLayoutSection *layoutSection = nil;
             
             beforeEach(^{
-                layoutSection = [layout sectionAtIndex:0];
+                layoutSection = [layout.layoutInfo sectionAtIndex:0];
             });
             
             it(@"should compute the header frame", ^{
@@ -552,7 +467,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         
         context(@"first section", ^{
             beforeEach(^{
-                layoutSection = [layout sectionAtIndex:0];
+                layoutSection = [layout.layoutInfo sectionAtIndex:0];
             });
             
             it(@"should computer the body frame", ^{
@@ -566,7 +481,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         
         context(@"fourth section", ^{
             beforeEach(^{
-                layoutSection = [layout sectionAtIndex:3];
+                layoutSection = [layout.layoutInfo sectionAtIndex:3];
             });
             
             it(@"should computer the body frame", ^{
@@ -580,7 +495,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         
         context(@"last section", ^{
             beforeEach(^{
-                layoutSection = [layout sectionAtIndex:4];
+                layoutSection = [layout.layoutInfo sectionAtIndex:4];
             });
             
             it(@"should computer the body frame", ^{
@@ -601,56 +516,6 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         it(@"should invalidate it's layout info", ^{
             [[layout.layoutInfo should] receive:@selector(invalidate)];
             [layout invalidateLayout];
-        });
-    });
-    
-    context(@"Utilities", ^{
-        __block UICollectionView *collectionView = nil;
-        __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
-        
-        beforeEach(^{
-            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 250.f, 500.f) collectionViewLayout:layout];
-            delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
-            
-            
-            delegateDataSource.numberOfSections = 3;
-            delegateDataSource.numberOfItemsInSection = 10;
-            delegateDataSource.itemSize = CGSizeMake(50.f, 50.f);
-            delegateDataSource.headerReferenceSize = CGSizeMake(25.f, 30.f);
-            delegateDataSource.footerReferenceSize = CGSizeMake(25.f, 40.f);
-            delegateDataSource.sectionHeaderReferenceSize = CGSizeMake(27.f, 50.f);
-            delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
-            delegateDataSource.minimumLineSpacing = 10.f;
-            delegateDataSource.minimumInteritemSpacing = 10.f;
-            
-            collectionView.delegate = delegateDataSource;
-            collectionView.dataSource = delegateDataSource;
-            
-            [layout prepareLayout];
-        });
-        
-        context(@"sectionAtIndex", ^{
-            it(@"should return a section for a valid index", ^{
-                AMPerSectionCollectionViewLayoutSection *section = [layout sectionAtIndex:1];
-                [[section should] beNonNil];
-            });
-            
-            it(@"should not return a section for an invalid index", ^{
-                AMPerSectionCollectionViewLayoutSection *section = [layout sectionAtIndex:3];
-                [[section should] beNil];
-            });
-        });
-        
-        context(@"itemAtIndexPath", ^{
-            it(@"should return an item for a valid index path", ^{
-                AMPerSectionCollectionViewLayoutItem *item = [layout itemAtIndexPath:[NSIndexPath indexPathForItem:4 inSection:2]];
-                [[item should] beNonNil];
-            });
-            
-            it(@"should not return an item for an invalid index path", ^{
-                AMPerSectionCollectionViewLayoutItem *item = [layout itemAtIndexPath:[NSIndexPath indexPathForItem:10 inSection:2]];
-                [[item should] beNil];
-            });
         });
     });
     
@@ -720,7 +585,6 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             
             [layout prepareLayout];
         });
-        
         
         context(@"collectionViewContentSize", ^{
             it(@"should ask the layout info for the collection view content size", ^{
@@ -827,7 +691,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 __block AMPerSectionCollectionViewLayoutSection *section = nil;
                 
                 beforeEach(^{
-                    section = [layout sectionAtIndex:1];
+                    section = [layout.layoutInfo sectionAtIndex:1];
                 });
                 
                 context(@"AMPerSectionCollectionElementKindSectionHeader", ^{
