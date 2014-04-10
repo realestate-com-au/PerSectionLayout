@@ -42,6 +42,9 @@
 {
     [super viewDidLoad];
     
+    AMPerSectionCollectionViewLayout *layout = (AMPerSectionCollectionViewLayout *)self.collectionViewLayout;
+    layout.stickyHeader = [[UIDevice currentDevice] isiPad];
+    
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withReuseIdentifier:@"header"];
     [self.sectionsProvider registerCustomElementsForCollectionView:self.collectionView];
 }
