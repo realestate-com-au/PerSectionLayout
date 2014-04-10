@@ -141,8 +141,7 @@
 	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfoSections)
     {
         CGFloat sectionWidth = section.width;
-        //FIXME: JC - I don't like this NAN
-        section.width = (isnan(sectionWidth)) ? self.collectionViewSize.width : sectionWidth;
+        section.width = sectionWidth > 0 ? sectionWidth : self.collectionViewSize.width;
         //FIXME: Unused layoutInfo in computeLayout
 		[section computeLayout:self];
 

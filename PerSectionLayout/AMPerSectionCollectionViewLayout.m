@@ -47,7 +47,7 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
     self.itemSize = CGSizeMake(50.f, 50.f);
     self.minimumLineSpacing = 5.f;
     self.minimumInteritemSpacing = 5.f;
-    self.sectionMinimumWidth = NAN;
+    self.sectionMinimumWidth = 0.f;
 }
 
 #pragma mark - Utilities
