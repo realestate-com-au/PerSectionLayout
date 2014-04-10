@@ -123,14 +123,15 @@
 
 - (void)updateItemsLayout
 {
+    CGFloat dimension = self.collectionViewSize.width;
     CGSize contentSize = CGSizeZero;
 
     // global header
     CGRect globalHeaderFrame = self.headerFrame;
-    if (CGRectGetWidth(globalHeaderFrame) > 0)
+    if (!CGRectEqualToRect(globalHeaderFrame, CGRectZero))
     {
         globalHeaderFrame.origin = CGPointZero;
-        globalHeaderFrame.size.width = self.collectionViewSize.width;
+        globalHeaderFrame.size.width = dimension;
         self.headerFrame = globalHeaderFrame;
     }
 
@@ -138,32 +139,16 @@
     contentSize.height += CGRectGetHeight(self.headerFrame);
 
     // first pass, compute all of the frames, ignoring position
-	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfoSections)
+    NSArray *layoutSections = self.layoutInfoSections;
+	for (AMPerSectionCollectionViewLayoutSection *section in layoutSections)
     {
         CGFloat sectionWidth = section.width;
-        section.width = sectionWidth > 0 ? sectionWidth : self.collectionViewSize.width;
-        //FIXME: Unused layoutInfo in computeLayout
+        section.width = sectionWidth > 0 ? sectionWidth : dimension;
 		[section computeLayout:self];
-
-        CGRect sectionFrame = section.frame;
-
-        CGRect headerFrame = section.headerFrame;
-        if (CGRectGetHeight(headerFrame) > 0)
-        {
-            headerFrame.size.width = CGRectGetWidth(sectionFrame);
-            section.headerFrame = headerFrame;
-        }
-
-        CGRect footerFrame = section.footerFrame;
-        if (CGRectGetHeight(footerFrame) > 0)
-        {
-            footerFrame.size.width = CGRectGetWidth(sectionFrame);
-            section.footerFrame = footerFrame;
-        }
 	}
 
     CGPoint nextOrigin = CGPointMake(0.f, contentSize.height);
-    for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfoSections)
+    for (AMPerSectionCollectionViewLayoutSection *section in layoutSections)
     {
         CGRect sectionFrame = section.frame;
 
@@ -173,7 +158,7 @@
         contentSize.width = MAX(CGRectGetMaxX(sectionFrame), contentSize.width);
         contentSize.height = MAX(CGRectGetMaxY(sectionFrame), contentSize.height);
 
-        if (CGRectGetMaxX(section.frame) >= self.collectionViewSize.width)
+        if (CGRectGetMaxX(section.frame) >= dimension)
         {
             // go to new line
             nextOrigin.y = CGRectGetMaxY(section.frame);
@@ -195,7 +180,7 @@
     {
         globalFooterFrame.origin.x = 0;
         globalFooterFrame.origin.y = contentSize.height;
-        globalFooterFrame.size.width = self.collectionViewSize.width;
+        globalFooterFrame.size.width = dimension;
         self.footerFrame = globalFooterFrame;
     }
 
