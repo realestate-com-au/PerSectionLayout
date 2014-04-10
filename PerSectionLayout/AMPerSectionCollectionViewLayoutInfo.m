@@ -151,6 +151,16 @@
     for (AMPerSectionCollectionViewLayoutSection *section in layoutSections)
     {
         CGRect sectionFrame = section.frame;
+        
+        while (nextOrigin.x + CGRectGetWidth(sectionFrame) > dimension)
+        {
+            // go to new line
+            nextOrigin.y += CGRectGetHeight(section.frame);
+            
+            // reset x
+            AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
+            nextOrigin.x = CGRectGetMaxX(sectionInMyWay.frame);
+        }
 
         sectionFrame.origin = nextOrigin;
         section.frame = sectionFrame;
