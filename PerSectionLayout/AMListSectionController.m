@@ -6,6 +6,24 @@
 #import "MainSections.h"
 #import "UIDevice+Utilities.h"
 
+@interface AMBackgroundSectionView : UICollectionReusableView
+@end
+
+@implementation AMBackgroundSectionView
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        self.backgroundColor = [UIColor whiteColor];
+    }
+    
+    return self;
+}
+
+@end
+
 @implementation AMListSectionController
 
 - (NSInteger)section
@@ -16,6 +34,12 @@
 - (void)registerCustomElementsForCollectionView:(UICollectionView *)collectionView
 {
     [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    
+    [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withReuseIdentifier:@"header"];
+    [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withReuseIdentifier:@"footer"];
+    
+    [collectionView.collectionViewLayout registerClass:[AMBackgroundSectionView class] forDecorationViewOfKind:AMPerSectionCollectionElementKindSectionBackground];
+    
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -38,6 +62,26 @@
     return cell;
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionHeader])
+    {
+        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withReuseIdentifier:@"header"  forIndexPath:indexPath];
+        view.backgroundColor = [UIColor brownColor];
+        
+        return view;
+    }
+    else if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionFooter])
+    {
+        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withReuseIdentifier:@"footer"  forIndexPath:indexPath];
+        view.backgroundColor = [UIColor magentaColor];
+        
+        return view;
+    }
+    
+    return nil;
+}
+
 #pragma mark - AMPerSectionCollectionViewLayoutDelegate
 
 - (CGFloat)maxWidthForCollectionView:(UICollectionView *)collectionView
@@ -53,6 +97,21 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section
 {
     return [self maxWidthForCollectionView:collectionView];
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasSectionDecorationBackgroundAtIndex:(NSInteger)section
+{
+    return YES;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForHeaderInSection:(NSInteger)section
+{
+    return CGSizeMake([self maxWidthForCollectionView:collectionView], 70.f);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForFooterInSection:(NSInteger)section
+{
+    return CGSizeMake([self maxWidthForCollectionView:collectionView], 20.f);
 }
 
 @end

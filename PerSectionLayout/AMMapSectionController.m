@@ -49,4 +49,9 @@
     return YES;
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout isSectionStickyAtIndex:(NSInteger)section
+{
+    return YES;
+}
+
 @end
