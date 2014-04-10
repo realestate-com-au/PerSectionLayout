@@ -16,6 +16,7 @@
 - (AMPerSectionCollectionViewLayoutRow *)addRow;
 - (void)invalidate;
 - (void)computeLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo;
+- (CGRect)stickyFrameForYOffset:(CGFloat)yOffset;
 
 @property (nonatomic, assign) CGFloat verticalInterstice;
 @property (nonatomic, assign) CGFloat horizontalInterstice;
@@ -25,6 +26,6 @@
 @property (nonatomic, assign) CGRect headerFrame;
 @property (nonatomic, assign) CGRect bodyFrame;
 @property (nonatomic, assign) CGRect footerFrame;
-
+@property (nonatomic, assign, getter = isSticky) BOOL sticky;
 
 @end

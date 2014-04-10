@@ -24,6 +24,20 @@
     return self;
 }
 
+#pragma mark - Sticky
+
+- (CGRect)stickyFrameForYOffset:(CGFloat)yOffset
+{
+    CGRect normalizedSectionFrame = self.frame;
+    
+    if (self.sticky)
+    {
+        normalizedSectionFrame.origin.y = yOffset + CGRectGetMinY(normalizedSectionFrame);
+    }
+    
+    return normalizedSectionFrame;
+}
+
 #pragma mark - Items
 
 - (NSArray *)layoutSectionItems
