@@ -373,14 +373,9 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
     {
         self.layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
         self.layoutInfo.collectionViewSize = self.collectionView.bounds.size;
-        [self fetchItemsInfo:self.layoutInfo];
+        [self getSizingInfos:self.layoutInfo];
+        [self.layoutInfo updateItemsLayout];
     }
-}
-
-- (void)fetchItemsInfo:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo
-{
-	[self getSizingInfos:layoutInfo];
-	[self updateItemsLayout:layoutInfo];
 }
 
 - (void)getSizingInfos:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo
@@ -418,11 +413,6 @@ static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
 			layoutItem.frame = (CGRect){.size = (implementsSizeDelegate) ? [self sizeForItemAtIndexPath:indexPath] : itemSize};
 		}
 	}
-}
-
-- (void)updateItemsLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo
-{
-    [layoutInfo updateItemsLayout];
 }
 
 #pragma mark - Content Size
