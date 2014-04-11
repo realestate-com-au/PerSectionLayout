@@ -70,18 +70,15 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
+    CGSize offset = CGSizeMake(0, [self adjustedCollectionViewContentOffset]);
     NSMutableArray *layoutAttributesArray = [NSMutableArray array];
-    
-	// header
-	CGRect normalizedHeaderFrame = [self.layoutInfo stickyHeaderFrameForYOffset:[self adjustedCollectionViewContentOffset]];
-	if ([self layoutInfoFrame:normalizedHeaderFrame requiresLayoutAttritbutesForRect:rect])
+
+    UICollectionViewLayoutAttributes *globalHeaderLayoutAttributes = [self.layoutInfo layoutAttributesForGlobalHeaderForRect:rect withOffset:offset];
+    if (globalHeaderLayoutAttributes != nil)
     {
-		UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-		layoutAttributes.frame = normalizedHeaderFrame;
-        layoutAttributes.zIndex = AMPerSectionCollectionElementAlwaysShowOnTopIndex;
-		[layoutAttributesArray addObject:layoutAttributes];
-	}
-	
+        [layoutAttributesArray addObject:globalHeaderLayoutAttributes];
+    }
+
 	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
     {
         CGRect normalizedSectionFrame = [section stickyFrameForYOffset:[self adjustedCollectionViewContentOffset]];

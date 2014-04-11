@@ -16,6 +16,8 @@
 - (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point;
 - (CGRect)stickyHeaderFrameForYOffset:(CGFloat)yOffset;
 
+- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalHeaderForRect:(CGRect)rect withOffset:(CGSize)offset;
+
 - (void)updateItemsLayout;
 
 @property (nonatomic, assign, getter = isValid) BOOL valid;

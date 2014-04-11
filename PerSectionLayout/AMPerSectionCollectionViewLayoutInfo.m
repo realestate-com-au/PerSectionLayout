@@ -3,6 +3,7 @@
 //
 
 #import "AMPerSectionCollectionViewLayoutInfo.h"
+#import "AMPerSectionCollectionViewLayout.h"
 
 @interface AMPerSectionCollectionViewLayoutInfo ()
 @property (nonatomic, strong) NSMutableArray *sections;
@@ -196,6 +197,25 @@
 
 	contentSize.height += CGRectGetHeight(self.footerFrame);
     self.contentSize = contentSize;
+}
+
+#pragma mark - UICollectionViewLayoutAttributes
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalHeaderForRect:(CGRect)rect withOffset:(CGSize)offset
+{
+    CGRect headerFrame = [self stickyHeaderFrameForYOffset:offset.height];
+
+    if (CGRectGetHeight(headerFrame) > 0 && CGRectIntersectsRect(headerFrame, rect))
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+        UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withIndexPath:indexPath];
+		attr.frame = headerFrame;
+        attr.zIndex = AMPerSectionCollectionElementAlwaysShowOnTopZIndex;
+
+        return attr;
+    }
+
+    return nil;
 }
 
 #pragma mark - NSObject
