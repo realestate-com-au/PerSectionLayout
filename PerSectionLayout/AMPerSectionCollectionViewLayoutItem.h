@@ -7,5 +7,6 @@
 
 @interface AMPerSectionCollectionViewLayoutItem : NSObject
 @property (nonatomic, assign) CGRect frame;
+@property (nonatomic, assign) NSInteger index;
 @property (nonatomic, weak) AMPerSectionCollectionViewLayoutRow *row;
 @end

@@ -19,11 +19,13 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
     __block AMPerSectionCollectionViewLayoutSection *section;
     
     context(@"Adding a new item", ^{
-        __block id addedItem ;
+        __block id addedItem;
+        __block id secondAddedItem;
         
         beforeEach(^{
             section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
             addedItem = [section addItem];
+            secondAddedItem = [section addItem];
         });
         
         it(@"should return the added item", ^{
@@ -36,6 +38,11 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
         
         it(@"should be a kind of AMPerSectionCollectionViewLayoutItem", ^{
             [[addedItem should] beKindOfClass:[AMPerSectionCollectionViewLayoutItem class]];
+        });
+
+        it(@"should set the item index", ^{
+            [[theValue([addedItem index]) should] equal:theValue(0)];
+            [[theValue([secondAddedItem index]) should] equal:theValue(1)];
         });
     });
     

@@ -54,6 +54,7 @@
 {
     AMPerSectionCollectionViewLayoutItem *layoutItem = [[AMPerSectionCollectionViewLayoutItem alloc] init];
     [self.items addObject:layoutItem];
+    layoutItem.index = (NSInteger)[self.items indexOfObject:layoutItem];
     
     return layoutItem;
 }
