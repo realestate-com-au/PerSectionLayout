@@ -82,64 +82,8 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 
 	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
     {
-        CGRect normalizedSectionFrame = [section stickyFrameForYOffset:[self adjustedCollectionViewContentOffset].y];
-		if (CGRectIntersectsRect(normalizedSectionFrame, rect))
-        {
-            NSInteger sectionIndex = (NSInteger)[self.layoutInfo.layoutInfoSections indexOfObject:section];
-            
-			// section header
-			CGRect normalizedSectionHeaderFrame = section.headerFrame;
-            normalizedSectionHeaderFrame.origin.x += CGRectGetMinX(normalizedSectionFrame);
-            normalizedSectionHeaderFrame.origin.y += CGRectGetMinY(normalizedSectionFrame);
-            if ([self layoutInfoFrame:normalizedSectionHeaderFrame requiresLayoutAttritbutesForRect:rect])
-            {
-                UICollectionViewLayoutAttributes *layoutAttributes;
-                layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionIndex]];
-                layoutAttributes.frame = normalizedSectionHeaderFrame;
-                [layoutAttributesArray addObject:layoutAttributes];
-            }
-			
-			// section body
-			for (AMPerSectionCollectionViewLayoutRow *row in section.layoutSectionRows)
-            {
-				//	figure out row's frame in global layout measurements
-				CGRect normalizedRowFrame = row.frame;
-				normalizedRowFrame.origin.x += CGRectGetMinX(normalizedSectionFrame);
-				normalizedRowFrame.origin.y += CGRectGetMinY(normalizedSectionFrame);
-				
-				if (CGRectIntersectsRect(normalizedRowFrame, rect))
-                {
-					for (NSInteger itemIndex = 0; itemIndex < row.itemsCount; itemIndex++)
-                    {
-						AMPerSectionCollectionViewLayoutItem *item = row.layoutSectionItems[(NSUInteger)itemIndex];
-						NSInteger sectionItemIndex = (NSInteger)[section.layoutSectionItems indexOfObject:item];
-						CGRect itemFrame = item.frame;
-                        
-						UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:[NSIndexPath indexPathForItem:sectionItemIndex inSection:sectionIndex]];
-						layoutAttributes.frame = CGRectMake(CGRectGetMinX(normalizedRowFrame) + CGRectGetMinX(itemFrame),
-															CGRectGetMinY(normalizedRowFrame) + CGRectGetMinY(itemFrame),
-															CGRectGetWidth(itemFrame),
-															CGRectGetHeight(itemFrame));
-                        if (section.isSticky)
-                        {
-                            layoutAttributes.zIndex = AMPerSectionCollectionElementStickySectionZIndex;
-                        }
-						[layoutAttributesArray addObject:layoutAttributes];
-					}
-				}
-			}
-            
-            // section footer
-			CGRect normalizedSectionFooterFrame = section.footerFrame;
-            normalizedSectionFooterFrame.origin.x += CGRectGetMinX(normalizedSectionFrame);
-            normalizedSectionFooterFrame.origin.y += CGRectGetMinY(normalizedSectionFrame);
-            if ([self layoutInfoFrame:normalizedSectionFooterFrame requiresLayoutAttritbutesForRect:rect])
-            {
-                UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionIndex]];
-                layoutAttributes.frame = normalizedSectionFooterFrame;
-                [layoutAttributesArray addObject:layoutAttributes];
-            }
-		}
+        NSArray *sectionLayoutAttributes = [section layoutAttributesArrayForSectionForRect:rect withOffset:offset];
+        [layoutAttributesArray addObjectsFromArray:sectionLayoutAttributes];
 	}
 
     UICollectionViewLayoutAttributes *globalFooterLayoutAttributes = [self.layoutInfo layoutAttributesForGlobalFooterForRect:rect withOffset:offset];

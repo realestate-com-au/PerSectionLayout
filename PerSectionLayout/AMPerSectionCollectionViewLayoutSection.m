@@ -4,6 +4,7 @@
 
 #import "AMPerSectionCollectionViewLayoutSection.h"
 #import "AMPerSectionCollectionViewLayoutInfo.h"
+#import "AMPerSectionCollectionViewLayout.h"
 
 @interface AMPerSectionCollectionViewLayoutSection ()
 @property (nonatomic, strong) NSMutableArray *items;
@@ -183,6 +184,75 @@
     sectionSize.width = self.width;
     sectionSize.height = footerOrigin + footerframe.size.height;
     self.frame = (CGRect){.origin = sectionOrigin, .size = sectionSize};
+}
+
+#pragma mark - UICollectionViewLayoutAttributes
+
+- (NSArray *)layoutAttributesArrayForSectionForRect:(CGRect)rect withOffset:(CGPoint)offset
+{
+    NSMutableArray *layoutAttributesArray = [NSMutableArray array];
+
+    CGRect sectionFrame = [self stickyFrameForYOffset:offset.y];
+    if (/*CGRectEqualToRect(rect, CGRectZero) || */CGRectIntersectsRect(sectionFrame, rect))
+    {
+        /** Header Frame **/
+        CGRect headerFrame = self.headerFrame;
+        //FIXME: CGRectOffset() ?
+        headerFrame.origin.x += CGRectGetMinX(sectionFrame);
+        headerFrame.origin.y += CGRectGetMinY(sectionFrame);
+        if (/*CGRectEqualToRect(rect, CGRectZero) || */(CGRectGetHeight(headerFrame) > 0) && CGRectIntersectsRect(headerFrame, rect))
+        {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:self.index];
+            UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withIndexPath:indexPath];
+            attr.frame = headerFrame;
+            [layoutAttributesArray addObject:attr];
+        }
+
+        /** Footer Frame **/
+        CGRect footerFrame = self.footerFrame;
+        //FIXME: CGRectOffset() ?
+        footerFrame.origin.x += CGRectGetMinX(sectionFrame);
+        footerFrame.origin.y += CGRectGetMinY(sectionFrame);
+        if (/*CGRectEqualToRect(rect, CGRectZero) || */(CGRectGetHeight(footerFrame) > 0) && CGRectIntersectsRect(footerFrame, rect))
+        {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:self.index];
+            UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:indexPath];
+            attr.frame = footerFrame;
+            [layoutAttributesArray addObject:attr];
+        }
+
+        /** Body / Rows / Items **/
+        for (AMPerSectionCollectionViewLayoutRow *row in self.layoutSectionRows)
+        {
+            CGRect rowFrame = row.frame;
+            //FIXME: CGRectOffset() ?
+            rowFrame.origin.x += CGRectGetMinX(sectionFrame);
+            rowFrame.origin.y += CGRectGetMinY(sectionFrame);
+
+            if (/*CGRectEqualToRect(rect, CGRectZero) || */CGRectIntersectsRect(rowFrame, rect))
+            {
+                for (AMPerSectionCollectionViewLayoutItem *item in row.layoutSectionItems)
+                {
+                    CGRect itemFrame = item.frame;
+                    itemFrame.origin.x += CGRectGetMinX(rowFrame);
+                    itemFrame.origin.y += CGRectGetMinY(rowFrame);
+                    
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item.index inSection:self.index];
+                    UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+                    attr.frame = itemFrame;
+
+                    if (self.isSticky)
+                    {
+                        attr.zIndex = AMPerSectionCollectionElementStickySectionZIndex;
+                    }
+
+                    [layoutAttributesArray addObject:attr];
+                }
+            }
+        }
+    }
+
+    return layoutAttributesArray;
 }
 
 #pragma mark - NSObject

@@ -18,6 +18,8 @@
 - (void)computeLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo;
 - (CGRect)stickyFrameForYOffset:(CGFloat)yOffset;
 
+- (NSArray *)layoutAttributesArrayForSectionForRect:(CGRect)rect withOffset:(CGPoint)offset;
+
 @property (nonatomic, assign) CGFloat verticalInterstice;
 @property (nonatomic, assign) CGFloat horizontalInterstice;
 @property (nonatomic, assign) UIEdgeInsets sectionMargins;
