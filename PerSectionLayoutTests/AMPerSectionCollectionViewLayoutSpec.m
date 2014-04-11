@@ -24,7 +24,6 @@
 - (BOOL)isSectionStickyAtIndex:(NSInteger)section;
 - (void)getSizingInfos:(id)arg;
 - (void)updateItemsLayout:(id)arg;
-- (BOOL)layoutInfoFrame:(CGRect)layoutInfoFrame requiresLayoutAttritbutesForRect:(CGRect)rect;
 - (CGFloat)adjustedCollectionViewContentOffset;
 
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
@@ -308,44 +307,6 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             });
             
             [[theValue([layout adjustedCollectionViewContentOffset]) should] equal:theValue(60.f)];
-        });
-        
-        context(@"layout attributes frame validation", ^{
-            
-            __block CGRect layoutInfoFrame = CGRectZero;
-            __block CGRect rect = CGRectZero;
-            
-            context(@"when both rects intersect", ^{
-                beforeEach(^{
-                    rect = CGRectMake(0.f, 0.f, 100.f, 100.f);
-                });
-                
-                it(@"should be true if layoutInfoFrame height is greater than zero", ^{
-                    layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 70.f);
-                    [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beTrue];
-                });
-                
-                it(@"should be false if layoutInfoFrame height of zero", ^{
-                    layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 0.f);
-                    [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beFalse];
-                });
-            });
-            
-            context(@"when rects don't intersect", ^{
-                beforeEach(^{
-                    rect = CGRectMake(1000.f, 1000.f, 100.f, 100.f);
-                });
-                
-                it(@"should be false if layoutInfoFrame height is greater than zero", ^{
-                    layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 70.f);
-                    [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beFalse];
-                });
-                
-                it(@"should be false if layoutInfoFrame height of zero", ^{
-                    layoutInfoFrame = CGRectMake(0.f, 0.f, 50.f, 0.f);
-                    [[theValue([layout layoutInfoFrame:layoutInfoFrame requiresLayoutAttritbutesForRect:rect]) should] beFalse];
-                });
-            });
         });
         
         context(@"getSizingInfos", ^{

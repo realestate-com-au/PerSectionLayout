@@ -54,13 +54,6 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 
 #pragma mark - Utilities
 
-- (BOOL)layoutInfoFrame:(CGRect)layoutInfoFrame requiresLayoutAttritbutesForRect:(CGRect)rect
-{
-    return ((CGRectGetHeight(layoutInfoFrame) > 0) && CGRectIntersectsRect(layoutInfoFrame, rect));
-}
-
-#pragma mark - Utilities
-
 - (CGPoint)adjustedCollectionViewContentOffset
 {
     CGFloat adjustedYValue = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
