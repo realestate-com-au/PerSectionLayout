@@ -218,6 +218,21 @@
     return nil;
 }
 
+- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalFooterForRect:(CGRect)rect withOffset:(CGSize)offset
+{
+    CGRect footerFrame = self.footerFrame;
+    if (CGRectGetHeight(footerFrame) > 0 && CGRectIntersectsRect(footerFrame, rect))
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+        UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter withIndexPath:indexPath];
+		attr.frame = footerFrame;
+
+        return attr;
+    }
+
+    return nil;
+}
+
 #pragma mark - NSObject
 
 - (NSString *)description

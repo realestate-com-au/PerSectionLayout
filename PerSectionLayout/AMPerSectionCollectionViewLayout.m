@@ -140,16 +140,12 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
             }
 		}
 	}
-	
-	// footer
-	CGRect normalizedFooterFrame = self.layoutInfo.footerFrame;
-	if ([self layoutInfoFrame:normalizedFooterFrame requiresLayoutAttritbutesForRect:rect])
+
+    UICollectionViewLayoutAttributes *globalFooterLayoutAttributes = [self.layoutInfo layoutAttributesForGlobalFooterForRect:rect withOffset:offset];
+    if (globalFooterLayoutAttributes != nil)
     {
-		UICollectionViewLayoutAttributes *layoutAttributes;
-		layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter withIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-		layoutAttributes.frame = normalizedFooterFrame;
-		[layoutAttributesArray addObject:layoutAttributes];
-	}
+        [layoutAttributesArray addObject:globalFooterLayoutAttributes];
+    }
     
 	return layoutAttributesArray;
 }

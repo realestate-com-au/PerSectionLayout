@@ -17,6 +17,7 @@
 - (CGRect)stickyHeaderFrameForYOffset:(CGFloat)yOffset;
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalHeaderForRect:(CGRect)rect withOffset:(CGSize)offset;
+- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalFooterForRect:(CGRect)rect withOffset:(CGSize)offset;
 
 - (void)updateItemsLayout;
 
