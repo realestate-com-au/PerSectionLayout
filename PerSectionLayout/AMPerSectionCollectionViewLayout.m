@@ -61,16 +61,17 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 
 #pragma mark - Utilities
 
-- (CGFloat)adjustedCollectionViewContentOffset
+- (CGPoint)adjustedCollectionViewContentOffset
 {
-    return self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
+    CGFloat adjustedYValue = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
+    return CGPointMake(0, adjustedYValue);
 }
 
 #pragma mark - Layout attributes
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    CGSize offset = CGSizeMake(0, [self adjustedCollectionViewContentOffset]);
+    CGPoint offset = [self adjustedCollectionViewContentOffset];
     NSMutableArray *layoutAttributesArray = [NSMutableArray array];
 
     UICollectionViewLayoutAttributes *globalHeaderLayoutAttributes = [self.layoutInfo layoutAttributesForGlobalHeaderForRect:rect withOffset:offset];
@@ -81,7 +82,7 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 
 	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
     {
-        CGRect normalizedSectionFrame = [section stickyFrameForYOffset:[self adjustedCollectionViewContentOffset]];
+        CGRect normalizedSectionFrame = [section stickyFrameForYOffset:[self adjustedCollectionViewContentOffset].y];
 		if (CGRectIntersectsRect(normalizedSectionFrame, rect))
         {
             NSInteger sectionIndex = (NSInteger)[self.layoutInfo.layoutInfoSections indexOfObject:section];
@@ -146,7 +147,7 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
     {
         [layoutAttributesArray addObject:globalFooterLayoutAttributes];
     }
-    
+
 	return layoutAttributesArray;
 }
 
@@ -160,7 +161,7 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 	
 	UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
 	
-    CGRect sectionFrame = [section stickyFrameForYOffset:[self adjustedCollectionViewContentOffset]];
+    CGRect sectionFrame = [section stickyFrameForYOffset:[self adjustedCollectionViewContentOffset].y];
     
 	// calculate item rect
 	CGRect normalizedRowFrame = row.frame;
@@ -178,21 +179,24 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:kind withIndexPath:indexPath];
-	
+    CGPoint offset = [self adjustedCollectionViewContentOffset];
+    CGRect rect = CGRectZero;
+
 	if ([kind isEqualToString:AMPerSectionCollectionElementKindHeader])
     {
-		layoutAttributes.frame = [self.layoutInfo stickyHeaderFrameForYOffset:[self adjustedCollectionViewContentOffset]];;
-        layoutAttributes.zIndex = AMPerSectionCollectionElementAlwaysShowOnTopZIndex;
+        //FIXME: JC - Passing the CGRectZero is a bit redundant.
+        return [self.layoutInfo layoutAttributesForGlobalHeaderForRect:rect withOffset:offset];
 	}
     else if ([kind isEqualToString:AMPerSectionCollectionElementKindFooter])
     {
-		layoutAttributes.frame = self.layoutInfo.footerFrame;
+        //FIXME: JC - Passing the CGRectZero is a bit redundant.
+        return [self.layoutInfo layoutAttributesForGlobalFooterForRect:rect withOffset:offset];
     }
     else
     {
+        UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:kind withIndexPath:indexPath];
 		AMPerSectionCollectionViewLayoutSection *section = [self.layoutInfo sectionAtIndex:indexPath.section];
-        CGRect normalizedSectionFrame = [section stickyFrameForYOffset:[self adjustedCollectionViewContentOffset]];
+        CGRect normalizedSectionFrame = [section stickyFrameForYOffset:offset.y];
         
 		if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionHeader])
         {
@@ -209,9 +213,11 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
             normalizedSectionHeaderFrame.origin.y += CGRectGetMinY(normalizedSectionFrame);
 			layoutAttributes.frame = normalizedSectionHeaderFrame;
 		}
+
+        return layoutAttributes;
 	}
-    
-	return layoutAttributes;
+
+    return nil;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString *)decorationViewKind atIndexPath:(NSIndexPath *)indexPath

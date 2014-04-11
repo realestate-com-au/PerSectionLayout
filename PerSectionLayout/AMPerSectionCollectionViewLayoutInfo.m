@@ -201,11 +201,12 @@
 
 #pragma mark - UICollectionViewLayoutAttributes
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalHeaderForRect:(CGRect)rect withOffset:(CGSize)offset
+- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalHeaderForRect:(CGRect)rect withOffset:(CGPoint)offset
 {
-    CGRect headerFrame = [self stickyHeaderFrameForYOffset:offset.height];
+    CGRect headerFrame = [self stickyHeaderFrameForYOffset:offset.y];
 
-    if (CGRectGetHeight(headerFrame) > 0 && CGRectIntersectsRect(headerFrame, rect))
+    //FIXME: abstract this, there's points where a reference rect is not required and the method must return something
+    if (CGRectEqualToRect(rect, CGRectZero) || (CGRectGetHeight(headerFrame) > 0 && CGRectIntersectsRect(headerFrame, rect)))
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
         UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withIndexPath:indexPath];
@@ -218,10 +219,12 @@
     return nil;
 }
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalFooterForRect:(CGRect)rect withOffset:(CGSize)offset
+- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalFooterForRect:(CGRect)rect withOffset:(CGPoint)offset
 {
     CGRect footerFrame = self.footerFrame;
-    if (CGRectGetHeight(footerFrame) > 0 && CGRectIntersectsRect(footerFrame, rect))
+
+    //FIXME: abstract this, there's points where a reference rect is not required and the method must return something
+    if (CGRectEqualToRect(rect, CGRectZero) || (CGRectGetHeight(footerFrame) > 0 && CGRectIntersectsRect(footerFrame, rect)))
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
         UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter withIndexPath:indexPath];

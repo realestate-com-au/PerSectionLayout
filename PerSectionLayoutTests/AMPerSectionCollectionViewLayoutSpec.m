@@ -507,10 +507,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 
                 context(@"emulating a scroll", ^{
                     beforeEach(^{
-                        CGFloat yOffset = delegateDataSource.headerReferenceSize.height + 60;
+                        CGPoint yOffsetPoint = CGPointMake(0, delegateDataSource.headerReferenceSize.height + 60);
                         
-                        [layout stub:@selector(adjustedCollectionViewContentOffset) andReturn:theValue(yOffset)];
-                        layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f,  yOffset, layout.collectionViewContentSize.width,  layout.collectionViewContentSize.height - yOffset)];
+                        [layout stub:@selector(adjustedCollectionViewContentOffset) andReturn:theValue(yOffsetPoint)];
+                        layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f,  yOffsetPoint.y, layout.collectionViewContentSize.width,  layout.collectionViewContentSize.height - yOffsetPoint.y)];
                     });
                     
                     it(@"should return the sticky header", ^{
