@@ -39,6 +39,8 @@
 {
     AMPerSectionCollectionViewLayoutSection *layoutSection = [[AMPerSectionCollectionViewLayoutSection alloc] init];
     [self.sections addObject:layoutSection];
+    layoutSection.index = (NSInteger)[self.sections indexOfObject:layoutSection];
+
     [self invalidate];
     
     return layoutSection;

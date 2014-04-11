@@ -26,6 +26,7 @@
 @property (nonatomic, assign) CGRect headerFrame;
 @property (nonatomic, assign) CGRect bodyFrame;
 @property (nonatomic, assign) CGRect footerFrame;
+@property (nonatomic, assign) NSInteger index;
 @property (nonatomic, assign, getter = isSticky) BOOL sticky;
 
 @end

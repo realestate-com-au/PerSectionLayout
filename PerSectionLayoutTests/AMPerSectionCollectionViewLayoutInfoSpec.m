@@ -23,9 +23,12 @@ describe(@"AMPerSectionCollectionViewLayoutInfo", ^{
     });
 
     context(@"adding a section", ^{
+        __block id secondSection;
+
         beforeEach(^{
             layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
             section = [layoutInfo addSection];
+            secondSection = [layoutInfo addSection];
         });
 
         it(@"added section should be of a layoutSection", ^{
@@ -39,6 +42,12 @@ describe(@"AMPerSectionCollectionViewLayoutInfo", ^{
         it(@"should leave the layout info invalidated", ^{
             [[theValue(layoutInfo.isValid) should] beNo];
         });
+
+        it(@"should be given an index value", ^{
+            [[theValue([section index]) should] equal:theValue(0)];
+            [[theValue([secondSection index]) should] equal:theValue(1)];
+        });
+
     });
 
     context(@"invalidation", ^{
