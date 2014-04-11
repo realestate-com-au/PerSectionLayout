@@ -13,8 +13,8 @@ NSString * const AMPerSectionCollectionElementKindSectionHeader = @"AMPerSection
 NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSectionCollectionElementKindSectionFooter";
 NSString * const AMPerSectionCollectionElementKindSectionBackground = @"AMPerSectionCollectionElementKindSectionBackground";
 
-static const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopIndex = 2048;
-static const NSInteger AMPerSectionCollectionElementStickySectionIndex = -2048;
+const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
+const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 
 @interface AMPerSectionCollectionViewLayout ()
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
@@ -124,7 +124,7 @@ static const NSInteger AMPerSectionCollectionElementStickySectionIndex = -2048;
 															CGRectGetHeight(itemFrame));
                         if (section.isSticky)
                         {
-                            layoutAttributes.zIndex = AMPerSectionCollectionElementStickySectionIndex;
+                            layoutAttributes.zIndex = AMPerSectionCollectionElementStickySectionZIndex;
                         }
 						[layoutAttributesArray addObject:layoutAttributes];
 					}
@@ -177,7 +177,7 @@ static const NSInteger AMPerSectionCollectionElementStickySectionIndex = -2048;
     
     if (section.isSticky)
     {
-        layoutAttributes.zIndex = AMPerSectionCollectionElementStickySectionIndex;
+        layoutAttributes.zIndex = AMPerSectionCollectionElementStickySectionZIndex;
     }
 	
 	return layoutAttributes;
@@ -190,7 +190,7 @@ static const NSInteger AMPerSectionCollectionElementStickySectionIndex = -2048;
 	if ([kind isEqualToString:AMPerSectionCollectionElementKindHeader])
     {
 		layoutAttributes.frame = [self.layoutInfo stickyHeaderFrameForYOffset:[self adjustedCollectionViewContentOffset]];;
-        layoutAttributes.zIndex = AMPerSectionCollectionElementAlwaysShowOnTopIndex;
+        layoutAttributes.zIndex = AMPerSectionCollectionElementAlwaysShowOnTopZIndex;
 	}
     else if ([kind isEqualToString:AMPerSectionCollectionElementKindFooter])
     {

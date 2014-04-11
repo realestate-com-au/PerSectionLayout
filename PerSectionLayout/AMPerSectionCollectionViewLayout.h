@@ -11,6 +11,9 @@ extern NSString * const AMPerSectionCollectionElementKindSectionHeader;
 extern NSString * const AMPerSectionCollectionElementKindSectionFooter;
 extern NSString * const AMPerSectionCollectionElementKindSectionBackground;
 
+extern const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex;
+extern const NSInteger AMPerSectionCollectionElementStickySectionZIndex;
+
 @protocol AMPerSectionCollectionViewLayoutDelegate <UICollectionViewDelegate>
 @optional
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
