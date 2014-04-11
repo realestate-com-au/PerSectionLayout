@@ -188,7 +188,7 @@
 
 #pragma mark - UICollectionViewLayoutAttributes
 
-- (NSArray *)layoutAttributesArrayForSectionForRect:(CGRect)rect withOffset:(CGPoint)offset
+- (NSArray *)layoutAttributesArrayForSectionInRect:(CGRect)rect withOffset:(CGPoint)offset
 {
     NSMutableArray *layoutAttributesArray = [NSMutableArray array];
 

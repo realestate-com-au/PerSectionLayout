@@ -74,7 +74,7 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
     CGPoint offset = [self adjustedCollectionViewContentOffset];
     NSMutableArray *layoutAttributesArray = [NSMutableArray array];
 
-    UICollectionViewLayoutAttributes *globalHeaderLayoutAttributes = [self.layoutInfo layoutAttributesForGlobalHeaderForRect:rect withOffset:offset];
+    UICollectionViewLayoutAttributes *globalHeaderLayoutAttributes = [self.layoutInfo layoutAttributesForGlobalHeaderInRect:rect withOffset:offset];
     if (globalHeaderLayoutAttributes != nil)
     {
         [layoutAttributesArray addObject:globalHeaderLayoutAttributes];
@@ -82,11 +82,11 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 
 	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
     {
-        NSArray *sectionLayoutAttributes = [section layoutAttributesArrayForSectionForRect:rect withOffset:offset];
+        NSArray *sectionLayoutAttributes = [section layoutAttributesArrayForSectionInRect:rect withOffset:offset];
         [layoutAttributesArray addObjectsFromArray:sectionLayoutAttributes];
 	}
 
-    UICollectionViewLayoutAttributes *globalFooterLayoutAttributes = [self.layoutInfo layoutAttributesForGlobalFooterForRect:rect withOffset:offset];
+    UICollectionViewLayoutAttributes *globalFooterLayoutAttributes = [self.layoutInfo layoutAttributesForGlobalFooterInRect:rect withOffset:offset];
     if (globalFooterLayoutAttributes != nil)
     {
         [layoutAttributesArray addObject:globalFooterLayoutAttributes];
@@ -129,12 +129,12 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 	if ([kind isEqualToString:AMPerSectionCollectionElementKindHeader])
     {
         //FIXME: JC - Passing the CGRectZero is a bit redundant.
-        return [self.layoutInfo layoutAttributesForGlobalHeaderForRect:rect withOffset:offset];
+        return [self.layoutInfo layoutAttributesForGlobalHeaderInRect:rect withOffset:offset];
 	}
     else if ([kind isEqualToString:AMPerSectionCollectionElementKindFooter])
     {
         //FIXME: JC - Passing the CGRectZero is a bit redundant.
-        return [self.layoutInfo layoutAttributesForGlobalFooterForRect:rect withOffset:offset];
+        return [self.layoutInfo layoutAttributesForGlobalFooterInRect:rect withOffset:offset];
     }
     else
     {

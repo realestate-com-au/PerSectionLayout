@@ -16,8 +16,8 @@
 - (AMPerSectionCollectionViewLayoutSection *)firstSectionAtPoint:(CGPoint)point;
 - (CGRect)stickyHeaderFrameForYOffset:(CGFloat)yOffset;
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalHeaderForRect:(CGRect)rect withOffset:(CGPoint)offset;
-- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalFooterForRect:(CGRect)rect withOffset:(CGPoint)offset;
+- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalHeaderInRect:(CGRect)rect withOffset:(CGPoint)offset;
+- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalFooterInRect:(CGRect)rect withOffset:(CGPoint)offset;
 
 - (void)updateItemsLayout;
 

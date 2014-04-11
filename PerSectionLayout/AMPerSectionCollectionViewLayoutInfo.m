@@ -203,7 +203,7 @@
 
 #pragma mark - UICollectionViewLayoutAttributes
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalHeaderForRect:(CGRect)rect withOffset:(CGPoint)offset
+- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalHeaderInRect:(CGRect)rect withOffset:(CGPoint)offset
 {
     CGRect headerFrame = [self stickyHeaderFrameForYOffset:offset.y];
 
@@ -221,7 +221,7 @@
     return nil;
 }
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalFooterForRect:(CGRect)rect withOffset:(CGPoint)offset
+- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalFooterInRect:(CGRect)rect withOffset:(CGPoint)offset
 {
     CGRect footerFrame = self.footerFrame;
 
