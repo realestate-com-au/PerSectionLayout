@@ -24,9 +24,10 @@
 - (BOOL)canStretchSectionAtIndex:(NSInteger)section;
 - (void)getSizingInfos:(id)arg;
 - (void)updateItemsLayout:(id)arg;
-- (CGFloat)adjustedCollectionViewContentOffset;
+- (CGPoint)adjustedCollectionViewContentOffset;
 
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
+@property (nonatomic, assign) NSValue *transitionTargetContentOffsetValue;
 
 @end
 
@@ -80,6 +81,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         it(@"should have by default non stick header", ^{
             [[theValue(layout.hasStickyHeader) should] equal:theValue(NO)];
         });
+        
+        it(@"should have no transition target content offset", ^{
+            [[layout.transitionTargetContentOffsetValue should] beNil];
+        });
     });
     
     context(@"layout invalidation", ^{
@@ -125,6 +130,52 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 it(@"should nil layout info", ^{
                     [[layout.layoutInfo should] beNil];
                 });
+            });
+        });
+    });
+    
+    context(@"target content offset for used in layout to layout transition", ^{
+        context(@"when have a transition target offset", ^{
+            beforeEach(^{
+                layout.transitionTargetContentOffsetValue = [NSValue valueWithCGPoint:CGPointMake(0.f, 40.f)];
+            });
+            
+            it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
+                [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointMake(0.f, 40.f))];
+            });
+        });
+        
+        context(@"when doesn't have a transition target offset", ^{
+            beforeEach(^{
+                layout.transitionTargetContentOffsetValue = nil;
+            });
+            
+            it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
+                [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointZero)];
+            });
+        });
+        
+        context(@"once targetContentOffsetForProposedContentOffset is called", ^{
+            beforeEach(^{
+                collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 250.f) collectionViewLayout:layout];
+                collectionView.contentInset = UIEdgeInsetsMake(45.f, 15.f, 25.f, 13.f);
+                [layout stub:@selector(collectionView) andReturn:collectionView];
+                [layout targetContentOffsetForProposedContentOffset:CGPointMake(0.f, 60.f)];
+            });
+            
+            it(@"should udpate the transition target content offset", ^{
+                [[theValue([layout.transitionTargetContentOffsetValue CGPointValue]) should] equal:theValue(CGPointMake(0.f, -45.f))];
+            });
+        });
+        
+        context(@"once finalizeLayoutTransition is called", ^{
+            beforeEach(^{
+                layout.transitionTargetContentOffsetValue = [NSValue valueWithCGPoint:CGPointMake(0.f, 23.f)];
+                [layout finalizeLayoutTransition];
+            });
+            
+            it(@"should no longer have a transition content offset", ^{
+                [[layout.transitionTargetContentOffsetValue should] beNil];
             });
         });
     });

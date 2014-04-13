@@ -17,6 +17,7 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 
 @interface AMPerSectionCollectionViewLayout ()
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
+@property (nonatomic, strong) NSValue *transitionTargetContentOffsetValue;
 @end
 
 @implementation AMPerSectionCollectionViewLayout
@@ -55,7 +56,13 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 
 - (CGPoint)adjustedCollectionViewContentOffset
 {
-    CGFloat adjustedYValue = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
+    CGFloat contentOffsetY = self.collectionView.contentOffset.y;
+    if (self.transitionTargetContentOffsetValue)
+    {
+        contentOffsetY = [self.transitionTargetContentOffsetValue CGPointValue].y;
+    }
+    
+    CGFloat adjustedYValue = contentOffsetY + self.collectionView.contentInset.top;
     return CGPointMake(0, adjustedYValue);
 }
 
@@ -159,6 +166,13 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 - (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString *)decorationViewKind atIndexPath:(NSIndexPath *)indexPath
 {
     return nil;
+}
+
+#pragma mark - Transition
+
+- (void)finalizeLayoutTransition
+{
+    self.transitionTargetContentOffsetValue = nil;
 }
 
 #pragma mark - AMPerSectionCollectionViewLayoutDelegate
@@ -294,9 +308,11 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset
 {
-    return CGPointMake(0.f, -64.f);
-    
     CGPoint targetOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset];
+    targetOffset.y = -self.collectionView.contentInset.top;
+    
+    self.transitionTargetContentOffsetValue = [NSValue valueWithCGPoint:targetOffset];;
+    
     return targetOffset;
 }
 
