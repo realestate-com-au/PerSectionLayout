@@ -146,7 +146,7 @@
 	for (AMPerSectionCollectionViewLayoutSection *section in layoutSections)
     {
         CGFloat sectionWidth = section.width;
-        section.width = sectionWidth > 0 ? sectionWidth : dimension;
+        section.width = (isnan(sectionWidth)) ? dimension : sectionWidth;
 		[section computeLayout:self];
 	}
 

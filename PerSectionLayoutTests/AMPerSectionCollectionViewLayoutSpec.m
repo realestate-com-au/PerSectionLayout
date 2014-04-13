@@ -74,7 +74,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
         
         it(@"should have a default section minimum with", ^{
-            [[theValue(layout.sectionMinimumWidth) should] equal:theValue(0.f)];
+            [[theValue(layout.sectionMinimumWidth) should] equal:theValue(NAN)];
         });
         
         it(@"should have by default non stick header", ^{
