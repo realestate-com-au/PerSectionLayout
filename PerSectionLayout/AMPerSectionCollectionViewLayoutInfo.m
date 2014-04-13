@@ -232,6 +232,18 @@
     return nil;
 }
 
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath withOffset:(CGPoint)offset
+{
+    AMPerSectionCollectionViewLayoutSection *section = [self sectionAtIndex:indexPath.section];
+    return [section layoutAttributesForItemAtIndexPath:indexPath withOffset:offset];
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind withIndexPath:(NSIndexPath *)indexPath withOffset:(CGPoint)offset
+{
+    AMPerSectionCollectionViewLayoutSection *section = [self sectionAtIndex:indexPath.section];
+    return [section layoutAttributesForSupplementaryViewOfKind:kind withIndexPath:indexPath withOffset:offset];
+}
+
 #pragma mark - NSObject
 
 - (NSString *)description

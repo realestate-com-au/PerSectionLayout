@@ -91,30 +91,13 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
         [layoutAttributesArray addObjectsFromArray:sectionLayoutAttributes];
 	}
 
-
 	return layoutAttributesArray;
 }
 
-//Cells
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    AMPerSectionCollectionViewLayoutItem *item = [self.layoutInfo itemAtIndexPath:indexPath];
-    CGRect itemFrame = item.frame;
-    
-    AMPerSectionCollectionViewLayoutSection *section = [self.layoutInfo sectionAtIndex:indexPath.section];
-	AMPerSectionCollectionViewLayoutRow *row = item.row;
-	
-	UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-	
-    CGRect sectionFrame = [section stretchedFrameForOffset:[self adjustedCollectionViewContentOffset]];
-    
-	// calculate item rect
-	CGRect normalizedRowFrame = row.frame;
-	normalizedRowFrame.origin.x += CGRectGetMinX(sectionFrame);
-	normalizedRowFrame.origin.y += CGRectGetMinY(sectionFrame);
-	layoutAttributes.frame = CGRectMake(CGRectGetMinX(normalizedRowFrame) + CGRectGetMinX(itemFrame), CGRectGetMinY(normalizedRowFrame) + CGRectGetMinY(itemFrame), CGRectGetWidth(itemFrame), CGRectGetHeight(itemFrame));
-	
-	return layoutAttributes;
+    CGPoint offset = [self adjustedCollectionViewContentOffset];
+    return [self.layoutInfo layoutAttributesForItemAtIndexPath:indexPath withOffset:offset];
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
@@ -123,6 +106,7 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 
 	if ([kind isEqualToString:AMPerSectionCollectionElementKindHeader])
     {
+        // Check the index path, supplementary views will be queried for each indexPath
         if (indexPath.row == 0 && indexPath.section == 0)
         {
             return [self.layoutInfo layoutAttributesForGlobalHeaderWithOffset:offset];
@@ -137,27 +121,7 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
     }
     else
     {
-        UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:kind withIndexPath:indexPath];
-		AMPerSectionCollectionViewLayoutSection *section = [self.layoutInfo sectionAtIndex:indexPath.section];
-        CGRect normalizedSectionFrame = [section stretchedFrameForOffset:offset];
-        
-		if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionHeader])
-        {
-            CGRect normalizedSectionHeaderFrame = section.headerFrame;
-            normalizedSectionHeaderFrame.origin.x += CGRectGetMinX(normalizedSectionFrame);
-            normalizedSectionHeaderFrame.origin.y += CGRectGetMinY(normalizedSectionFrame);
-			layoutAttributes.frame = normalizedSectionHeaderFrame;
-            
-		}
-        else if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionFooter])
-        {
-            CGRect normalizedSectionHeaderFrame = section.footerFrame;
-            normalizedSectionHeaderFrame.origin.x += CGRectGetMinX(normalizedSectionFrame);
-            normalizedSectionHeaderFrame.origin.y += CGRectGetMinY(normalizedSectionFrame);
-			layoutAttributes.frame = normalizedSectionHeaderFrame;
-		}
-
-        return layoutAttributes;
+		return [self.layoutInfo layoutAttributesForSupplementaryViewOfKind:kind withIndexPath:indexPath withOffset:offset];
 	}
 
     return nil;

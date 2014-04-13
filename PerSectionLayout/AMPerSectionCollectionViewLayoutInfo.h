@@ -19,6 +19,9 @@
 - (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalHeaderWithOffset:(CGPoint)offset;
 - (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalFooterWithOffset:(CGPoint)offset;
 
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath withOffset:(CGPoint)offset;
+- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind withIndexPath:(NSIndexPath *)indexPath withOffset:(CGPoint)offset;
+
 - (void)updateItemsLayout;
 
 @property (nonatomic, assign, getter = isValid) BOOL valid;
