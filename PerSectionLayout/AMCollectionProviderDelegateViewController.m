@@ -97,12 +97,12 @@
     return collectionViewLayout.hasStickyHeader;
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout isSectionStickyAtIndex:(NSInteger)section
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout canStretchSectionAtIndex:(NSInteger)section
 {
     id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:isSectionStickyAtIndex:)])
+    if ([sectionController respondsToSelector:@selector(collectionView:layout:canStretchSectionAtIndex:)])
     {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout isSectionStickyAtIndex:section];
+        return [sectionController collectionView:collectionView layout:collectionViewLayout canStretchSectionAtIndex:section];
     }
     
     return NO;

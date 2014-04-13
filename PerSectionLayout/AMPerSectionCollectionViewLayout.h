@@ -12,7 +12,6 @@ extern NSString * const AMPerSectionCollectionElementKindSectionFooter;
 extern NSString * const AMPerSectionCollectionElementKindSectionBackground;
 
 extern const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex;
-extern const NSInteger AMPerSectionCollectionElementStickySectionZIndex;
 
 @protocol AMPerSectionCollectionViewLayoutDelegate <UICollectionViewDelegate>
 @optional
@@ -26,7 +25,7 @@ extern const NSInteger AMPerSectionCollectionElementStickySectionZIndex;
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section;
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
-- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout isSectionStickyAtIndex:(NSInteger)section;
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout canStretchSectionAtIndex:(NSInteger)section;
 @end
 
 @interface AMPerSectionCollectionViewLayout : UICollectionViewLayout

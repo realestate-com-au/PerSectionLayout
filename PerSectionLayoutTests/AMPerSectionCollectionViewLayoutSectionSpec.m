@@ -231,54 +231,62 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
             });
         });
         
-        context(@"sticky", ^{
+        context(@"can stretch", ^{
             beforeEach(^{
                 section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
             });
             
             context(@"by default", ^{
                 it(@"should not be sticky by default", ^{
-                    [[theValue(section.sticky) should] beFalse];
+                    [[theValue(section.canStretch) should] beFalse];
                 });
             });
             
             context(@"once set", ^{
-                __block BOOL sticky = NO;
+                __block BOOL canStretch = NO;
                 
                 beforeEach(^{
-                    sticky = YES;
-                    section.sticky = sticky;
+                    canStretch = YES;
+                    section.stretch = canStretch;
                 });
                 
-                it(@"should remember if is sticky or not", ^{
-                    [[theValue(section.sticky) should] equal:theValue(sticky)];
+                it(@"should remember if can be stretched or not", ^{
+                    [[theValue(section.canStretch) should] equal:theValue(canStretch)];
                 });
             });
         });
         
-        context(@"stickyFrameForYOffset", ^{
+        context(@"stretchedFrameForOffset", ^{
             beforeEach(^{
                 section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
                 section.frame = CGRectMake(0.f, 20.f, 200.f, 50.f);
             });
             
-            context(@"section is sticky", ^{
+            context(@"section can stretch", ^{
                 beforeEach(^{
-                    section.sticky = YES;
+                    section.stretch = YES;
                 });
                 
-                it(@"should have per sticky frame the section frame", ^{
-                    [[theValue([section stickyFrameForYOffset:400]) should] equal:theValue(CGRectMake(0.f, 420.f, 200.f, 50.f))];
+                context(@"and need to stretch", ^{
+                    it(@"should have a stretched frame", ^{
+                        [[theValue([section stretchedFrameForOffset:CGPointMake(0, -400.f)]) should] equal:theValue(CGRectMake(0.f, -380.f, 200.f, 450.f))];
+                    });
+                });
+                
+                context(@"and doesn't need to stretch", ^{
+                    it(@"should have per streched frame the section frame", ^{
+                        [[theValue([section stretchedFrameForOffset:CGPointMake(0, 400.f)]) should] equal:theValue(section.frame)];
+                    });
                 });
             });
             
-            context(@"sectio isn't sticky", ^{
+            context(@"sectio cannot stretch", ^{
                 beforeEach(^{
-                    section.sticky = NO;
+                    section.stretch = NO;
                 });
                 
-                it(@"should have per sticky frame the section frame", ^{
-                    [[theValue([section stickyFrameForYOffset:0]) should] equal:theValue(section.frame)];
+                it(@"should have per stretched frame the section frame", ^{
+                    [[theValue([section stretchedFrameForOffset:CGPointZero]) should] equal:theValue(section.frame)];
                 });
             });
         });

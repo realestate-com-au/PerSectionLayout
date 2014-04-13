@@ -27,13 +27,13 @@
 
 #pragma mark - Sticky
 
-- (CGRect)stickyFrameForYOffset:(CGFloat)yOffset
+- (CGRect)stretchedFrameForOffset:(CGPoint)offset
 {
     CGRect normalizedSectionFrame = self.frame;
-    
-    if (self.sticky)
+    if (self.canStretch && offset.y < 0)
     {
-        normalizedSectionFrame.origin.y = yOffset + CGRectGetMinY(normalizedSectionFrame);
+        normalizedSectionFrame.origin.y += offset.y;
+        normalizedSectionFrame.size.height = MAX(0, CGRectGetHeight(normalizedSectionFrame) - offset.y);
     }
     
     return normalizedSectionFrame;
@@ -190,7 +190,7 @@
 
 - (UICollectionViewLayoutAttributes *)attributesForSupplementaryViewOfKind:(NSString *)kind withIndexPath:(NSIndexPath *)indexPath withOffset:(CGPoint)offset
 {
-    __unused CGRect sectionFrame = [self stickyFrameForYOffset:offset.y];
+    __unused CGRect sectionFrame = [self stretchedFrameForOffset:offset];
 
     if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionHeader])
     {
@@ -216,7 +216,7 @@
 {
     NSMutableArray *layoutAttributesArray = [NSMutableArray array];
 
-    CGRect sectionFrame = [self stickyFrameForYOffset:offset.y];
+    CGRect sectionFrame = [self stretchedFrameForOffset:offset];
     if (/*CGRectEqualToRect(rect, CGRectZero) || */CGRectIntersectsRect(sectionFrame, rect))
     {
         /** Header Frame **/
@@ -240,21 +240,32 @@
         }
 
         /** Body */
+        CGFloat firstRowSizeAdjustment = 0;
         for (AMPerSectionCollectionViewLayoutRow *row in self.layoutSectionRows)
         {
+            BOOL shouldStretchFirstRow = (self.canStretch && row.index == 0);
+            
             CGRect rowFrame = CGRectOffset(row.frame, sectionFrame.origin.x, sectionFrame.origin.y);
+            rowFrame.origin.y += firstRowSizeAdjustment;
+            if (shouldStretchFirstRow)
+            {
+                firstRowSizeAdjustment = MAX(0, CGRectGetHeight(sectionFrame) - CGRectGetHeight(self.frame));
+                rowFrame.size.height += firstRowSizeAdjustment;
+            }
+            
             if (/*CGRectEqualToRect(rect, CGRectZero) || */CGRectIntersectsRect(rowFrame, rect))
             {
                 for (AMPerSectionCollectionViewLayoutItem *item in row.layoutSectionItems)
                 {
                     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item.index inSection:self.index];
                     UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-                    attr.frame = CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
-
-                    if (self.isSticky)
+                    
+                    CGRect itemFrame = CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
+                    if (shouldStretchFirstRow)
                     {
-                        attr.zIndex = AMPerSectionCollectionElementStickySectionZIndex;
+                        itemFrame.size.height = CGRectGetHeight(rowFrame);
                     }
+                    attr.frame = itemFrame;
 
                     [layoutAttributesArray addObject:attr];
                 }

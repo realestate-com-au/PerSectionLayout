@@ -85,9 +85,9 @@
     return NO;
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout isSectionStickyAtIndex:(NSInteger)section
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout canStretchSectionAtIndex:(NSInteger)section
 {
-    return (section == self.stickySectionIndex);
+    return (section == self.sectionIndexToStretch);
 }
 
 @end

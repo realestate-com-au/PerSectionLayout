@@ -14,7 +14,6 @@ NSString * const AMPerSectionCollectionElementKindSectionFooter = @"AMPerSection
 NSString * const AMPerSectionCollectionElementKindSectionBackground = @"AMPerSectionCollectionElementKindSectionBackground";
 
 const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
-const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 
 @interface AMPerSectionCollectionViewLayout ()
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
@@ -100,18 +99,13 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 	
 	UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
 	
-    CGRect sectionFrame = [section stickyFrameForYOffset:[self adjustedCollectionViewContentOffset].y];
+    CGRect sectionFrame = [section stretchedFrameForOffset:[self adjustedCollectionViewContentOffset]];
     
 	// calculate item rect
 	CGRect normalizedRowFrame = row.frame;
 	normalizedRowFrame.origin.x += CGRectGetMinX(sectionFrame);
 	normalizedRowFrame.origin.y += CGRectGetMinY(sectionFrame);
 	layoutAttributes.frame = CGRectMake(CGRectGetMinX(normalizedRowFrame) + CGRectGetMinX(itemFrame), CGRectGetMinY(normalizedRowFrame) + CGRectGetMinY(itemFrame), CGRectGetWidth(itemFrame), CGRectGetHeight(itemFrame));
-    
-    if (section.isSticky)
-    {
-        layoutAttributes.zIndex = AMPerSectionCollectionElementStickySectionZIndex;
-    }
 	
 	return layoutAttributes;
 }
@@ -138,7 +132,7 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
     {
         UICollectionViewLayoutAttributes *layoutAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:kind withIndexPath:indexPath];
 		AMPerSectionCollectionViewLayoutSection *section = [self.layoutInfo sectionAtIndex:indexPath.section];
-        CGRect normalizedSectionFrame = [section stickyFrameForYOffset:offset.y];
+        CGRect normalizedSectionFrame = [section stretchedFrameForOffset:offset];
         
 		if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionHeader])
         {
@@ -285,15 +279,15 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
     return minimumInteritemSpacing;
 }
 
-- (BOOL)isSectionStickyAtIndex:(NSInteger)section
+- (BOOL)canStretchSectionAtIndex:(NSInteger)section
 {
-    BOOL isSectionStickyAtIndex = NO;
-    if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:isSectionStickyAtIndex:)])
+    BOOL canStretchSectionAtIndex = NO;
+    if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:canStretchSectionAtIndex:)])
     {
-        isSectionStickyAtIndex = [self.collectionViewDelegate collectionView:self.collectionView layout:self isSectionStickyAtIndex:section];
+        canStretchSectionAtIndex = [self.collectionViewDelegate collectionView:self.collectionView layout:self canStretchSectionAtIndex:section];
     }
     
-    return isSectionStickyAtIndex;
+    return canStretchSectionAtIndex;
 }
 
 #pragma mark - Layout
@@ -368,7 +362,7 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
         layoutSection.verticalInterstice = [self minimumLineSpacingForSectionAtIndex:section];
         layoutSection.horizontalInterstice = [self minimumInteritemSpacingForSectionAtIndex:section];
         layoutSection.width = [self miniumWidthForSectionAtIndex:section];
-        layoutSection.sticky = [self isSectionStickyAtIndex:section];
+        layoutSection.stretch = [self canStretchSectionAtIndex:section];
         
 		NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:section];
         CGSize itemSize = [self itemSize];

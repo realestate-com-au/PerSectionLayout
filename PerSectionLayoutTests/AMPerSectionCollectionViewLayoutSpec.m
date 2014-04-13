@@ -21,7 +21,7 @@
 - (CGFloat)minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)miniumWidthForSectionAtIndex:(NSInteger)section;
 - (BOOL)hasStickyHeaderOverSection:(NSInteger)section;
-- (BOOL)isSectionStickyAtIndex:(NSInteger)section;
+- (BOOL)canStretchSectionAtIndex:(NSInteger)section;
 - (void)getSizingInfos:(id)arg;
 - (void)updateItemsLayout:(id)arg;
 - (CGFloat)adjustedCollectionViewContentOffset;
@@ -194,8 +194,8 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 [[theValue([layout hasStickyHeaderOverSection:0]) should] equal:theValue(layout.hasStickyHeader)];
             });
             
-            it(@"isSectionStickyAtIndex", ^{
-                [[theValue([layout isSectionStickyAtIndex:0]) should] beFalse];
+            it(@"canStretchSectionAtIndex", ^{
+                [[theValue([layout canStretchSectionAtIndex:0]) should] beFalse];
             });
         });
         
@@ -214,7 +214,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 delegateDataSource.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
                 delegateDataSource.minimumLineSpacing = 8.f;
                 delegateDataSource.minimumInteritemSpacing = 10.f;
-                delegateDataSource.stickySectionIndex = 0;
+                delegateDataSource.sectionIndexToStretch = 0;
                 
                 collectionView.delegate = delegateDataSource;
                 collectionView.dataSource = delegateDataSource;
@@ -260,8 +260,8 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 [[theValue([layout hasStickyHeaderOverSection:0]) should] equal:theValue(delegateDataSource.hasStickyHeader)];
             });
             
-            it(@"isSectionStickyAtIndex", ^{
-                [[theValue([layout isSectionStickyAtIndex:0]) should] beTrue];
+            it(@"canStretchSectionAtIndex", ^{
+                [[theValue([layout canStretchSectionAtIndex:0]) should] beTrue];
             });
         });
         
@@ -436,7 +436,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
                 delegateDataSource.stickyHeader = YES;
                 delegateDataSource.lastSectionWithStickyHeader = 1;
-                delegateDataSource.stickySectionIndex = 0;
+                delegateDataSource.sectionIndexToStretch = 0;
                 
                 collectionView.delegate = delegateDataSource;
                 collectionView.dataSource = delegateDataSource;

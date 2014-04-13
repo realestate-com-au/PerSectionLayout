@@ -16,7 +16,7 @@
 - (AMPerSectionCollectionViewLayoutRow *)addRow;
 - (void)invalidate;
 - (void)computeLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo;
-- (CGRect)stickyFrameForYOffset:(CGFloat)yOffset;
+- (CGRect)stretchedFrameForOffset:(CGPoint)offset;
 
 - (NSArray *)layoutAttributesArrayForSectionInRect:(CGRect)rect withOffset:(CGPoint)offset;
 
@@ -29,6 +29,6 @@
 @property (nonatomic, assign) CGRect bodyFrame;
 @property (nonatomic, assign) CGRect footerFrame;
 @property (nonatomic, assign) NSInteger index;
-@property (nonatomic, assign, getter = isSticky) BOOL sticky;
+@property (nonatomic, assign, getter = canStretch) BOOL stretch;
 
 @end
