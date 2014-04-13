@@ -67,27 +67,29 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
     CGPoint offset = [self adjustedCollectionViewContentOffset];
     NSMutableArray *layoutAttributesArray = [NSMutableArray array];
 
-    UICollectionViewLayoutAttributes *globalHeaderLayoutAttributes = [self.layoutInfo layoutAttributesForGlobalHeaderInRect:rect withOffset:offset];
-    if (globalHeaderLayoutAttributes != nil)
+    UICollectionViewLayoutAttributes *globalHeaderLayoutAttributes = [self.layoutInfo layoutAttributesForGlobalHeaderWithOffset:offset];
+    if (globalHeaderLayoutAttributes != nil && CGRectIntersectsRect(globalHeaderLayoutAttributes.frame, rect))
     {
         [layoutAttributesArray addObject:globalHeaderLayoutAttributes];
     }
 
-	for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
+    UICollectionViewLayoutAttributes *globalFooterLayoutAttributes = [self.layoutInfo layoutAttributesForGlobalFooterWithOffset:offset];
+    if (globalFooterLayoutAttributes != nil && CGRectIntersectsRect(globalFooterLayoutAttributes.frame, rect))
+    {
+        [layoutAttributesArray addObject:globalFooterLayoutAttributes];
+    }
+
+    for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfo.layoutInfoSections)
     {
         NSArray *sectionLayoutAttributes = [section layoutAttributesArrayForSectionInRect:rect withOffset:offset];
         [layoutAttributesArray addObjectsFromArray:sectionLayoutAttributes];
 	}
 
-    UICollectionViewLayoutAttributes *globalFooterLayoutAttributes = [self.layoutInfo layoutAttributesForGlobalFooterInRect:rect withOffset:offset];
-    if (globalFooterLayoutAttributes != nil)
-    {
-        [layoutAttributesArray addObject:globalFooterLayoutAttributes];
-    }
 
 	return layoutAttributesArray;
 }
 
+//Cells
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     AMPerSectionCollectionViewLayoutItem *item = [self.layoutInfo itemAtIndexPath:indexPath];
@@ -117,17 +119,20 @@ const NSInteger AMPerSectionCollectionElementStickySectionZIndex = -2048;
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     CGPoint offset = [self adjustedCollectionViewContentOffset];
-    CGRect rect = CGRectZero;
 
 	if ([kind isEqualToString:AMPerSectionCollectionElementKindHeader])
     {
-        //FIXME: JC - Passing the CGRectZero is a bit redundant.
-        return [self.layoutInfo layoutAttributesForGlobalHeaderInRect:rect withOffset:offset];
+        if (indexPath.row == 0 && indexPath.section == 0)
+        {
+            return [self.layoutInfo layoutAttributesForGlobalHeaderWithOffset:offset];
+        }
 	}
     else if ([kind isEqualToString:AMPerSectionCollectionElementKindFooter])
     {
-        //FIXME: JC - Passing the CGRectZero is a bit redundant.
-        return [self.layoutInfo layoutAttributesForGlobalFooterInRect:rect withOffset:offset];
+        if (indexPath.row == 0 && indexPath.section == 0)
+        {
+            return [self.layoutInfo layoutAttributesForGlobalFooterWithOffset:offset];
+        }
     }
     else
     {

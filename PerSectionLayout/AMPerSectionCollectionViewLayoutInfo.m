@@ -203,35 +203,29 @@
 
 #pragma mark - UICollectionViewLayoutAttributes
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalHeaderInRect:(CGRect)rect withOffset:(CGPoint)offset
+- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalHeaderWithOffset:(CGPoint)offset
 {
     CGRect headerFrame = [self stickyHeaderFrameForYOffset:offset.y];
-
-    //FIXME: abstract this, there's points where a reference rect is not required and the method must return something
-    if (CGRectEqualToRect(rect, CGRectZero) || (CGRectGetHeight(headerFrame) > 0 && CGRectIntersectsRect(headerFrame, rect)))
+    if (CGRectGetHeight(headerFrame) > 0)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
         UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withIndexPath:indexPath];
-		attr.frame = headerFrame;
+        attr.frame = headerFrame;
         attr.zIndex = AMPerSectionCollectionElementAlwaysShowOnTopZIndex;
-
         return attr;
     }
 
     return nil;
 }
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalFooterInRect:(CGRect)rect withOffset:(CGPoint)offset
+- (UICollectionViewLayoutAttributes *)layoutAttributesForGlobalFooterWithOffset:(CGPoint)offset
 {
     CGRect footerFrame = self.footerFrame;
-
-    //FIXME: abstract this, there's points where a reference rect is not required and the method must return something
-    if (CGRectEqualToRect(rect, CGRectZero) || (CGRectGetHeight(footerFrame) > 0 && CGRectIntersectsRect(footerFrame, rect)))
+    if (CGRectGetHeight(footerFrame) > 0)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
         UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter withIndexPath:indexPath];
 		attr.frame = footerFrame;
-
         return attr;
     }
 
