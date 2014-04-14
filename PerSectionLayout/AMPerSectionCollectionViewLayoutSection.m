@@ -190,7 +190,7 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSectionHeaderWithOffset:(CGPoint)offset
 {
-    CGRect sectionFrame = [self stickyFrameForYOffset:offset.y];
+    CGRect sectionFrame = [self stretchedFrameForOffset:offset];
     CGRect headerFrame = CGRectOffset(self.headerFrame, sectionFrame.origin.x, sectionFrame.origin.y);
     if (CGRectGetHeight(headerFrame) > 0)
     {
@@ -241,7 +241,7 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath withOffset:(CGPoint)offset
 {
-    CGRect sectionFrame = [self stickyFrameForYOffset:offset.y];
+    CGRect sectionFrame = [self stretchedFrameForOffset:offset];
 
     AMPerSectionCollectionViewLayoutItem *item = self.layoutSectionItems[(NSUInteger)indexPath.row];
 
@@ -250,11 +250,6 @@
 
     UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
     attr.frame = CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
-
-    if (self.isSticky)
-    {
-        attr.zIndex = AMPerSectionCollectionElementStickySectionZIndex;
-    }
 
     return attr;
 }
