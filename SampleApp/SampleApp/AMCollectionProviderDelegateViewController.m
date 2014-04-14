@@ -3,7 +3,7 @@
 //
 
 #import "AMCollectionProviderDelegateViewController.h"
-#import "AMPerSectionCollectionViewLayout.h"
+#import <PerSectionLayout/AMPerSectionCollectionViewLayout.h>
 
 @implementation AMCollectionProviderDelegateViewController
 

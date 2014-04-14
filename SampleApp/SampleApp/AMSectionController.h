@@ -4,7 +4,7 @@
 
 @import UIKit;
 #import "MainSections.h"
-#import "AMPerSectionCollectionViewLayout.h"
+#import <PerSectionLayout/AMPerSectionCollectionViewLayout.h>
 
 @protocol AMSectionController <NSObject, UICollectionViewDataSource, AMPerSectionCollectionViewLayoutDelegate>
 

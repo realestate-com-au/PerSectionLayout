@@ -3,7 +3,7 @@
 //
 
 #import "AMMapExpandedCollectionViewController.h"
-#import "AMPerSectionCollectionViewLayout.h"
+#import <PerSectionLayout/AMPerSectionCollectionViewLayout.h>
 #import "AMMapSectionController.h"
 #import "AMListSectionController.h"
 #import "AMOFISectionController.h"

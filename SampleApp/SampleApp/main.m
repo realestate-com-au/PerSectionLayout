@@ -1,8 +1,12 @@
 //
+//  main.m
+//  SampleApp
+//
+//  Created by Anthony Mittaz on 14/04/2014.
 //  Copyright (c) 2014 Dblechoc. All rights reserved.
 //
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 #import "AMAppDelegate.h"
 

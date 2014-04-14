@@ -2,7 +2,7 @@
 //  Copyright (c) 2014 Dblechoc. All rights reserved.
 //
 
-#import "AMPerSectionCollectionViewLayout.h"
+#import <PerSectionLayout/AMPerSectionCollectionViewLayout.h>
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 #import "math.h"
 #import "AMPerSectionCollectionViewLayoutInvalidationContext.h"
