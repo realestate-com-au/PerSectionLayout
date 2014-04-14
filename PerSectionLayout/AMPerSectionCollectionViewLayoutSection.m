@@ -196,8 +196,9 @@
     if (CGRectGetHeight(headerFrame) > 0)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:self.index];
-        UICollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withIndexPath:indexPath];
+        AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withIndexPath:indexPath];
         attr.frame = headerFrame;
+        attr.adjustmentOffset = offset;
         return attr;
     }
 
@@ -211,8 +212,9 @@
     if (CGRectGetHeight(footerFrame) > 0)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:self.index];
-        UICollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:indexPath];
+        AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:indexPath];
         attr.frame = footerFrame;
+        attr.adjustmentOffset = offset;
         return attr;
     }
 
@@ -249,8 +251,9 @@
     AMPerSectionCollectionViewLayoutRow *row = item.row;
     CGRect rowFrame = CGRectOffset(row.frame, sectionFrame.origin.x, sectionFrame.origin.y);
 
-    UICollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+    AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
     attr.frame = CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
+    attr.adjustmentOffset = offset;
 
     return attr;
 }

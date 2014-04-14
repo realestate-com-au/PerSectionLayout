@@ -210,9 +210,10 @@
     if (CGRectGetHeight(headerFrame) > 0)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-        UICollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withIndexPath:indexPath];
+        AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withIndexPath:indexPath];
         attr.frame = headerFrame;
         attr.zIndex = AMPerSectionCollectionElementAlwaysShowOnTopZIndex;
+        attr.adjustmentOffset = offset;
         return attr;
     }
 
@@ -225,8 +226,9 @@
     if (CGRectGetHeight(footerFrame) > 0)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-        UICollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter withIndexPath:indexPath];
+        AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter withIndexPath:indexPath];
 		attr.frame = footerFrame;
+        attr.adjustmentOffset = offset;
         return attr;
     }
 

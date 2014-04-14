@@ -529,11 +529,21 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                             [[attributes should] beKindOfClass:[AMPerSectionCollectionViewLayoutAttributes class]];
                         }
                     });
+                    
+                    it(@"should have all it's returned attributes without an adjustment offset", ^{
+                        for (AMPerSectionCollectionViewLayoutAttributes *attributes in layoutAttributesForElementsInRect)
+                        {
+                            [[theValue(attributes.adjustmentOffset) should] equal:theValue(CGPointZero)];
+                        }
+                    });
                 });
                 
                 context(@"emulating a scroll", ^{
+                    
+                    __block  CGPoint yOffsetPoint = CGPointZero;
+                    
                     beforeEach(^{
-                        CGPoint yOffsetPoint = CGPointMake(0, delegateDataSource.headerReferenceSize.height + 60);
+                        yOffsetPoint = CGPointMake(0, delegateDataSource.headerReferenceSize.height + 60);
                         
                         [layout stub:@selector(adjustedCollectionViewContentOffset) andReturn:theValue(yOffsetPoint)];
                         layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f,  yOffsetPoint.y, layout.collectionViewContentSize.width,  layout.collectionViewContentSize.height - yOffsetPoint.y)];
@@ -549,6 +559,13 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                         for (AMPerSectionCollectionViewLayoutAttributes *attributes in layoutAttributesForElementsInRect)
                         {
                             [[attributes should] beKindOfClass:[AMPerSectionCollectionViewLayoutAttributes class]];
+                        }
+                    });
+                    
+                    it(@"should have all it's returned attributes without an adjustment offset", ^{
+                        for (AMPerSectionCollectionViewLayoutAttributes *attributes in layoutAttributesForElementsInRect)
+                        {
+                            [[theValue(attributes.adjustmentOffset) should] equal:theValue(yOffsetPoint)];
                         }
                     });
                 });
