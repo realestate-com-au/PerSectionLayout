@@ -8,6 +8,7 @@
 #import "AMFakeCollectionViewDelegateDataSource.h"
 #import "math.h"
 #import "AMPerSectionCollectionViewLayoutInvalidationContext.h"
+#import "AMPerSectionCollectionViewLayoutAttributes.h"
 
 @interface AMPerSectionCollectionViewLayout ()
 
@@ -84,6 +85,12 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         
         it(@"should have no transition target content offset", ^{
             [[layout.transitionTargetContentOffsetValue should] beNil];
+        });
+    });
+    
+    context(@"layoutAttributesClass", ^{
+        it(@"should use the custom AMPerSectionCollectionViewLayoutAttributes class", ^{
+            [[[AMPerSectionCollectionViewLayout layoutAttributesClass] should] equal:[AMPerSectionCollectionViewLayoutAttributes class]];
         });
     });
     
@@ -515,6 +522,13 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                         // header + footer + 30 * (rows) + 3 * header + footer ==> 38
                         [[layoutAttributesForElementsInRect should] haveCountOf:38];
                     });
+                    
+                    it(@"should have all it's returned attributes be of AMPerSectionCollectionViewLayoutAttributes class kind", ^{
+                        for (AMPerSectionCollectionViewLayoutAttributes *attributes in layoutAttributesForElementsInRect)
+                        {
+                            [[attributes should] beKindOfClass:[AMPerSectionCollectionViewLayoutAttributes class]];
+                        }
+                    });
                 });
                 
                 context(@"emulating a scroll", ^{
@@ -529,6 +543,13 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                         [[layoutAttributesForElementsInRect should] beNonNil];
                         
                         [[[layoutAttributesForElementsInRect valueForKey:@"elementKind"] should] contain:AMPerSectionCollectionElementKindHeader];
+                    });
+                    
+                    it(@"should have all it's returned attributes be of AMPerSectionCollectionViewLayoutAttributes class kind", ^{
+                        for (AMPerSectionCollectionViewLayoutAttributes *attributes in layoutAttributesForElementsInRect)
+                        {
+                            [[attributes should] beKindOfClass:[AMPerSectionCollectionViewLayoutAttributes class]];
+                        }
                     });
                 });
             });
@@ -548,6 +569,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                     it(@"should have a frame", ^{
                         [[theValue(attributes.frame) should] equal:theValue(CGRectMake(0.f, 80.f, 50.f, 50.f))];
                     });
+                    
+                    it(@"should be of AMPerSectionCollectionViewLayoutAttributes class kind", ^{
+                        [[attributes should] beKindOfClass:[AMPerSectionCollectionViewLayoutAttributes class]];
+                    });
                 });
                 
                 context(@"last indexPath", ^{
@@ -561,6 +586,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                     
                     it(@"should return a layout attributes with a frame", ^{
                         [[theValue(attributes.frame) should] equal:theValue(CGRectMake(60.f, 800.f, 50.f, 50.f))];
+                    });
+                    
+                    it(@"should be of AMPerSectionCollectionViewLayoutAttributes class kind", ^{
+                        [[attributes should] beKindOfClass:[AMPerSectionCollectionViewLayoutAttributes class]];
                     });
                 });
             });
@@ -580,6 +609,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                     it(@"should return a layout attributes with a frame", ^{
                         [[theValue(attributes.frame) should] equal:theValue(layout.layoutInfo.headerFrame)];
                     });
+                    
+                    it(@"should be of AMPerSectionCollectionViewLayoutAttributes class kind", ^{
+                        [[attributes should] beKindOfClass:[AMPerSectionCollectionViewLayoutAttributes class]];
+                    });
                 });
                 
                 context(@"AMPerSectionCollectionElementKindFooter", ^{
@@ -593,6 +626,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                     
                     it(@"should return a layout attributes with a frame", ^{
                         [[theValue(attributes.frame) should] equal:theValue(layout.layoutInfo.footerFrame)];
+                    });
+                    
+                    it(@"should be of AMPerSectionCollectionViewLayoutAttributes class kind", ^{
+                        [[attributes should] beKindOfClass:[AMPerSectionCollectionViewLayoutAttributes class]];
                     });
                 });
                 
@@ -615,6 +652,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                         it(@"should return a layout attributes with a frame", ^{
                             [[theValue(attributes.frame) should] equal:theValue(CGRectMake(0.f, 330.f, 250.f, 50.f))];
                         });
+                        
+                        it(@"should be of AMPerSectionCollectionViewLayoutAttributes class kind", ^{
+                            [[attributes should] beKindOfClass:[AMPerSectionCollectionViewLayoutAttributes class]];
+                        });
                     });
                     
                     context(@"AMPerSectionCollectionElementKindSectionFooter", ^{
@@ -629,6 +670,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                         it(@"should return a layout attributes with a frame", ^{
                             [[theValue(attributes.frame) should] equal:theValue(CGRectMake(0.f, 560.f, 250.f, 70.f))];
                         });
+                        
+                        it(@"should be of AMPerSectionCollectionViewLayoutAttributes class kind", ^{
+                            [[attributes should] beKindOfClass:[AMPerSectionCollectionViewLayoutAttributes class]];
+                        });
                     });
                 });
                 
@@ -642,7 +687,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                             attributes = [layout layoutAttributesForDecorationViewOfKind:AMPerSectionCollectionElementKindSectionBackground atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];
                         });
                         
-                        it(@"should return a layout attributes", ^{
+                        it(@"should return no layout attributes", ^{
                             [[attributes should] beNil];
                         });
                     });

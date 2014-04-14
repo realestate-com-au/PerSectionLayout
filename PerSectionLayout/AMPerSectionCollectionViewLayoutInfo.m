@@ -4,6 +4,7 @@
 
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 #import "AMPerSectionCollectionViewLayout.h"
+#import "AMPerSectionCollectionViewLayoutAttributes.h"
 
 @interface AMPerSectionCollectionViewLayoutInfo ()
 @property (nonatomic, strong) NSMutableArray *sections;
@@ -209,7 +210,7 @@
     if (CGRectGetHeight(headerFrame) > 0)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-        UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withIndexPath:indexPath];
+        UICollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindHeader withIndexPath:indexPath];
         attr.frame = headerFrame;
         attr.zIndex = AMPerSectionCollectionElementAlwaysShowOnTopZIndex;
         return attr;
@@ -224,7 +225,7 @@
     if (CGRectGetHeight(footerFrame) > 0)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-        UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter withIndexPath:indexPath];
+        UICollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter withIndexPath:indexPath];
 		attr.frame = footerFrame;
         return attr;
     }

@@ -6,6 +6,7 @@
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 #import "math.h"
 #import "AMPerSectionCollectionViewLayoutInvalidationContext.h"
+#import "AMPerSectionCollectionViewLayoutAttributes.h"
 
 NSString * const AMPerSectionCollectionElementKindHeader = @"AMPerSectionCollectionElementKindHeader";
 NSString * const AMPerSectionCollectionElementKindFooter = @"AMPerSectionCollectionElementKindFooter";
@@ -130,6 +131,11 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 - (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString *)decorationViewKind atIndexPath:(NSIndexPath *)indexPath
 {
     return nil;
+}
+
++ (Class)layoutAttributesClass
+{
+    return [AMPerSectionCollectionViewLayoutAttributes class];
 }
 
 #pragma mark - Transition

@@ -5,6 +5,7 @@
 #import "AMPerSectionCollectionViewLayoutSection.h"
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 #import "AMPerSectionCollectionViewLayout.h"
+#import "AMPerSectionCollectionViewLayoutAttributes.h"
 
 @interface AMPerSectionCollectionViewLayoutSection ()
 @property (nonatomic, strong) NSMutableArray *items;
@@ -195,7 +196,7 @@
     if (CGRectGetHeight(headerFrame) > 0)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:self.index];
-        UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withIndexPath:indexPath];
+        UICollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withIndexPath:indexPath];
         attr.frame = headerFrame;
         return attr;
     }
@@ -210,7 +211,7 @@
     if (CGRectGetHeight(footerFrame) > 0)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:self.index];
-        UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:indexPath];
+        UICollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:indexPath];
         attr.frame = footerFrame;
         return attr;
     }
@@ -248,7 +249,7 @@
     AMPerSectionCollectionViewLayoutRow *row = item.row;
     CGRect rowFrame = CGRectOffset(row.frame, sectionFrame.origin.x, sectionFrame.origin.y);
 
-    UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+    UICollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
     attr.frame = CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
 
     return attr;
