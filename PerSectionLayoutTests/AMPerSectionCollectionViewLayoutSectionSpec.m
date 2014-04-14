@@ -85,16 +85,16 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
             section.width = 300;
             
             //add a few items
-            AMPerSectionCollectionViewLayoutItem *item1 = [section addItem];;
+            AMPerSectionCollectionViewLayoutItem *item1 = [section addItem];
             item1.frame = CGRectMake(0, 0, 100, 100);
             
-            AMPerSectionCollectionViewLayoutItem *item2 = [section addItem];;
+            AMPerSectionCollectionViewLayoutItem *item2 = [section addItem];
             item2.frame = CGRectMake(0, 0, 100, 150);
             
-            AMPerSectionCollectionViewLayoutItem *item3 = [section addItem];;
+            AMPerSectionCollectionViewLayoutItem *item3 = [section addItem];
             item3.frame = CGRectMake(0, 0, 100, 150);
             
-            AMPerSectionCollectionViewLayoutItem *item4 = [section addItem];;
+            AMPerSectionCollectionViewLayoutItem *item4 = [section addItem];
             item4.frame = CGRectMake(0, 0, 100, 100);
             
             [section computeLayout:nil];

@@ -279,9 +279,9 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset
 {
     CGPoint targetOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset];
-    targetOffset.y = -self.collectionView.contentInset.top;
     
-    self.transitionTargetContentOffsetValue = [NSValue valueWithCGPoint:targetOffset];;
+    targetOffset.y = -self.collectionView.contentInset.top;
+    self.transitionTargetContentOffsetValue = [NSValue valueWithCGPoint:targetOffset];
     
     return targetOffset;
 }
