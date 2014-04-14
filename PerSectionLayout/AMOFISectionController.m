@@ -14,7 +14,7 @@
 
 - (void)registerCustomElementsForCollectionView:(UICollectionView *)collectionView
 {
-    [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"OFISectionCell"];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -31,7 +31,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"OFISectionCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor greenColor];
     
     return cell;

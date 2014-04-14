@@ -33,10 +33,10 @@
 
 - (void)registerCustomElementsForCollectionView:(UICollectionView *)collectionView
 {
-    [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"ListSectionCell"];
     
-    [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withReuseIdentifier:@"header"];
-    [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withReuseIdentifier:@"footer"];
+    [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withReuseIdentifier:@"ListSectionHeader"];
+    [collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withReuseIdentifier:@"ListSectionFooter"];
     
 }
 
@@ -61,7 +61,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ListSectionCell" forIndexPath:indexPath];
     cell.backgroundColor = [UIColor yellowColor];
     
     return cell;
@@ -71,14 +71,14 @@
 {
     if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionHeader])
     {
-        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withReuseIdentifier:@"header"  forIndexPath:indexPath];
+        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withReuseIdentifier:@"ListSectionHeader"  forIndexPath:indexPath];
         view.backgroundColor = [UIColor brownColor];
         
         return view;
     }
     else if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionFooter])
     {
-        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withReuseIdentifier:@"footer"  forIndexPath:indexPath];
+        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withReuseIdentifier:@"ListSectionFooter"  forIndexPath:indexPath];
         view.backgroundColor = [UIColor magentaColor];
         
         return view;
