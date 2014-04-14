@@ -42,6 +42,8 @@
 		5FD1A21918EFE07B00B2ECE1 /* AMSectionsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A21818EFE07B00B2ECE1 /* AMSectionsProvider.m */; };
 		5FD1A21B18EFE23500B2ECE1 /* AMSectionsProviderSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A21A18EFE23500B2ECE1 /* AMSectionsProviderSpec.m */; };
 		5FD1A22218EFF54F00B2ECE1 /* AMFakeSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD1A22118EFF54F00B2ECE1 /* AMFakeSectionController.m */; };
+		5FD2CCE418FB615000B8E740 /* AMPerSectionCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2CCE318FB615000B8E740 /* AMPerSectionCollectionViewLayoutAttributes.m */; };
+		5FD2CCE618FB622400B8E740 /* AMPerSectionCollectionViewLayoutAttributesSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2CCE518FB622400B8E740 /* AMPerSectionCollectionViewLayoutAttributesSpec.m */; };
 		5FE11B8718F37C1000525441 /* AMMapSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE11B8618F37C0F00525441 /* AMMapSectionController.m */; };
 		5FE11B8A18F37D6C00525441 /* AMOFISectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE11B8918F37D6C00525441 /* AMOFISectionController.m */; };
 		5FE11B8D18F37DEC00525441 /* AMGraphSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE11B8C18F37DEC00525441 /* AMGraphSectionController.m */; };
@@ -120,6 +122,9 @@
 		5FD1A21A18EFE23500B2ECE1 /* AMSectionsProviderSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMSectionsProviderSpec.m; sourceTree = "<group>"; };
 		5FD1A22018EFF54F00B2ECE1 /* AMFakeSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMFakeSectionController.h; sourceTree = "<group>"; };
 		5FD1A22118EFF54F00B2ECE1 /* AMFakeSectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMFakeSectionController.m; sourceTree = "<group>"; };
+		5FD2CCE218FB615000B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPerSectionCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
+		5FD2CCE318FB615000B8E740 /* AMPerSectionCollectionViewLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPerSectionCollectionViewLayoutAttributes.m; sourceTree = "<group>"; };
+		5FD2CCE518FB622400B8E740 /* AMPerSectionCollectionViewLayoutAttributesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPerSectionCollectionViewLayoutAttributesSpec.m; sourceTree = "<group>"; };
 		5FE11B8518F37C0F00525441 /* AMMapSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMMapSectionController.h; sourceTree = "<group>"; };
 		5FE11B8618F37C0F00525441 /* AMMapSectionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMMapSectionController.m; sourceTree = "<group>"; };
 		5FE11B8818F37D6C00525441 /* AMOFISectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMOFISectionController.h; sourceTree = "<group>"; };
@@ -171,6 +176,8 @@
 				5F0BD46018F0F56B00771ADF /* AMPerSectionCollectionViewLayoutItem.m */,
 				5F93047418F61878008C1C69 /* AMPerSectionCollectionViewLayoutInvalidationContext.h */,
 				5F93047518F61878008C1C69 /* AMPerSectionCollectionViewLayoutInvalidationContext.m */,
+				5FD2CCE218FB615000B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h */,
+				5FD2CCE318FB615000B8E740 /* AMPerSectionCollectionViewLayoutAttributes.m */,
 			);
 			name = "Custom Layout";
 			sourceTree = "<group>";
@@ -185,6 +192,7 @@
 				5F0BD46218F0F58D00771ADF /* AMPerSectionCollectionViewLayoutItemSpec.m */,
 				5F93047718F618C0008C1C69 /* AMPerSectionCollectionViewLayoutInvalidationContextSpec.m */,
 				880D5AE718F66BE600D7B6CD /* AMPerSectionCollectionViewInfoCalculationSpec.m */,
+				5FD2CCE518FB622400B8E740 /* AMPerSectionCollectionViewLayoutAttributesSpec.m */,
 			);
 			name = "Custom Layout";
 			sourceTree = "<group>";
@@ -485,6 +493,7 @@
 				5F0BD46118F0F56B00771ADF /* AMPerSectionCollectionViewLayoutItem.m in Sources */,
 				5FE11B8D18F37DEC00525441 /* AMGraphSectionController.m in Sources */,
 				5F93047618F61878008C1C69 /* AMPerSectionCollectionViewLayoutInvalidationContext.m in Sources */,
+				5FD2CCE418FB615000B8E740 /* AMPerSectionCollectionViewLayoutAttributes.m in Sources */,
 				5F9304A618F6A74C008C1C69 /* AMMapExpandedCollectionViewController.m in Sources */,
 				5F8DE2BF18F2BB280072300C /* AMListSectionController.m in Sources */,
 			);
@@ -496,6 +505,7 @@
 			files = (
 				5F0BD44818F01A3C00771ADF /* AMPerSectionCollectionViewLayoutInfoSpec.m in Sources */,
 				5FD1A22218EFF54F00B2ECE1 /* AMFakeSectionController.m in Sources */,
+				5FD2CCE618FB622400B8E740 /* AMPerSectionCollectionViewLayoutAttributesSpec.m in Sources */,
 				880D5AE818F66BE600D7B6CD /* AMPerSectionCollectionViewInfoCalculationSpec.m in Sources */,
 				5FD1A21B18EFE23500B2ECE1 /* AMSectionsProviderSpec.m in Sources */,
 				5F0BD44118F0195100771ADF /* AMPerSectionCollectionViewLayoutSpec.m in Sources */,
