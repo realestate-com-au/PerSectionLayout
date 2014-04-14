@@ -18,7 +18,8 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 
 @interface AMPerSectionCollectionViewLayout ()
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
-@property (nonatomic, strong) NSValue *transitionTargetContentOffsetValue;
+@property (nonatomic, assign, getter = isTransitioning) BOOL transitioning;
+@property (nonatomic, assign) CGPoint transitionTargetContentOffset;
 @end
 
 @implementation AMPerSectionCollectionViewLayout
@@ -58,9 +59,9 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 - (CGPoint)adjustedCollectionViewContentOffset
 {
     CGFloat contentOffsetY = self.collectionView.contentOffset.y;
-    if (self.transitionTargetContentOffsetValue)
+    if ([self isTransitioning])
     {
-        contentOffsetY = [self.transitionTargetContentOffsetValue CGPointValue].y;
+        contentOffsetY = self.transitionTargetContentOffset.y;
     }
     
     CGFloat adjustedYValue = contentOffsetY + self.collectionView.contentInset.top;
@@ -140,9 +141,15 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 
 #pragma mark - Transition
 
+- (void)prepareForTransitionToLayout:(AMPerSectionCollectionViewLayout *)newLayout
+{
+    newLayout.transitioning = YES;
+}
+
 - (void)finalizeLayoutTransition
 {
-    self.transitionTargetContentOffsetValue = nil;
+    self.transitioning = NO;
+    self.transitionTargetContentOffset = CGPointZero;
 }
 
 #pragma mark - AMPerSectionCollectionViewLayoutDelegate
@@ -280,8 +287,11 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 {
     CGPoint targetOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset];
     
-    targetOffset.y = -self.collectionView.contentInset.top;
-    self.transitionTargetContentOffsetValue = [NSValue valueWithCGPoint:targetOffset];
+    if ([self isTransitioning])
+    {
+        targetOffset.y = -self.collectionView.contentInset.top;
+        self.transitionTargetContentOffset = targetOffset;
+    }
     
     return targetOffset;
 }

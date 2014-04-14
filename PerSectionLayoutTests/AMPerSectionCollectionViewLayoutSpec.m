@@ -28,7 +28,8 @@
 - (CGPoint)adjustedCollectionViewContentOffset;
 
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
-@property (nonatomic, assign) NSValue *transitionTargetContentOffsetValue;
+@property (nonatomic, assign, getter = isTransitioning) BOOL transitioning;
+@property (nonatomic, assign) CGPoint transitionTargetContentOffset;
 
 @end
 
@@ -84,7 +85,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
         
         it(@"should have no transition target content offset", ^{
-            [[layout.transitionTargetContentOffsetValue should] beNil];
+            [[theValue(layout.transitionTargetContentOffset) should] equal:theValue(CGPointZero)];
         });
     });
     
@@ -142,47 +143,95 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
     });
     
     context(@"target content offset for used in layout to layout transition", ^{
-        context(@"when have a transition target offset", ^{
+        context(@"when is transitioning", ^{
             beforeEach(^{
-                layout.transitionTargetContentOffsetValue = [NSValue valueWithCGPoint:CGPointMake(0.f, 40.f)];
+                layout.transitioning = YES;
             });
             
-            it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
-                [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointMake(0.f, 40.f))];
+            context(@"when have a transition target offset", ^{
+                beforeEach(^{
+                    layout.transitionTargetContentOffset = CGPointMake(0.f, 40.f);
+                });
+                
+                it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
+                    [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointMake(0.f, 40.f))];
+                });
+            });
+            
+            context(@"when doesn't have a transition target offset", ^{
+                beforeEach(^{
+                    layout.transitionTargetContentOffset = CGPointZero;
+                });
+                
+                it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
+                    [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointZero)];
+                });
             });
         });
         
-        context(@"when doesn't have a transition target offset", ^{
+        context(@"when isn't transitioning", ^{
             beforeEach(^{
-                layout.transitionTargetContentOffsetValue = nil;
+                layout.transitioning = NO;
             });
             
-            it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
-                [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointZero)];
+            context(@"when have a transition target offset", ^{
+                beforeEach(^{
+                    layout.transitionTargetContentOffset = CGPointMake(0.f, 40.f);
+                });
+                
+                it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
+                    [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointMake(0.f, 0.f))];
+                });
+            });
+        });
+    });
+    
+    context(@"transitioning", ^{
+        
+        __block AMPerSectionCollectionViewLayout *newLayout = nil;
+        
+        beforeEach(^{
+            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 250.f) collectionViewLayout:layout];
+            collectionView.contentInset = UIEdgeInsetsMake(45.f, 15.f, 25.f, 13.f);
+            [layout stub:@selector(collectionView) andReturn:collectionView];
+            
+            newLayout = [[AMPerSectionCollectionViewLayout alloc] init];
+            [newLayout stub:@selector(collectionView) andReturn:collectionView];
+        });
+        
+        context(@"when preparing to transition to a new layout", ^{
+            beforeEach(^{
+                [layout prepareForTransitionToLayout:newLayout];
+            });
+            
+            it(@"should mark the new layout as being transitioned", ^{
+                [[theValue(newLayout.transitioning) should] beYes];
             });
         });
         
-        context(@"once targetContentOffsetForProposedContentOffset is called", ^{
+        context(@"when target content offset is called", ^{
             beforeEach(^{
-                collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 250.f) collectionViewLayout:layout];
-                collectionView.contentInset = UIEdgeInsetsMake(45.f, 15.f, 25.f, 13.f);
-                [layout stub:@selector(collectionView) andReturn:collectionView];
-                [layout targetContentOffsetForProposedContentOffset:CGPointMake(0.f, 60.f)];
+                [layout prepareForTransitionToLayout:newLayout];
+                [newLayout targetContentOffsetForProposedContentOffset:CGPointMake(0.f, 60.f)];
             });
             
             it(@"should udpate the transition target content offset", ^{
-                [[theValue([layout.transitionTargetContentOffsetValue CGPointValue]) should] equal:theValue(CGPointMake(0.f, -45.f))];
+                [[theValue(newLayout.transitionTargetContentOffset) should] equal:theValue(CGPointMake(0.f, -45.f))];
             });
         });
         
-        context(@"once finalizeLayoutTransition is called", ^{
+        context(@"when transition is finalized", ^{
             beforeEach(^{
-                layout.transitionTargetContentOffsetValue = [NSValue valueWithCGPoint:CGPointMake(0.f, 23.f)];
-                [layout finalizeLayoutTransition];
+                [layout prepareForTransitionToLayout:newLayout];
+                [newLayout finalizeLayoutTransition];
             });
             
-            it(@"should no longer have a transition content offset", ^{
-                [[layout.transitionTargetContentOffsetValue should] beNil];
+            it(@"should mark the new layout as being transitioned", ^{
+                [[theValue(newLayout.transitioning) should] beNo];
+            });
+            
+            it(@"should no longer have a transition target content offset", ^{
+                [[theValue(newLayout.transitionTargetContentOffset) should] equal:theValue(CGPointZero)];
             });
         });
     });
