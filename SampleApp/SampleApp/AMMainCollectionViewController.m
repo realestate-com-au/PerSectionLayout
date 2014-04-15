@@ -13,6 +13,7 @@
 #import "AMOtherSectionController.h"
 #import "UIDevice+Utilities.h"
 #import "AMMapExpandedCollectionViewController.h"
+#import "UICollectionView+Utilities.h"
 
 @interface AMMainCollectionViewController ()
 @property (nonatomic, strong) AMSectionsProvider *sectionsProvider;
@@ -72,11 +73,15 @@
             [kind isEqualToString:AMPerSectionCollectionElementKindFooter]);
 }
 
-#pragma mark -  AMPerSectionCollectionViewLayoutDelegate
+#pragma mark - UIScrollViewDelegate
 
-- (CGSize)collectionView:(UICollectionView *)collectionView sizeForHeaderInLayout:(AMPerSectionCollectionViewLayout *)collectionViewLayout
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    return CGSizeMake(CGRectGetWidth(collectionView.frame), 50);
+    CGFloat progress = [self.collectionView verticalBouncedOffProgressForMaxOffset:-60.f];
+    if (progress >= 1.f)
+    {
+        [self pushViewControllerWithNewLayout];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource

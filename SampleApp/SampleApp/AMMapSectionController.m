@@ -53,7 +53,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    return CGSizeMake(CGRectGetWidth(collectionView.frame), [self maxCellHeight:collectionViewLayout.isExpanded]);
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), [self maxCellHeight:[collectionViewLayout isExpanded]]);
     
 }
 

@@ -9,6 +9,11 @@
 
 #pragma mark -  AMPerSectionCollectionViewLayoutDelegate
 
+- (CGSize)collectionView:(UICollectionView *)collectionView sizeForHeaderInLayout:(AMPerSectionCollectionViewLayout *)collectionViewLayout
+{    
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), 50);
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:indexPath.section];

@@ -11,14 +11,19 @@
 #import "AMADSectionController.h"
 #import "AMOtherSectionController.h"
 #import "UIDevice+Utilities.h"
+#import "UICollectionView+Utilities.h"
 
 @implementation AMMapExpandedCollectionViewController
 
-#pragma mark -  AMPerSectionCollectionViewLayoutDelegate
+#pragma mark - UIScrollViewDelegate
 
-- (CGSize)collectionView:(UICollectionView *)collectionView sizeForHeaderInLayout:(AMPerSectionCollectionViewLayout *)collectionViewLayout
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    return CGSizeMake(CGRectGetWidth(collectionView.frame), 50);
+    CGFloat progress = [self.collectionView verticalBouncedOffProgressForMaxOffset:30.f];
+    if (progress >= 1.f)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end
