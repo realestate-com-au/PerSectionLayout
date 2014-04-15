@@ -85,13 +85,25 @@ describe(@"AMPerSectionCollectionViewLayoutInfo", ^{
     context(@"lastSectionIndex", ^{
         beforeEach(^{
             layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
-            [layoutInfo addSection];
-            [layoutInfo addSection];
-            [layoutInfo addSection];
         });
         
-        it(@"should return the last section index", ^{
-            [[theValue([layoutInfo lastSectionIndex]) should] equal:theValue(2)];
+        context(@"with no section", ^{
+            it(@"should be zero", ^{
+                [[theValue([layoutInfo lastSectionIndex]) should] equal:theValue(0)];
+            });
+        });
+        
+        
+        context(@"with 3 sections", ^{
+            beforeEach(^{
+                [layoutInfo addSection];
+                [layoutInfo addSection];
+                [layoutInfo addSection];
+            });
+            
+            it(@"should return the last section index", ^{
+                [[theValue([layoutInfo lastSectionIndex]) should] equal:theValue(2)];
+            });
         });
     });
 

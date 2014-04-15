@@ -54,7 +54,7 @@
 
 - (NSInteger)lastItemIndex
 {
-    return self.itemsCount - 1;
+    return MAX(0, self.itemsCount - 1);
 }
 
 - (AMPerSectionCollectionViewLayoutItem *)addItem

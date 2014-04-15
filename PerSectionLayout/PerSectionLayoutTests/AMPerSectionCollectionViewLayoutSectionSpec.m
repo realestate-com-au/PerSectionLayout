@@ -82,15 +82,20 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
     context(@"lastItemIndex", ^{
         beforeEach(^{
             section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
-            [section addItem];
-            [section addItem];
         });
         
         context(@"with no item", ^{
-             [[theValue([section lastItemIndex]) should] equal:theValue(-1)];
+            it(@"should be zero", ^{
+               [[theValue([section lastItemIndex]) should] equal:theValue(0)];
+            });
         });
         
         context(@"with 2 items", ^{
+            beforeEach(^{
+                [section addItem];
+                [section addItem];
+            });
+            
             it(@"should return the last item index", ^{
                 [[theValue([section lastItemIndex]) should] equal:theValue(1)];
             });

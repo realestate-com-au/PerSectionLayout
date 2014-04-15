@@ -38,7 +38,7 @@
 
 - (NSInteger)lastSectionIndex
 {
-    return ((NSInteger)self.sections.count - 1);
+    return MAX(0, ((NSInteger)self.sections.count - 1));
 }
 
 - (NSObject *)addSection
