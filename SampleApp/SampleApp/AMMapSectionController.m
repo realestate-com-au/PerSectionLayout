@@ -54,7 +54,6 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
     return CGSizeMake(CGRectGetWidth(collectionView.frame), [self maxCellHeight:[collectionViewLayout isExpanded]]);
-    
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasStickyHeaderOverSection:(NSInteger)section

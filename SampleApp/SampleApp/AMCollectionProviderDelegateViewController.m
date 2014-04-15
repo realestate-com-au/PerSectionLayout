@@ -39,9 +39,9 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForFooterInSection:(NSInteger)section
 {
     id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:sizeForHeaderInSection:)])
+    if ([sectionController respondsToSelector:@selector(collectionView:layout:sizeForFooterInSection:)])
     {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout sizeForHeaderInSection:section];
+        return [sectionController collectionView:collectionView layout:collectionViewLayout sizeForFooterInSection:section];
     }
     
     return collectionViewLayout.sectionFooterReferenceSize;
