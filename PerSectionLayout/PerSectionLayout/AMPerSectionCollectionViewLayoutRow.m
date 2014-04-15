@@ -47,11 +47,10 @@
 
 - (void)invalidate
 {
-	self.size = CGSizeZero;
 	self.frame = CGRectZero;
 }
 
-- (void)computeLayout:(__unused AMPerSectionCollectionViewLayoutInfo *)layoutInfo inSection:(AMPerSectionCollectionViewLayoutSection *)section
+- (void)computeLayoutInSection:(AMPerSectionCollectionViewLayoutSection *)section
 {
     CGPoint itemOffset = CGPointZero;
     CGRect frame = CGRectZero;
@@ -69,7 +68,7 @@
         frame = CGRectUnion(frame, itemFrame);
     }
     
-    self.size = frame.size;
+    self.frame = frame;
 }
 
 #pragma mark - NSObject

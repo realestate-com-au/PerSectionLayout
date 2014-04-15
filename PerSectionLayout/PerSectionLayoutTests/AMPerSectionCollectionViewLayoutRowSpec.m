@@ -33,14 +33,12 @@ describe(@"AMPerSectionCollectionViewLayoutRow", ^{
 
     context(@"invalidate", ^{
         beforeEach(^{
-            row = [[AMPerSectionCollectionViewLayoutRow alloc] init];
-            row.size = CGSizeMake(100, 100);
+            row = [[AMPerSectionCollectionViewLayoutRow alloc] init];\
             row.frame = CGRectMake(1, 1, 1, 1);
         });
 
         it(@"should reset the size and frame values to zeros", ^{
             [row invalidate];
-            [[theValue(row.size) should] equal:theValue(CGSizeZero)];
             [[theValue(row.frame) should] equal:theValue(CGRectZero)];
         });
     });
@@ -54,23 +52,18 @@ describe(@"AMPerSectionCollectionViewLayoutRow", ^{
         });
 
         context(@"with a single item", ^{
-
             beforeEach(^{
                 row = [[AMPerSectionCollectionViewLayoutRow alloc] init];
-
                 item = [[AMPerSectionCollectionViewLayoutItem alloc] init];
+
                 item.frame = (CGRect){.size = CGSizeMake(100, 100)};
                 [row addItem:item];
 
-                [row computeLayout:nil inSection:section];
+                [row computeLayoutInSection:section];
             });
 
             it(@"the item should have the appropriate frame", ^{
                 [[theValue(item.frame) should] equal:theValue(CGRectMake(0, 0, 100, 100))];
-            });
-
-            it(@"should have the appropriate size", ^{
-                [[theValue(row.size) should] equal:theValue(CGSizeMake(100, 100))];
             });
         });
 
@@ -88,11 +81,7 @@ describe(@"AMPerSectionCollectionViewLayoutRow", ^{
                 [row addItem:item];
                 [row addItem:item2];
 
-                [row computeLayout:nil inSection:section];
-            });
-
-            it(@"should have an appropriate size as a union of all item frames", ^{
-                [[theValue(row.size) should] equal:theValue(CGSizeMake(200, 110))];
+                [row computeLayoutInSection:section];
             });
 
             it(@"should layout items horizontally", ^{
@@ -119,11 +108,7 @@ describe(@"AMPerSectionCollectionViewLayoutRow", ^{
                 [row addItem:item2];
                 [row addItem:item3];
 
-                [row computeLayout:nil inSection:section];
-            });
-
-            it(@"should have an appropriate size as a union of all item frames", ^{
-                [[theValue(row.size) should] equal:theValue(CGSizeMake(450, 115))];
+                [row computeLayoutInSection:section];
             });
 
             it(@"should layout the items horizontally", ^{
@@ -148,11 +133,7 @@ describe(@"AMPerSectionCollectionViewLayoutRow", ^{
                 [row addItem:item];
                 [row addItem:item2];
 
-                [row computeLayout:nil inSection:section];
-            });
-
-            it(@"should have an appropriate size as a union of all item frames", ^{
-                [[theValue(row.size) should] equal:theValue(CGSizeMake(210, 100))];
+                [row computeLayoutInSection:section];
             });
 
             it(@"should layout the items taking into account the hozontal interstice", ^{

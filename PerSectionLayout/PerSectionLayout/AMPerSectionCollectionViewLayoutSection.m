@@ -138,14 +138,14 @@
             // finish current row
             if (row)
             {
-                [row computeLayout:layoutInfo inSection:self];
-                row.frame = CGRectMake(bodyOrigin.x, currentRowPoint, row.size.width, row.size.height);
+                [row computeLayoutInSection:self];
+                row.frame = CGRectMake(bodyOrigin.x, currentRowPoint, CGRectGetWidth(row.frame), CGRectGetHeight(row.frame));
                 if (rowIndex > 0)
                 {
                     bodySize.height += self.verticalInterstice;
                 }
-                bodySize.height += row.size.height;
-                currentRowPoint += row.size.height + self.verticalInterstice;
+                bodySize.height += CGRectGetHeight(row.frame);
+                currentRowPoint += CGRectGetHeight(row.frame) + self.verticalInterstice;
             }
             if (!finishCycle)
             {
