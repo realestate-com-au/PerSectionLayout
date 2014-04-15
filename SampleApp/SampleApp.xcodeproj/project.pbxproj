@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F78C65C18FCB35600ACE12B /* UICollectionView+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78C65B18FCB35600ACE12B /* UICollectionView+Utilities.m */; };
 		5FD2CD3A18FB987400B8E740 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CD3918FB987400B8E740 /* Foundation.framework */; };
 		5FD2CD3C18FB987400B8E740 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CD3B18FB987400B8E740 /* CoreGraphics.framework */; };
 		5FD2CD3E18FB987400B8E740 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CD3D18FB987400B8E740 /* UIKit.framework */; };
@@ -47,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5F78C65A18FCB35600ACE12B /* UICollectionView+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+Utilities.h"; sourceTree = "<group>"; };
+		5F78C65B18FCB35600ACE12B /* UICollectionView+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Utilities.m"; sourceTree = "<group>"; };
 		5FD2CD3618FB987400B8E740 /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FD2CD3918FB987400B8E740 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5FD2CD3B18FB987400B8E740 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -228,6 +231,8 @@
 			children = (
 				5FD2CE1718FB9DD300B8E740 /* UIDevice+Utilities.h */,
 				5FD2CE1818FB9DD300B8E740 /* UIDevice+Utilities.m */,
+				5F78C65A18FCB35600ACE12B /* UICollectionView+Utilities.h */,
+				5F78C65B18FCB35600ACE12B /* UICollectionView+Utilities.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -349,6 +354,7 @@
 				5FD2CE0B18FB9D6300B8E740 /* AMADSectionController.m in Sources */,
 				5FD2CE0F18FB9D6300B8E740 /* AMListSectionController.m in Sources */,
 				5FD2CE1118FB9D6300B8E740 /* AMMapExpandedCollectionViewController.m in Sources */,
+				5F78C65C18FCB35600ACE12B /* UICollectionView+Utilities.m in Sources */,
 				5FD2CE1218FB9D6300B8E740 /* AMMapSectionController.m in Sources */,
 				5FD2CD4618FB987400B8E740 /* main.m in Sources */,
 				5FD2CE1918FB9DD300B8E740 /* UIDevice+Utilities.m in Sources */,
