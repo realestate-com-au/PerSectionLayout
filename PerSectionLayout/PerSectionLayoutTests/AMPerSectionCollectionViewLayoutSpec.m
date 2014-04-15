@@ -87,6 +87,10 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         it(@"should have no transition target content offset", ^{
             [[theValue(layout.transitionTargetContentOffset) should] equal:theValue(CGPointZero)];
         });
+        
+        it(@"should not be expaned by default", ^{
+            [[theValue([layout isExpanded]) should] beFalse];
+        });
     });
     
     context(@"layoutAttributesClass", ^{

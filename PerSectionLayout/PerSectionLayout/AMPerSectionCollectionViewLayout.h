@@ -41,6 +41,6 @@ extern const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex;
 @property (nonatomic, assign) CGFloat minimumLineSpacing; // default: 5
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing; // default: 5
 
-@property (nonatomic, assign, getter = isExpanded) BOOL expanded;
+@property (nonatomic, assign, getter = isExpanded) BOOL expanded; // default: NO
 
 @end
