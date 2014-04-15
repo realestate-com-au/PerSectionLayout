@@ -3,19 +3,17 @@
 //
 
 @import Foundation;
-#import "AMPerSectionCollectionViewLayoutItem.h"
+@class AMPerSectionCollectionViewLayoutItem;
 @class AMPerSectionCollectionViewLayoutSection;
-@class AMPerSectionCollectionViewLayoutInfo;
 
 @interface AMPerSectionCollectionViewLayoutRow : NSObject
 
 - (NSArray *)layoutSectionItems;
 - (void)addItem:(AMPerSectionCollectionViewLayoutItem *)item;
 - (NSInteger)itemsCount;
-- (void)computeLayout:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo inSection:(AMPerSectionCollectionViewLayoutSection *)section;
-- (void)invalidate;
+- (void)computeLayoutInSection:(AMPerSectionCollectionViewLayoutSection *)section;
+- (void)invalidate __unused;
 
-@property (nonatomic, assign) CGSize size;
 @property (nonatomic, assign) CGRect frame;
 @property (nonatomic, assign) NSInteger index;
 

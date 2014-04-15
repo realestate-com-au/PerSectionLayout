@@ -114,7 +114,7 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 	if ([kind isEqualToString:AMPerSectionCollectionElementKindHeader])
     {
         // Check the index path, supplementary views will be queried for each indexPath
-        if (indexPath.row == 0 && indexPath.section == 0)
+        if (indexPath.item == 0 && indexPath.section == 0)
         {
             return [self.layoutInfo layoutAttributesForGlobalHeaderWithOffset:offset];
         }
@@ -122,7 +122,7 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
     else if ([kind isEqualToString:AMPerSectionCollectionElementKindFooter])
     {
         AMPerSectionCollectionViewLayoutSection *section = [self.layoutInfo sectionAtIndex:indexPath.section];
-        if (indexPath.row == [section lastItemIndex] && indexPath.section == [self.layoutInfo lastSectionIndex])
+        if (indexPath.item == [section lastItemIndex] && indexPath.section == [self.layoutInfo lastSectionIndex])
         {
             return [self.layoutInfo layoutAttributesForGlobalFooterWithOffset:offset];
         }

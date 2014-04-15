@@ -143,14 +143,14 @@
             // finish current row
             if (row)
             {
-                [row computeLayout:layoutInfo inSection:self];
-                row.frame = CGRectMake(bodyOrigin.x, currentRowPoint, row.size.width, row.size.height);
+                [row computeLayoutInSection:self];
+                row.frame = CGRectMake(bodyOrigin.x, currentRowPoint, CGRectGetWidth(row.frame), CGRectGetHeight(row.frame));
                 if (rowIndex > 0)
                 {
                     bodySize.height += self.verticalInterstice;
                 }
-                bodySize.height += row.size.height;
-                currentRowPoint += row.size.height + self.verticalInterstice;
+                bodySize.height += CGRectGetHeight(row.frame);
+                currentRowPoint += CGRectGetHeight(row.frame) + self.verticalInterstice;
             }
             if (!finishCycle)
             {
@@ -231,14 +231,14 @@
     if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionHeader])
     {
         //FIXME: JC - this check (row/section) is doubling up on the indexPath given to the attributes above.
-        if (indexPath.section == self.index && indexPath.row == 0)
+        if (indexPath.section == self.index && indexPath.item == 0)
         {
             return [self layoutAttributesForSectionHeaderWithOffset:offset];
         }
     }
     else if([kind isEqualToString:AMPerSectionCollectionElementKindSectionFooter])
     {
-        if (indexPath.section == self.index && indexPath.row == [self lastItemIndex])
+        if (indexPath.section == self.index && indexPath.item == [self lastItemIndex])
         {
             return [self layoutAttributesForSectionFooterWithOffset:offset];
         }
@@ -247,17 +247,29 @@
     return nil;
 }
 
+//FIXME: JC - It would be good to reuse these methods.
+
+- (CGRect)offsetFrameForItem:(AMPerSectionCollectionViewLayoutItem *)item withOffset:(CGPoint)offset
+{
+    NSParameterAssert(item);
+    CGRect rowFrame = [self offsetFrameForRow:item.row withOffest:offset];
+    return CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
+}
+
+- (CGRect)offsetFrameForRow:(AMPerSectionCollectionViewLayoutRow *)row withOffest:(CGPoint)offset
+{
+    NSParameterAssert(row);
+    CGRect sectionFrame = [self stretchedFrameForOffset:offset];
+    return CGRectOffset(row.frame, sectionFrame.origin.x, sectionFrame.origin.y);
+}
+
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath withOffset:(CGPoint)offset
 {
-    CGRect sectionFrame = [self stretchedFrameForOffset:offset];
+    NSAssert(indexPath.section == self.index, @"index path must be asking for rows in this section");
 
-    AMPerSectionCollectionViewLayoutItem *item = self.layoutSectionItems[(NSUInteger)indexPath.row];
-
-    AMPerSectionCollectionViewLayoutRow *row = item.row;
-    CGRect rowFrame = CGRectOffset(row.frame, sectionFrame.origin.x, sectionFrame.origin.y);
-
+    AMPerSectionCollectionViewLayoutItem *item = self.layoutSectionItems[(NSUInteger)indexPath.item];
     AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-    attr.frame = CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
+    attr.frame = [self offsetFrameForItem:item withOffset:offset];
     attr.adjustmentOffset = offset;
 
     return attr;
@@ -288,7 +300,7 @@
         {
             BOOL shouldStretchFirstRow = (self.canStretch && row.index == 0);
             
-            CGRect rowFrame = CGRectOffset(row.frame, sectionFrame.origin.x, sectionFrame.origin.y);
+            CGRect rowFrame = [self offsetFrameForRow:row withOffest:offset];
             rowFrame.origin.y += firstRowSizeAdjustment;
             if (shouldStretchFirstRow)
             {

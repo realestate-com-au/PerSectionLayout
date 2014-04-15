@@ -37,7 +37,7 @@ describe(@"LayoutItemAttributes", ^{
 
         it(@"should have the right indexPath", ^{
             [[theValue(layoutAttr.indexPath.section) should] equal:theValue(0)];
-            [[theValue(layoutAttr.indexPath.row) should] equal:theValue(0)];
+            [[theValue(layoutAttr.indexPath.item) should] equal:theValue(0)];
         });
 
         it(@"should represent the right element kind", ^{
@@ -97,7 +97,7 @@ describe(@"LayoutItemAttributes", ^{
 
         it(@"should have the right indexPath", ^{
             [[theValue(layoutAttr.indexPath.section) should] equal:theValue(0)];
-            [[theValue(layoutAttr.indexPath.row) should] equal:theValue(0)];
+            [[theValue(layoutAttr.indexPath.item) should] equal:theValue(0)];
         });
 
         it(@"should represent the right element kind", ^{
