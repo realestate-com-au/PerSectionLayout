@@ -152,23 +152,55 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 layout.transitioning = YES;
             });
             
-            context(@"when have a transition target offset", ^{
+            context(@"when is expanded", ^{
                 beforeEach(^{
-                    layout.transitionTargetContentOffset = CGPointMake(0.f, 40.f);
+                    layout.expanded = YES;
                 });
                 
-                it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
-                    [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointMake(0.f, 40.f))];
+                context(@"when have a transition target offset", ^{
+                    beforeEach(^{
+                        layout.transitionTargetContentOffset = CGPointMake(0.f, 40.f);
+                    });
+                    
+                    it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
+                        [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointMake(0.f, 40.1f))];
+                    });
+                });
+                
+                context(@"when doesn't have a transition target offset", ^{
+                    beforeEach(^{
+                        layout.transitionTargetContentOffset = CGPointZero;
+                    });
+                    
+                    it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
+                        [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointMake(0.f, 0.1f))];
+                    });
                 });
             });
             
-            context(@"when doesn't have a transition target offset", ^{
+            context(@"when isn't expanded", ^{
                 beforeEach(^{
-                    layout.transitionTargetContentOffset = CGPointZero;
+                    layout.expanded = NO;
                 });
                 
-                it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
-                    [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointZero)];
+                context(@"when have a transition target offset", ^{
+                    beforeEach(^{
+                        layout.transitionTargetContentOffset = CGPointMake(0.f, 40.f);
+                    });
+                    
+                    it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
+                        [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointMake(0.f, 40.f))];
+                    });
+                });
+                
+                context(@"when doesn't have a transition target offset", ^{
+                    beforeEach(^{
+                        layout.transitionTargetContentOffset = CGPointZero;
+                    });
+                    
+                    it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
+                        [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointZero)];
+                    });
                 });
             });
         });

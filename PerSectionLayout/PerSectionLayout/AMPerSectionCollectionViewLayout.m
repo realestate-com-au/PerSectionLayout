@@ -62,6 +62,11 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
     if ([self isTransitioning])
     {
         contentOffsetY = self.transitionTargetContentOffset.y;
+        
+        if ([self isExpanded])
+        {
+            contentOffsetY += 0.1; // make sure sticky / stretchy items stay at the top
+        }
     }
     
     CGFloat adjustedYValue = contentOffsetY + self.collectionView.contentInset.top;
