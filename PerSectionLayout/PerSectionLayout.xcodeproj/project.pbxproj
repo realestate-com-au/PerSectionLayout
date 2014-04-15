@@ -99,7 +99,6 @@
 		5FD2CE2E18FBA58F00B8E740 /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Warnings.xcconfig; path = ../Warnings.xcconfig; sourceTree = "<group>"; };
 		5FD2CE2F18FBA58F00B8E740 /* Test.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Test.xcconfig; path = ../Test.xcconfig; sourceTree = "<group>"; };
 		5FD2CE3018FBA58F00B8E740 /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Project.xcconfig; path = ../Project.xcconfig; sourceTree = "<group>"; };
-		7539B1FE3DEA44FE9364A460 /* Pods-PerSectionLayoutTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PerSectionLayoutTests.xcconfig"; path = "../Pods/Pods-PerSectionLayoutTests.xcconfig"; sourceTree = "<group>"; };
 		88ADDC6118FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutInfoLayoutAttributesSpec.m; sourceTree = "<group>"; };
 		88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpecSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutSectionLayoutAttributesSpecSpec.m; sourceTree = "<group>"; };
 		F302CDB9732041E985FBB92E /* libPods-PerSectionLayoutTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PerSectionLayoutTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,7 +136,6 @@
 				5FD2CDBC18FB9AD000B8E740 /* PerSectionLayoutTests */,
 				5FD2CDA518FB9AD000B8E740 /* Frameworks */,
 				5FD2CDA418FB9AD000B8E740 /* Products */,
-				7539B1FE3DEA44FE9364A460 /* Pods-PerSectionLayoutTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -542,7 +540,6 @@
 		};
 		5FD2CDCB18FB9AD000B8E740 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7539B1FE3DEA44FE9364A460 /* Pods-PerSectionLayoutTests.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

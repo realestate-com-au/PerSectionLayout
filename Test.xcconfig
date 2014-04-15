@@ -3,4 +3,3 @@
 //
 
 #include "Warnings.xcconfig"
-#include "Pods/Pods-PerSectionLayoutTests.xcconfig"
