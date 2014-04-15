@@ -19,6 +19,9 @@
 - (CGRect)stretchedFrameForOffset:(CGPoint)offset;
 
 - (NSArray *)layoutAttributesArrayForSectionInRect:(CGRect)rect withOffset:(CGPoint)offset;
+- (UICollectionViewLayoutAttributes *)layoutAttributesForSectionHeaderWithOffset:(CGPoint)offset;
+- (UICollectionViewLayoutAttributes *)layoutAttributesForSectionFooterWithOffset:(CGPoint)offset;
+
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath withOffset:(CGPoint)offset;
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind withIndexPath:(NSIndexPath *)indexPath withOffset:(CGPoint)offset;
 

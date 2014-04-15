@@ -242,17 +242,29 @@
     return nil;
 }
 
+//FIXME: JC - It would be good to reuse these methods.
+
+- (CGRect)offsetFrameForItem:(AMPerSectionCollectionViewLayoutItem *)item withOffset:(CGPoint)offset
+{
+    NSParameterAssert(item);
+    CGRect rowFrame = [self offsetFrameForRow:item.row withOffest:offset];
+    return CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
+}
+
+- (CGRect)offsetFrameForRow:(AMPerSectionCollectionViewLayoutRow *)row withOffest:(CGPoint)offset
+{
+    NSParameterAssert(row);
+    CGRect sectionFrame = [self stretchedFrameForOffset:offset];
+    return CGRectOffset(row.frame, sectionFrame.origin.x, sectionFrame.origin.y);
+}
+
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath withOffset:(CGPoint)offset
 {
-    CGRect sectionFrame = [self stretchedFrameForOffset:offset];
+    NSAssert(indexPath.section == self.index, @"index path must be asking for rows in this section");
 
     AMPerSectionCollectionViewLayoutItem *item = self.layoutSectionItems[(NSUInteger)indexPath.row];
-
-    AMPerSectionCollectionViewLayoutRow *row = item.row;
-    CGRect rowFrame = CGRectOffset(row.frame, sectionFrame.origin.x, sectionFrame.origin.y);
-
     AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-    attr.frame = CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
+    attr.frame = [self offsetFrameForItem:item withOffset:offset];
     attr.adjustmentOffset = offset;
 
     return attr;
@@ -283,7 +295,7 @@
         {
             BOOL shouldStretchFirstRow = (self.canStretch && row.index == 0);
             
-            CGRect rowFrame = CGRectOffset(row.frame, sectionFrame.origin.x, sectionFrame.origin.y);
+            CGRect rowFrame = [self offsetFrameForRow:row withOffest:offset];
             rowFrame.origin.y += firstRowSizeAdjustment;
             if (shouldStretchFirstRow)
             {
