@@ -213,9 +213,9 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 - (CGSize)sizeForHeaderInSection:(NSInteger)section
 {
     CGSize sectionHeaderReferenceSize = self.sectionHeaderReferenceSize;
-    if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:sizeForHeaderInSection:)])
+    if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)])
     {
-        sectionHeaderReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView layout:self sizeForHeaderInSection:section];
+        sectionHeaderReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView layout:self referenceSizeForHeaderInSection:section];
     }
     
     return  sectionHeaderReferenceSize;
@@ -224,9 +224,9 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 - (CGSize)sizeForFooterInSection:(NSInteger)section
 {
     CGSize sectionFooterReferenceSize = self.sectionFooterReferenceSize;
-    if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:sizeForFooterInSection:)])
+    if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:referenceSizeForFooterInSection:)])
     {
-        sectionFooterReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView layout:self sizeForFooterInSection:section];
+        sectionFooterReferenceSize = [self.collectionViewDelegate collectionView:self.collectionView layout:self referenceSizeForFooterInSection:section];
     }
     
     return  sectionFooterReferenceSize;
