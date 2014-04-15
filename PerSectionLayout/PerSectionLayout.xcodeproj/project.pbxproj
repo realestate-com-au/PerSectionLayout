@@ -48,6 +48,8 @@
 		5FD2CE2518FBA28200B8E740 /* AMPerSectionCollectionViewLayoutItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDD418FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutItem.h */; };
 		5FD2CE2618FBA28200B8E740 /* AMPerSectionCollectionViewLayoutRow.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDD618FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutRow.h */; };
 		5FD2CE2718FBA28200B8E740 /* AMPerSectionCollectionViewLayoutSection.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDD818FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutSection.h */; };
+		5FDDB80018FDDB58005D20F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */; };
+		5FDDB80118FDDB61005D20F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */; };
 		88ADDC6218FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ADDC6118FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m */; };
 		88ADDC6418FBB48200467201 /* LayoutSectionLayoutAttributesSpecSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpecSpec.m */; };
 /* End PBXBuildFile section */
@@ -149,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FDDB80118FDDB61005D20F3 /* CoreGraphics.framework in Frameworks */,
 				5F78C73118FD143900ACE12B /* UIKit.framework in Frameworks */,
 				5FD2CDA718FB9AD000B8E740 /* Foundation.framework in Frameworks */,
 			);
@@ -158,6 +161,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FDDB80018FDDB58005D20F3 /* CoreGraphics.framework in Frameworks */,
 				5F78C73518FD14A900ACE12B /* SenTestingKit.framework in Frameworks */,
 				5F78C73318FD149200ACE12B /* libPerSectionLayout.a in Frameworks */,
 				5F78C73218FD144E00ACE12B /* UIKit.framework in Frameworks */,
@@ -523,7 +527,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Prefix.pch";
@@ -533,7 +536,6 @@
 				);
 				INFOPLIST_FILE = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -545,13 +547,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Prefix.pch";
 				INFOPLIST_FILE = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -564,8 +564,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_MODULES_AUTOLINK = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -591,6 +591,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -601,8 +602,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_MODULES_AUTOLINK = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -621,6 +622,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -630,12 +632,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5FD2CE3018FBA58F00B8E740 /* Project.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = NO;
 				DSTROOT = /tmp/PerSectionLayout.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayout/PerSectionLayout-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PRODUCT_NAME)";
 				SKIP_INSTALL = YES;
@@ -645,12 +645,10 @@
 		5FD2CDC818FB9AD000B8E740 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = NO;
 				DSTROOT = /tmp/PerSectionLayout.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayout/PerSectionLayout-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PRODUCT_NAME)";
 				SKIP_INSTALL = YES;
@@ -662,7 +660,6 @@
 			baseConfigurationReference = 5FD2CE2F18FBA58F00B8E740 /* Test.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PerSectionLayoutTestLoader.app/PerSectionLayoutTestLoader";
-				CLANG_ENABLE_MODULES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -677,7 +674,6 @@
 				);
 				INFOPLIST_FILE = "PerSectionLayoutTests/PerSectionLayoutTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -688,7 +684,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PerSectionLayoutTestLoader.app/PerSectionLayoutTestLoader";
-				CLANG_ENABLE_MODULES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -699,7 +694,6 @@
 				GCC_PREFIX_HEADER = "PerSectionLayout/PerSectionLayout-Prefix.pch";
 				INFOPLIST_FILE = "PerSectionLayoutTests/PerSectionLayoutTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
