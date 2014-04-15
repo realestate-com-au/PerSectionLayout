@@ -2,7 +2,7 @@
 //  Copyright (c) 2014 Dblechoc. All rights reserved.
 //
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 @interface UICollectionView (Utilities)
 

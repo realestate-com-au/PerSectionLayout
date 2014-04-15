@@ -5,6 +5,12 @@ update:
 	git submodule sync
 	git submodule update --init --recursive
 
+clean: xcode-clean
+
+xcode-clean:
+	@echo "\n\033[04m+ squeaky clean Xcode derived data, because Xcode can't be trusted\033[0m"
+	rm -rf ~/Library/Developer/Xcode/DerivedData/PerSectionLayout*
+
 kiwi: kiwi-clean kiwi-build
 
 kiwi-clean:

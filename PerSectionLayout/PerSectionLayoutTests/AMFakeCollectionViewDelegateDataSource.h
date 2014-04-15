@@ -2,7 +2,7 @@
 //  Copyright (c) 2014 Dblechoc. All rights reserved.
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 #import <PerSectionLayout/AMPerSectionCollectionViewLayout.h>
 
 @interface AMFakeCollectionViewDelegateDataSource : NSObject <UICollectionViewDataSource, AMPerSectionCollectionViewLayoutDelegate>

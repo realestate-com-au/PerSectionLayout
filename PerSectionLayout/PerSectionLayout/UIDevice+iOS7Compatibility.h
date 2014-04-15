@@ -4,8 +4,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIDevice (Utilities)
+@interface UIDevice (iOS7Compatibility)
 
-- (BOOL)isiPad;
+- (BOOL)isPerSectionLayoutRunningOnAtLeastiOS7;
 
 @end

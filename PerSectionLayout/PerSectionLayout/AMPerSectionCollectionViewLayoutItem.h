@@ -2,7 +2,7 @@
 //  Copyright (c) 2014 Dblechoc. All rights reserved.
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 @class AMPerSectionCollectionViewLayoutRow;
 
 @interface AMPerSectionCollectionViewLayoutItem : NSObject

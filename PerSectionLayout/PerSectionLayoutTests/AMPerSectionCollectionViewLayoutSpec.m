@@ -9,6 +9,7 @@
 #import "math.h"
 #import "AMPerSectionCollectionViewLayoutInvalidationContext.h"
 #import "AMPerSectionCollectionViewLayoutAttributes.h"
+#import "UIDevice+iOS7Compatibility.h"
 
 @interface AMPerSectionCollectionViewLayout ()
 
@@ -99,52 +100,55 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
     });
     
-    context(@"layout invalidation", ^{
-        context(@"invalidationContextClass", ^{
-            it(@"should be a custom class", ^{
-                [[[AMPerSectionCollectionViewLayout invalidationContextClass] should] equal:[AMPerSectionCollectionViewLayoutInvalidationContext class]];
-            });
-        });
-        
-        context(@"invalidationContextForBoundsChange", ^{
-            it(@"should set invalidateHeader to YES", ^{
-                AMPerSectionCollectionViewLayoutInvalidationContext *context = (AMPerSectionCollectionViewLayoutInvalidationContext *)[layout invalidationContextForBoundsChange:CGRectMake(0.f, 0.f, 200.f, 50.f)];
-                [[theValue(context.invalidateHeader) should] beTrue];
-            });
-        });
-        
-        context(@"invalidateLayoutWithContext", ^{
-            
-            __block AMPerSectionCollectionViewLayoutInvalidationContext *invalidationContext = nil;
-            
-            beforeEach(^{
-                invalidationContext = [[AMPerSectionCollectionViewLayoutInvalidationContext alloc] init];
-                layout.layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
+    if ([[UIDevice currentDevice] isPerSectionLayoutRunningOnAtLeastiOS7])
+    {
+        context(@"layout invalidation", ^{
+            context(@"invalidationContextClass", ^{
+                it(@"should be a custom class", ^{
+                    [[[AMPerSectionCollectionViewLayout invalidationContextClass] should] equal:[AMPerSectionCollectionViewLayoutInvalidationContext class]];
+                });
             });
             
-            context(@"invalidateHeader is Yes", ^{
+            context(@"invalidationContextForBoundsChange", ^{
+                it(@"should set invalidateHeader to YES", ^{
+                    AMPerSectionCollectionViewLayoutInvalidationContext *context = (AMPerSectionCollectionViewLayoutInvalidationContext *)[layout invalidationContextForBoundsChange:CGRectMake(0.f, 0.f, 200.f, 50.f)];
+                    [[theValue(context.invalidateHeader) should] beTrue];
+                });
+            });
+            
+            context(@"invalidateLayoutWithContext", ^{
+                
+                __block AMPerSectionCollectionViewLayoutInvalidationContext *invalidationContext = nil;
+                
                 beforeEach(^{
-                    invalidationContext.invalidateHeader = YES;
-                    [layout invalidateLayoutWithContext:invalidationContext];
+                    invalidationContext = [[AMPerSectionCollectionViewLayoutInvalidationContext alloc] init];
+                    layout.layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
                 });
                 
-                it(@"should keep layout info", ^{
-                    [[layout.layoutInfo should] beNonNil];
-                });
-            });
-            
-            context(@"invalidateHeader is No", ^{
-                beforeEach(^{
-                    invalidationContext.invalidateHeader = NO;
-                    [layout invalidateLayoutWithContext:invalidationContext];
+                context(@"invalidateHeader is Yes", ^{
+                    beforeEach(^{
+                        invalidationContext.invalidateHeader = YES;
+                        [layout invalidateLayoutWithContext:invalidationContext];
+                    });
+                    
+                    it(@"should keep layout info", ^{
+                        [[layout.layoutInfo should] beNonNil];
+                    });
                 });
                 
-                it(@"should nil layout info", ^{
-                    [[layout.layoutInfo should] beNil];
+                context(@"invalidateHeader is No", ^{
+                    beforeEach(^{
+                        invalidationContext.invalidateHeader = NO;
+                        [layout invalidateLayoutWithContext:invalidationContext];
+                    });
+                    
+                    it(@"should nil layout info", ^{
+                        [[layout.layoutInfo should] beNil];
+                    });
                 });
             });
         });
-    });
+    }
     
     context(@"target content offset for used in layout to layout transition", ^{
         context(@"when is transitioning", ^{
@@ -222,55 +226,58 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
     });
     
-    context(@"transitioning", ^{
-        
-        __block AMPerSectionCollectionViewLayout *newLayout = nil;
-        
-        beforeEach(^{
-            collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 250.f) collectionViewLayout:layout];
-            collectionView.contentInset = UIEdgeInsetsMake(45.f, 15.f, 25.f, 13.f);
-            [layout stub:@selector(collectionView) andReturn:collectionView];
+    if ([[UIDevice currentDevice] isPerSectionLayoutRunningOnAtLeastiOS7])
+    {
+        context(@"transitioning", ^{
             
-            newLayout = [[AMPerSectionCollectionViewLayout alloc] init];
-            [newLayout stub:@selector(collectionView) andReturn:collectionView];
-        });
-        
-        context(@"when preparing to transition to a new layout", ^{
+            __block AMPerSectionCollectionViewLayout *newLayout = nil;
+            
             beforeEach(^{
-                [layout prepareForTransitionToLayout:newLayout];
+                collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 250.f) collectionViewLayout:layout];
+                collectionView.contentInset = UIEdgeInsetsMake(45.f, 15.f, 25.f, 13.f);
+                [layout stub:@selector(collectionView) andReturn:collectionView];
+                
+                newLayout = [[AMPerSectionCollectionViewLayout alloc] init];
+                [newLayout stub:@selector(collectionView) andReturn:collectionView];
             });
             
-            it(@"should mark the new layout as being transitioned", ^{
-                [[theValue(newLayout.transitioning) should] beYes];
+            context(@"when preparing to transition to a new layout", ^{
+                beforeEach(^{
+                    [layout prepareForTransitionToLayout:newLayout];
+                });
+                
+                it(@"should mark the new layout as being transitioned", ^{
+                    [[theValue(newLayout.transitioning) should] beYes];
+                });
+            });
+            
+            context(@"when target content offset is called", ^{
+                beforeEach(^{
+                    [layout prepareForTransitionToLayout:newLayout];
+                    [newLayout targetContentOffsetForProposedContentOffset:CGPointMake(0.f, 60.f)];
+                });
+                
+                it(@"should udpate the transition target content offset", ^{
+                    [[theValue(newLayout.transitionTargetContentOffset) should] equal:theValue(CGPointMake(0.f, -45.f))];
+                });
+            });
+            
+            context(@"when transition is finalized", ^{
+                beforeEach(^{
+                    [layout prepareForTransitionToLayout:newLayout];
+                    [newLayout finalizeLayoutTransition];
+                });
+                
+                it(@"should mark the new layout as being transitioned", ^{
+                    [[theValue(newLayout.transitioning) should] beNo];
+                });
+                
+                it(@"should no longer have a transition target content offset", ^{
+                    [[theValue(newLayout.transitionTargetContentOffset) should] equal:theValue(CGPointZero)];
+                });
             });
         });
-        
-        context(@"when target content offset is called", ^{
-            beforeEach(^{
-                [layout prepareForTransitionToLayout:newLayout];
-                [newLayout targetContentOffsetForProposedContentOffset:CGPointMake(0.f, 60.f)];
-            });
-            
-            it(@"should udpate the transition target content offset", ^{
-                [[theValue(newLayout.transitionTargetContentOffset) should] equal:theValue(CGPointMake(0.f, -45.f))];
-            });
-        });
-        
-        context(@"when transition is finalized", ^{
-            beforeEach(^{
-                [layout prepareForTransitionToLayout:newLayout];
-                [newLayout finalizeLayoutTransition];
-            });
-            
-            it(@"should mark the new layout as being transitioned", ^{
-                [[theValue(newLayout.transitioning) should] beNo];
-            });
-            
-            it(@"should no longer have a transition target content offset", ^{
-                [[theValue(newLayout.transitionTargetContentOffset) should] equal:theValue(CGPointZero)];
-            });
-        });
-    });
+    }
     
     context(@"AMPerSectionCollectionViewLayoutDelegate", ^{
         beforeEach(^{

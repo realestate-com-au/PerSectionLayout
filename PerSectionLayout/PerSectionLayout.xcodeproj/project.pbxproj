@@ -20,8 +20,9 @@
 		5F78C79018FD1A6C00ACE12B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78C78F18FD1A6C00ACE12B /* AppDelegate.m */; };
 		5F78C79218FD1A6C00ACE12B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F78C79118FD1A6C00ACE12B /* Images.xcassets */; };
 		5F78C7AD18FD1BA200ACE12B /* libPerSectionLayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */; };
+		5F78C7C518FD1F0400ACE12B /* UIDevice+iOS7Compatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F78C7C318FD1F0400ACE12B /* UIDevice+iOS7Compatibility.h */; };
+		5F78C7C618FD1F0400ACE12B /* UIDevice+iOS7Compatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78C7C418FD1F0400ACE12B /* UIDevice+iOS7Compatibility.m */; };
 		5FD2CDA718FB9AD000B8E740 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA618FB9AD000B8E740 /* Foundation.framework */; };
-		5FD2CDB518FB9AD000B8E740 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDB418FB9AD000B8E740 /* XCTest.framework */; };
 		5FD2CDB618FB9AD000B8E740 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA618FB9AD000B8E740 /* Foundation.framework */; };
 		5FD2CDC118FB9AD000B8E740 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2CDBF18FB9AD000B8E740 /* InfoPlist.strings */; };
 		5FD2CDDA18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2CDCD18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayout.m */; };
@@ -93,11 +94,12 @@
 		5F78C78E18FD1A6C00ACE12B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5F78C78F18FD1A6C00ACE12B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5F78C79118FD1A6C00ACE12B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		5F78C7C318FD1F0400ACE12B /* UIDevice+iOS7Compatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+iOS7Compatibility.h"; sourceTree = "<group>"; };
+		5F78C7C418FD1F0400ACE12B /* UIDevice+iOS7Compatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+iOS7Compatibility.m"; sourceTree = "<group>"; };
 		5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPerSectionLayout.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FD2CDA618FB9AD000B8E740 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5FD2CDAA18FB9AD000B8E740 /* PerSectionLayout-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PerSectionLayout-Prefix.pch"; sourceTree = "<group>"; };
 		5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PerSectionLayoutTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5FD2CDB418FB9AD000B8E740 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5FD2CDBE18FB9AD000B8E740 /* PerSectionLayoutTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PerSectionLayoutTests-Info.plist"; sourceTree = "<group>"; };
 		5FD2CDC018FB9AD000B8E740 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5FD2CDCC18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPerSectionCollectionViewLayout.h; sourceTree = "<group>"; };
@@ -159,7 +161,6 @@
 				5F78C73518FD14A900ACE12B /* SenTestingKit.framework in Frameworks */,
 				5F78C73318FD149200ACE12B /* libPerSectionLayout.a in Frameworks */,
 				5F78C73218FD144E00ACE12B /* UIKit.framework in Frameworks */,
-				5FD2CDB518FB9AD000B8E740 /* XCTest.framework in Frameworks */,
 				5F78C72F18FD141500ACE12B /* Kiwi.framework in Frameworks */,
 				5FD2CDB618FB9AD000B8E740 /* Foundation.framework in Frameworks */,
 			);
@@ -190,6 +191,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		5F78C7C118FD1EC900ACE12B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5F78C7C318FD1F0400ACE12B /* UIDevice+iOS7Compatibility.h */,
+				5F78C7C418FD1F0400ACE12B /* UIDevice+iOS7Compatibility.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 		5FD2CD9A18FB9AD000B8E740 = {
 			isa = PBXGroup;
 			children = (
@@ -218,7 +228,6 @@
 				5F78C73418FD14A900ACE12B /* SenTestingKit.framework */,
 				5F78C73018FD143900ACE12B /* UIKit.framework */,
 				5FD2CDA618FB9AD000B8E740 /* Foundation.framework */,
-				5FD2CDB418FB9AD000B8E740 /* XCTest.framework */,
 				5F78C72E18FD141500ACE12B /* Kiwi.framework */,
 				5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */,
 			);
@@ -242,6 +251,7 @@
 				5FD2CDD318FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutInvalidationContext.m */,
 				5FD2CDCE18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h */,
 				5FD2CDCF18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutAttributes.m */,
+				5F78C7C118FD1EC900ACE12B /* Utilities */,
 				5FD2CDA918FB9AD000B8E740 /* Supporting Files */,
 			);
 			path = PerSectionLayout;
@@ -316,6 +326,7 @@
 				5FD2CE2518FBA28200B8E740 /* AMPerSectionCollectionViewLayoutItem.h in Headers */,
 				5FD2CE2118FB9F5700B8E740 /* AMPerSectionCollectionViewLayout.h in Headers */,
 				5FD2CE2718FBA28200B8E740 /* AMPerSectionCollectionViewLayoutSection.h in Headers */,
+				5F78C7C518FD1F0400ACE12B /* UIDevice+iOS7Compatibility.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +458,7 @@
 				5FD2CDDC18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutInfo.m in Sources */,
 				5FD2CDE018FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutSection.m in Sources */,
 				5FD2CDDD18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutInvalidationContext.m in Sources */,
+				5F78C7C618FD1F0400ACE12B /* UIDevice+iOS7Compatibility.m in Sources */,
 				5FD2CDDF18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutRow.m in Sources */,
 				5FD2CDDE18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutItem.m in Sources */,
 				5FD2CDDB18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutAttributes.m in Sources */,
@@ -519,6 +531,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -535,6 +548,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Prefix.pch";
 				INFOPLIST_FILE = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -617,7 +631,7 @@
 				DSTROOT = /tmp/PerSectionLayout.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayout/PerSectionLayout-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PRODUCT_NAME)";
@@ -631,7 +645,7 @@
 				DSTROOT = /tmp/PerSectionLayout.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayout/PerSectionLayout-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PRODUCT_NAME)";
@@ -657,12 +671,8 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "PerSectionLayoutTests/PerSectionLayoutTests-Info.plist";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -682,12 +692,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayout/PerSectionLayout-Prefix.pch";
 				INFOPLIST_FILE = "PerSectionLayoutTests/PerSectionLayoutTests-Info.plist";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
