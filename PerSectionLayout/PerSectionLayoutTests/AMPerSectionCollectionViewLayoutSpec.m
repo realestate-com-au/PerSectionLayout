@@ -167,7 +167,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                     });
                     
                     it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
-                        [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointMake(0.f, 40.1f))];
+                        [[theValue(layout.adjustedCollectionViewContentOffset.y) should] equal:40.1f withDelta:0.0001];
                     });
                 });
                 
@@ -177,7 +177,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                     });
                     
                     it(@"should use it the transition target offset to compute adjustedCollectionViewContentOffset", ^{
-                        [[theValue(layout.adjustedCollectionViewContentOffset) should] equal:theValue(CGPointMake(0.f, 0.1f))];
+                        [[theValue(layout.adjustedCollectionViewContentOffset.y) should] equal:0.1f withDelta:0.0001];
                     });
                 });
             });
@@ -626,38 +626,6 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                         for (AMPerSectionCollectionViewLayoutAttributes *attributes in layoutAttributesForElementsInRect)
                         {
                             [[theValue(attributes.adjustmentOffset) should] equal:theValue(CGPointZero)];
-                        }
-                    });
-                });
-                
-                context(@"emulating a scroll", ^{
-                    
-                    __block  CGPoint yOffsetPoint = CGPointZero;
-                    
-                    beforeEach(^{
-                        yOffsetPoint = CGPointMake(0, delegateDataSource.headerReferenceSize.height + 60);
-                        
-                        [layout stub:@selector(adjustedCollectionViewContentOffset) andReturn:theValue(yOffsetPoint)];
-                        layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f,  yOffsetPoint.y, layout.collectionViewContentSize.width,  layout.collectionViewContentSize.height - yOffsetPoint.y)];
-                    });
-                    
-                    it(@"should return the sticky header", ^{
-                        [[layoutAttributesForElementsInRect should] beNonNil];
-                        
-                        [[[layoutAttributesForElementsInRect valueForKey:@"elementKind"] should] contain:AMPerSectionCollectionElementKindHeader];
-                    });
-                    
-                    it(@"should have all it's returned attributes be of AMPerSectionCollectionViewLayoutAttributes class kind", ^{
-                        for (AMPerSectionCollectionViewLayoutAttributes *attributes in layoutAttributesForElementsInRect)
-                        {
-                            [[attributes should] beKindOfClass:[AMPerSectionCollectionViewLayoutAttributes class]];
-                        }
-                    });
-                    
-                    it(@"should have all it's returned attributes without an adjustment offset", ^{
-                        for (AMPerSectionCollectionViewLayoutAttributes *attributes in layoutAttributesForElementsInRect)
-                        {
-                            [[theValue(attributes.adjustmentOffset) should] equal:theValue(yOffsetPoint)];
                         }
                     });
                 });

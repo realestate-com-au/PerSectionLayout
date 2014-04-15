@@ -51,7 +51,7 @@
 		5FDDB80018FDDB58005D20F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */; };
 		5FDDB80118FDDB61005D20F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */; };
 		88ADDC6218FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ADDC6118FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m */; };
-		88ADDC6418FBB48200467201 /* LayoutSectionLayoutAttributesSpecSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpecSpec.m */; };
+		88ADDC6418FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,7 +132,7 @@
 		5FD2CE2F18FBA58F00B8E740 /* Test.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Test.xcconfig; path = ../Test.xcconfig; sourceTree = "<group>"; };
 		5FD2CE3018FBA58F00B8E740 /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Project.xcconfig; path = ../Project.xcconfig; sourceTree = "<group>"; };
 		88ADDC6118FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutInfoLayoutAttributesSpec.m; sourceTree = "<group>"; };
-		88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpecSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutSectionLayoutAttributesSpecSpec.m; sourceTree = "<group>"; };
+		88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutSectionLayoutAttributesSpec.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -311,7 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				88ADDC6118FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m */,
-				88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpecSpec.m */,
+				88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m */,
 			);
 			name = LayoutAttributes;
 			sourceTree = "<group>";
@@ -479,7 +479,7 @@
 				5FD2CDF118FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutRowSpec.m in Sources */,
 				5FD2CDEB18FB9BD900B8E740 /* AMFakeCollectionViewDelegateDataSource.m in Sources */,
 				5FD2CDEC18FB9BD900B8E740 /* AMPerSectionCollectionViewInfoCalculationSpec.m in Sources */,
-				88ADDC6418FBB48200467201 /* LayoutSectionLayoutAttributesSpecSpec.m in Sources */,
+				88ADDC6418FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m in Sources */,
 				5FD2CDF018FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutItemSpec.m in Sources */,
 				5FD2CDEE18FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutInfoSpec.m in Sources */,
 				5FD2CDF218FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutSectionSpec.m in Sources */,

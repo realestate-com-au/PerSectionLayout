@@ -78,6 +78,37 @@ describe(@"LayoutItemAttributes", ^{
 //                CGPoint headerOrigin = layoutAttr.frame.origin;
 //                [[theValue(headerOrigin) should] equal:theValue(CGPointMake(100, 100))];
             });
+            
+            // TODO: once collection view is scrolled
+//            context(@"emulating a scroll", ^{
+//                
+//                __block  CGPoint yOffsetPoint = CGPointZero;
+//                
+//                beforeEach(^{
+//                    yOffsetPoint = CGPointMake(0, delegateDataSource.headerReferenceSize.height + 60);
+//                    
+//                    [layout stub:@selector(adjustedCollectionViewContentOffset) andReturn:theValue(yOffsetPoint)];
+//                    layoutAttributesForElementsInRect = [layout layoutAttributesForElementsInRect:CGRectMake(0.f,  yOffsetPoint.y, layout.collectionViewContentSize.width,  layout.collectionViewContentSize.height - yOffsetPoint.y)];
+//                });
+//                
+//                it(@"should return the sticky header", ^{
+//                    [[[layoutAttributesForElementsInRect valueForKey:@"elementKind"] should] contain:AMPerSectionCollectionElementKindHeader];
+//                });
+//                
+//                it(@"should have all it's returned attributes be of AMPerSectionCollectionViewLayoutAttributes class kind", ^{
+//                    for (AMPerSectionCollectionViewLayoutAttributes *attributes in layoutAttributesForElementsInRect)
+//                    {
+//                        [[attributes should] beKindOfClass:[AMPerSectionCollectionViewLayoutAttributes class]];
+//                    }
+//                });
+//                
+//                it(@"should have all it's returned attributes without an adjustment offset", ^{
+//                    for (AMPerSectionCollectionViewLayoutAttributes *attributes in layoutAttributesForElementsInRect)
+//                    {
+//                        [[theValue(attributes.adjustmentOffset) should] equal:theValue(yOffsetPoint)];
+//                    }
+//                });
+//            });
         });
 
     });
