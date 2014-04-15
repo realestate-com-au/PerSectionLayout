@@ -1,5 +1,7 @@
 language: objective-c
 rvm:
     - 2.0.0-p247
+ before_install:
+ 	- make update
 install: bundle install
 script: make test
