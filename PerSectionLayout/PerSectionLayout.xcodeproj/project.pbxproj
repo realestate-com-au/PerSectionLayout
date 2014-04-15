@@ -42,7 +42,7 @@
 		5FD2CDF218FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutSectionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2CDE918FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutSectionSpec.m */; };
 		5FD2CDF318FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2CDEA18FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutSpec.m */; };
 		5FD2CE2118FB9F5700B8E740 /* AMPerSectionCollectionViewLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDCC18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5FD2CE2218FBA27400B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDCE18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h */; };
+		5FD2CE2218FBA27400B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDCE18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5FD2CE2318FBA28200B8E740 /* AMPerSectionCollectionViewLayoutInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDD018FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutInfo.h */; };
 		5FD2CE2418FBA28200B8E740 /* AMPerSectionCollectionViewLayoutInvalidationContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDD218FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutInvalidationContext.h */; };
 		5FD2CE2518FBA28200B8E740 /* AMPerSectionCollectionViewLayoutItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDD418FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutItem.h */; };
