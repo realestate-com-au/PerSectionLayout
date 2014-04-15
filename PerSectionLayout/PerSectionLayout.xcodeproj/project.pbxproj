@@ -12,6 +12,14 @@
 		5F78C73218FD144E00ACE12B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C73018FD143900ACE12B /* UIKit.framework */; };
 		5F78C73318FD149200ACE12B /* libPerSectionLayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */; };
 		5F78C73518FD14A900ACE12B /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C73418FD14A900ACE12B /* SenTestingKit.framework */; };
+		5F78C78118FD1A6C00ACE12B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA618FB9AD000B8E740 /* Foundation.framework */; };
+		5F78C78318FD1A6C00ACE12B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */; };
+		5F78C78418FD1A6C00ACE12B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C73018FD143900ACE12B /* UIKit.framework */; };
+		5F78C78A18FD1A6C00ACE12B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F78C78818FD1A6C00ACE12B /* InfoPlist.strings */; };
+		5F78C78C18FD1A6C00ACE12B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78C78B18FD1A6C00ACE12B /* main.m */; };
+		5F78C79018FD1A6C00ACE12B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78C78F18FD1A6C00ACE12B /* AppDelegate.m */; };
+		5F78C79218FD1A6C00ACE12B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F78C79118FD1A6C00ACE12B /* Images.xcassets */; };
+		5F78C7AD18FD1BA200ACE12B /* libPerSectionLayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */; };
 		5FD2CDA718FB9AD000B8E740 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA618FB9AD000B8E740 /* Foundation.framework */; };
 		5FD2CDB518FB9AD000B8E740 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDB418FB9AD000B8E740 /* XCTest.framework */; };
 		5FD2CDB618FB9AD000B8E740 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA618FB9AD000B8E740 /* Foundation.framework */; };
@@ -44,6 +52,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5F78C7AB18FD1B9700ACE12B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5FD2CD9B18FB9AD000B8E740 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5FD2CDA218FB9AD000B8E740;
+			remoteInfo = PerSectionLayout;
+		};
 		5FD2CDB918FB9AD000B8E740 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5FD2CD9B18FB9AD000B8E740 /* Project object */;
@@ -69,10 +84,19 @@
 		5F78C72E18FD141500ACE12B /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = ../tools/Kiwi.framework; sourceTree = "<group>"; };
 		5F78C73018FD143900ACE12B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F78C73418FD14A900ACE12B /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		5F78C78018FD1A6C00ACE12B /* PerSectionLayoutTestLoader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerSectionLayoutTestLoader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5F78C78718FD1A6C00ACE12B /* PerSectionLayoutTestLoader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PerSectionLayoutTestLoader-Info.plist"; sourceTree = "<group>"; };
+		5F78C78918FD1A6C00ACE12B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5F78C78B18FD1A6C00ACE12B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5F78C78D18FD1A6C00ACE12B /* PerSectionLayoutTestLoader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PerSectionLayoutTestLoader-Prefix.pch"; sourceTree = "<group>"; };
+		5F78C78E18FD1A6C00ACE12B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5F78C78F18FD1A6C00ACE12B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5F78C79118FD1A6C00ACE12B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPerSectionLayout.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FD2CDA618FB9AD000B8E740 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5FD2CDAA18FB9AD000B8E740 /* PerSectionLayout-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PerSectionLayout-Prefix.pch"; sourceTree = "<group>"; };
-		5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PerSectionLayoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PerSectionLayoutTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FD2CDB418FB9AD000B8E740 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5FD2CDBE18FB9AD000B8E740 /* PerSectionLayoutTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PerSectionLayoutTests-Info.plist"; sourceTree = "<group>"; };
 		5FD2CDC018FB9AD000B8E740 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -108,6 +132,17 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5F78C77D18FD1A6C00ACE12B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F78C7AD18FD1BA200ACE12B /* libPerSectionLayout.a in Frameworks */,
+				5F78C78318FD1A6C00ACE12B /* CoreGraphics.framework in Frameworks */,
+				5F78C78418FD1A6C00ACE12B /* UIKit.framework in Frameworks */,
+				5F78C78118FD1A6C00ACE12B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5FD2CDA018FB9AD000B8E740 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -133,12 +168,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F78C78518FD1A6C00ACE12B /* PerSectionLayoutTestLoader */ = {
+			isa = PBXGroup;
+			children = (
+				5F78C78E18FD1A6C00ACE12B /* AppDelegate.h */,
+				5F78C78F18FD1A6C00ACE12B /* AppDelegate.m */,
+				5F78C79118FD1A6C00ACE12B /* Images.xcassets */,
+				5F78C78618FD1A6C00ACE12B /* Supporting Files */,
+			);
+			path = PerSectionLayoutTestLoader;
+			sourceTree = "<group>";
+		};
+		5F78C78618FD1A6C00ACE12B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5F78C78718FD1A6C00ACE12B /* PerSectionLayoutTestLoader-Info.plist */,
+				5F78C78818FD1A6C00ACE12B /* InfoPlist.strings */,
+				5F78C78B18FD1A6C00ACE12B /* main.m */,
+				5F78C78D18FD1A6C00ACE12B /* PerSectionLayoutTestLoader-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		5FD2CD9A18FB9AD000B8E740 = {
 			isa = PBXGroup;
 			children = (
 				5FD2CE3718FBA5BE00B8E740 /* Configurations */,
 				5FD2CDA818FB9AD000B8E740 /* PerSectionLayout */,
 				5FD2CDBC18FB9AD000B8E740 /* PerSectionLayoutTests */,
+				5F78C78518FD1A6C00ACE12B /* PerSectionLayoutTestLoader */,
 				5FD2CDA518FB9AD000B8E740 /* Frameworks */,
 				5FD2CDA418FB9AD000B8E740 /* Products */,
 			);
@@ -148,7 +206,8 @@
 			isa = PBXGroup;
 			children = (
 				5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */,
-				5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.xctest */,
+				5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.octest */,
+				5F78C78018FD1A6C00ACE12B /* PerSectionLayoutTestLoader.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -161,6 +220,7 @@
 				5FD2CDA618FB9AD000B8E740 /* Foundation.framework */,
 				5FD2CDB418FB9AD000B8E740 /* XCTest.framework */,
 				5F78C72E18FD141500ACE12B /* Kiwi.framework */,
+				5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -262,6 +322,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		5F78C77F18FD1A6C00ACE12B /* PerSectionLayoutTestLoader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F78C7A918FD1A6D00ACE12B /* Build configuration list for PBXNativeTarget "PerSectionLayoutTestLoader" */;
+			buildPhases = (
+				5F78C77C18FD1A6C00ACE12B /* Sources */,
+				5F78C77D18FD1A6C00ACE12B /* Frameworks */,
+				5F78C77E18FD1A6C00ACE12B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5F78C7AC18FD1B9700ACE12B /* PBXTargetDependency */,
+			);
+			name = PerSectionLayoutTestLoader;
+			productName = PerSectionLayoutTestLoader;
+			productReference = 5F78C78018FD1A6C00ACE12B /* PerSectionLayoutTestLoader.app */;
+			productType = "com.apple.product-type.application";
+		};
 		5FD2CDA218FB9AD000B8E740 /* PerSectionLayout */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5FD2CDC618FB9AD000B8E740 /* Build configuration list for PBXNativeTarget "PerSectionLayout" */;
@@ -295,7 +373,7 @@
 			);
 			name = PerSectionLayoutTests;
 			productName = PerSectionLayoutTests;
-			productReference = 5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.xctest */;
+			productReference = 5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.octest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -306,6 +384,11 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Dblechoc;
+				TargetAttributes = {
+					5FD2CDB218FB9AD000B8E740 = {
+						TestTargetID = 5F78C77F18FD1A6C00ACE12B;
+					};
+				};
 			};
 			buildConfigurationList = 5FD2CD9E18FB9AD000B8E740 /* Build configuration list for PBXProject "PerSectionLayout" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -321,11 +404,21 @@
 			targets = (
 				5FD2CDA218FB9AD000B8E740 /* PerSectionLayout */,
 				5FD2CDB218FB9AD000B8E740 /* PerSectionLayoutTests */,
+				5F78C77F18FD1A6C00ACE12B /* PerSectionLayoutTestLoader */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5F78C77E18FD1A6C00ACE12B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F78C78A18FD1A6C00ACE12B /* InfoPlist.strings in Resources */,
+				5F78C79218FD1A6C00ACE12B /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5FD2CDB118FB9AD000B8E740 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -337,6 +430,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5F78C77C18FD1A6C00ACE12B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F78C79018FD1A6C00ACE12B /* AppDelegate.m in Sources */,
+				5F78C78C18FD1A6C00ACE12B /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5FD2CD9F18FB9AD000B8E740 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -372,6 +474,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5F78C7AC18FD1B9700ACE12B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5FD2CDA218FB9AD000B8E740 /* PerSectionLayout */;
+			targetProxy = 5F78C7AB18FD1B9700ACE12B /* PBXContainerItemProxy */;
+		};
 		5FD2CDBA18FB9AD000B8E740 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5FD2CDA218FB9AD000B8E740 /* PerSectionLayout */;
@@ -380,6 +487,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		5F78C78818FD1A6C00ACE12B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5F78C78918FD1A6C00ACE12B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		5FD2CDBF18FB9AD000B8E740 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -391,6 +506,42 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		5F78C7A518FD1A6D00ACE12B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		5F78C7A618FD1A6D00ACE12B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Prefix.pch";
+				INFOPLIST_FILE = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		5FD2CDC418FB9AD000B8E740 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -492,6 +643,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5FD2CE2F18FBA58F00B8E740 /* Test.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PerSectionLayoutTestLoader.app/PerSectionLayoutTestLoader";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -505,14 +657,22 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "PerSectionLayoutTests/PerSectionLayoutTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
 		5FD2CDCB18FB9AD000B8E740 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PerSectionLayoutTestLoader.app/PerSectionLayoutTestLoader";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -522,14 +682,29 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayout/PerSectionLayout-Prefix.pch";
 				INFOPLIST_FILE = "PerSectionLayoutTests/PerSectionLayoutTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5F78C7A918FD1A6D00ACE12B /* Build configuration list for PBXNativeTarget "PerSectionLayoutTestLoader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F78C7A518FD1A6D00ACE12B /* Debug */,
+				5F78C7A618FD1A6D00ACE12B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		5FD2CD9E18FB9AD000B8E740 /* Build configuration list for PBXProject "PerSectionLayout" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
