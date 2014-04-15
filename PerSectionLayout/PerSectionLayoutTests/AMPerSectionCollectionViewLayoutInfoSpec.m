@@ -81,6 +81,19 @@ describe(@"AMPerSectionCollectionViewLayoutInfo", ^{
             [[invalidSectionIndex should] beNil];
         });
     });
+    
+    context(@"lastSectionIndex", ^{
+        beforeEach(^{
+            layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
+            [layoutInfo addSection];
+            [layoutInfo addSection];
+            [layoutInfo addSection];
+        });
+        
+        it(@"should return the last section index", ^{
+            [[theValue([layoutInfo lastSectionIndex]) should] equal:theValue(2)];
+        });
+    });
 
     context(@"firstSectionAtPoint", ^{
         __block AMPerSectionCollectionViewLayoutSection *section2;

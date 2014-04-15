@@ -52,6 +52,11 @@
     return (NSInteger)self.items.count;
 }
 
+- (NSInteger)lastItemIndex
+{
+    return self.itemsCount - 1;
+}
+
 - (AMPerSectionCollectionViewLayoutItem *)addItem
 {
     AMPerSectionCollectionViewLayoutItem *layoutItem = [[AMPerSectionCollectionViewLayoutItem alloc] init];
@@ -211,7 +216,7 @@
     CGRect footerFrame = CGRectOffset(self.footerFrame, sectionFrame.origin.x, sectionFrame.origin.y);
     if (CGRectGetHeight(footerFrame) > 0)
     {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:self.index];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self lastItemIndex] inSection:self.index];
         AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:indexPath];
         attr.frame = footerFrame;
         attr.adjustmentOffset = offset;
@@ -233,7 +238,7 @@
     }
     else if([kind isEqualToString:AMPerSectionCollectionElementKindSectionFooter])
     {
-        if (indexPath.section == self.index && indexPath.row == 0)
+        if (indexPath.section == self.index && indexPath.row == [self lastItemIndex])
         {
             return [self layoutAttributesForSectionFooterWithOffset:offset];
         }

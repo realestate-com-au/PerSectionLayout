@@ -36,6 +36,11 @@
     return [self.sections copy];
 }
 
+- (NSInteger)lastSectionIndex
+{
+    return ((NSInteger)self.sections.count - 1);
+}
+
 - (NSObject *)addSection
 {
     AMPerSectionCollectionViewLayoutSection *layoutSection = [[AMPerSectionCollectionViewLayoutSection alloc] init];

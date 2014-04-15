@@ -12,6 +12,7 @@
 - (NSArray *)layoutSectionItems;
 - (NSArray *)layoutSectionRows;
 - (NSInteger)itemsCount;
+- (NSInteger)lastItemIndex;
 - (AMPerSectionCollectionViewLayoutItem *)addItem;
 - (AMPerSectionCollectionViewLayoutRow *)addRow;
 - (void)invalidate;

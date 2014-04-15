@@ -121,7 +121,8 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 	}
     else if ([kind isEqualToString:AMPerSectionCollectionElementKindFooter])
     {
-        if (indexPath.row == 0 && indexPath.section == 0)
+        AMPerSectionCollectionViewLayoutSection *section = [self.layoutInfo sectionAtIndex:indexPath.section];
+        if (indexPath.row == [section lastItemIndex] && indexPath.section == [self.layoutInfo lastSectionIndex])
         {
             return [self.layoutInfo layoutAttributesForGlobalFooterWithOffset:offset];
         }

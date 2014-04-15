@@ -79,6 +79,24 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
         });
     });
     
+    context(@"lastItemIndex", ^{
+        beforeEach(^{
+            section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
+            [section addItem];
+            [section addItem];
+        });
+        
+        context(@"with no item", ^{
+             [[theValue([section lastItemIndex]) should] equal:theValue(-1)];
+        });
+        
+        context(@"with 2 items", ^{
+            it(@"should return the last item index", ^{
+                [[theValue([section lastItemIndex]) should] equal:theValue(1)];
+            });
+        });
+    });
+    
     context(@"a standard layout", ^{
         beforeEach(^{
             section = [[AMPerSectionCollectionViewLayoutSection alloc] init];

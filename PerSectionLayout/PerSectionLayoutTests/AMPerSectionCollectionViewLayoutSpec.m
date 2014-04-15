@@ -719,7 +719,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 
                 context(@"AMPerSectionCollectionElementKindFooter", ^{
                     beforeEach(^{
-                        attributes = [layout layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+                        attributes = [layout layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindFooter atIndexPath:[NSIndexPath indexPathForItem:9 inSection:2]];
                     });
                     
                     it(@"should return a layout attributes", ^{
@@ -762,7 +762,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                     
                     context(@"AMPerSectionCollectionElementKindSectionFooter", ^{
                         beforeEach(^{
-                            attributes = [layout layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter atIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];
+                            attributes = [layout layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter atIndexPath:[NSIndexPath indexPathForItem:9 inSection:1]];
                         });
                         
                         it(@"should return a layout attributes", ^{
