@@ -25,23 +25,23 @@
     return collectionViewLayout.itemSize;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForHeaderInSection:(NSInteger)section
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
     id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:sizeForHeaderInSection:)])
+    if ([sectionController respondsToSelector:@selector(collectionView:layout:referenceSizeForHeaderInSection:)])
     {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout sizeForHeaderInSection:section];
+        return [sectionController collectionView:collectionView layout:collectionViewLayout referenceSizeForHeaderInSection:section];
     }
     
     return collectionViewLayout.sectionHeaderReferenceSize;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForFooterInSection:(NSInteger)section
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
     id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:sizeForFooterInSection:)])
+    if ([sectionController respondsToSelector:@selector(collectionView:layout:referenceSizeForFooterInSection:)])
     {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout sizeForFooterInSection:section];
+        return [sectionController collectionView:collectionView layout:collectionViewLayout referenceSizeForFooterInSection:section];
     }
     
     return collectionViewLayout.sectionFooterReferenceSize;
