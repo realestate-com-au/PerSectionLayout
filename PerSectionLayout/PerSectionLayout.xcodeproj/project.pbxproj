@@ -662,9 +662,9 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PerSectionLayoutTestLoader.app/PerSectionLayoutTestLoader";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					/Users/amittaz/Projects/REA/PerSectionLayout/tools,
+					"$(inherited)",
+					"\"$(SRCROOT)/../tools\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayout/PerSectionLayout-Prefix.pch";
@@ -686,9 +686,9 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PerSectionLayoutTestLoader.app/PerSectionLayoutTestLoader";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					/Users/amittaz/Projects/REA/PerSectionLayout/tools,
+					"$(inherited)",
+					"\"$(SRCROOT)/../tools\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayout/PerSectionLayout-Prefix.pch";
