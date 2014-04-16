@@ -20,7 +20,7 @@
 @property (nonatomic) UIEdgeInsets sectionInset;
 @property (nonatomic) CGFloat minimumLineSpacing;
 @property (nonatomic) CGFloat minimumInteritemSpacing;
-@property (nonatomic) CGFloat sectionMinimumWidth;
+@property (nonatomic) CGFloat sectionWidth;
 @property (nonatomic, assign, getter = hasStickyHeader) BOOL stickyHeader;
 @property (nonatomic, assign) NSInteger sectionIndexToStretch;
 

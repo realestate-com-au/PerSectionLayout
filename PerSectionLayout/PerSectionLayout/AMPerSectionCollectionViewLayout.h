@@ -22,7 +22,7 @@ extern const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section;
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section;
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section;
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout widthForSectionAtIndex:(NSInteger)section;
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
 - (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout canStretchSectionAtIndex:(NSInteger)section;
@@ -37,7 +37,7 @@ extern const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex;
 @property (nonatomic, assign) CGSize sectionHeaderReferenceSize; // default: CGSizeZero
 @property (nonatomic, assign) CGSize sectionFooterReferenceSize; // default: CGSizeZero
 @property (nonatomic, assign) UIEdgeInsets sectionInset; // default: UIEdgeInsetsZero
-@property (nonatomic, assign) CGFloat sectionMinimumWidth; // default: NAN (use the collection view width)
+@property (nonatomic, assign) CGFloat sectionWidth; // default: NAN (use the collection view width)
 @property (nonatomic, assign) CGFloat minimumLineSpacing; // default: 5
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing; // default: 5
 

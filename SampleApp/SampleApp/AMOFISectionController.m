@@ -49,7 +49,7 @@
     return CGSizeMake(40.f, 40.f);
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout widthForSectionAtIndex:(NSInteger)section
 {
     return [self maxWidthForCollectionView:collectionView];
 }

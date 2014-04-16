@@ -80,15 +80,15 @@
     return collectionViewLayout.minimumInteritemSpacing;
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumWidthForSectionAtIndex:(NSInteger)section
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout widthForSectionAtIndex:(NSInteger)section
 {
     id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:minimumWidthForSectionAtIndex:)])
+    if ([sectionController respondsToSelector:@selector(collectionView:layout:widthForSectionAtIndex:)])
     {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout minimumWidthForSectionAtIndex:section];
+        return [sectionController collectionView:collectionView layout:collectionViewLayout widthForSectionAtIndex:section];
     }
     
-    return collectionViewLayout.sectionMinimumWidth;
+    return collectionViewLayout.sectionWidth;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasStickyHeaderOverSection:(NSInteger)section

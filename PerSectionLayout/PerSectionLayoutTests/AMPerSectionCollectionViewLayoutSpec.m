@@ -21,7 +21,7 @@
 - (UIEdgeInsets)insetForSectionAtIndex:(NSInteger)section;
 - (CGFloat)minimumLineSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
-- (CGFloat)miniumWidthForSectionAtIndex:(NSInteger)section;
+- (CGFloat)widthForSectionAtIndex:(NSInteger)section;
 - (BOOL)hasStickyHeaderOverSection:(NSInteger)section;
 - (BOOL)canStretchSectionAtIndex:(NSInteger)section;
 - (void)getSizingInfos:(id)arg;
@@ -78,7 +78,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         });
         
         it(@"should have a default section minimum with", ^{
-            [[theValue(layout.sectionMinimumWidth) should] equal:theValue(NAN)];
+            [[theValue(layout.sectionWidth) should] equal:theValue(NAN)];
         });
         
         it(@"should have by default non stick header", ^{
@@ -297,7 +297,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 layout.sectionHeaderReferenceSize = CGSizeMake(227.f, 148.f);
                 layout.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
                 layout.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
-                layout.sectionMinimumWidth = 400.f;
+                layout.sectionWidth = 400.f;
                 layout.minimumLineSpacing = 8.f;
                 layout.minimumInteritemSpacing = 10.f;
                 
@@ -328,8 +328,8 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 [[theValue([layout insetForSectionAtIndex:0]) should] equal:theValue(layout.sectionInset)];
             });
             
-            it(@"miniumWidthForSectionAtIndex", ^{
-                [[theValue([layout miniumWidthForSectionAtIndex:0]) should] equal:theValue(layout.sectionMinimumWidth)];
+            it(@"widthForSectionAtIndex", ^{
+                [[theValue([layout widthForSectionAtIndex:0]) should] equal:theValue(layout.sectionWidth)];
             });
             
             it(@"minimumLineSpacingForSectionAtIndex", ^{
@@ -394,8 +394,8 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             it(@"insetForSectionAtIndex", ^{
                 [[theValue([layout insetForSectionAtIndex:0]) should] equal:theValue(delegateDataSource.sectionInset)];
             });
-            it(@"miniumWidthForSectionAtIndex", ^{
-                [[theValue([layout miniumWidthForSectionAtIndex:0]) should] equal:theValue(delegateDataSource.sectionMinimumWidth)];
+            it(@"widthForSectionAtIndex", ^{
+                [[theValue([layout widthForSectionAtIndex:0]) should] equal:theValue(delegateDataSource.sectionWidth)];
             });
             
             it(@"minimumLineSpacingForSectionAtIndex", ^{
@@ -544,7 +544,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
                 delegateDataSource.minimumLineSpacing = 10.f;
                 delegateDataSource.minimumInteritemSpacing = 10.f;
-                delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
+                delegateDataSource.sectionWidth = CGRectGetWidth(collectionView.frame);
                 delegateDataSource.stickyHeader = YES;
                 delegateDataSource.lastSectionWithStickyHeader = 1;
                 
@@ -583,7 +583,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 delegateDataSource.sectionFooterReferenceSize = CGSizeMake(17.f, 70.f);
                 delegateDataSource.minimumLineSpacing = 10.f;
                 delegateDataSource.minimumInteritemSpacing = 10.f;
-                delegateDataSource.sectionMinimumWidth = CGRectGetWidth(collectionView.frame);
+                delegateDataSource.sectionWidth = CGRectGetWidth(collectionView.frame);
                 delegateDataSource.stickyHeader = YES;
                 delegateDataSource.lastSectionWithStickyHeader = 1;
                 delegateDataSource.sectionIndexToStretch = 0;
