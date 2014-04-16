@@ -227,7 +227,7 @@
 			attributes = {
 				CLASSPREFIX = AM;
 				LastUpgradeCheck = 0510;
-				ORGANIZATIONNAME = Dblechoc;
+				ORGANIZATIONNAME = "REA Group";
 			};
 			buildConfigurationList = 5FD2CD3118FB987400B8E740 /* Build configuration list for PBXProject "SampleApp" */;
 			compatibilityVersion = "Xcode 3.2";

@@ -214,7 +214,9 @@
 				5FD2CDA518FB9AD000B8E740 /* Frameworks */,
 				5FD2CDA418FB9AD000B8E740 /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		5FD2CDA418FB9AD000B8E740 /* Products */ = {
 			isa = PBXGroup;
@@ -397,8 +399,9 @@
 		5FD2CD9B18FB9AD000B8E740 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = AM;
 				LastUpgradeCheck = 0510;
-				ORGANIZATIONNAME = Dblechoc;
+				ORGANIZATIONNAME = "REA Group";
 				TargetAttributes = {
 					5FD2CDB218FB9AD000B8E740 = {
 						TestTargetID = 5F78C77F18FD1A6C00ACE12B;

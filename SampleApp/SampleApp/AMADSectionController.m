@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2014 Dblechoc. All rights reserved.
+//  Copyright (c) 2014 REA Group. All rights reserved.
 //
 
 #import "AMADSectionController.h"

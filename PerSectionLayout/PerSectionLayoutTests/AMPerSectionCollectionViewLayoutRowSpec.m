@@ -1,5 +1,5 @@
 //
-//  Copyright 2014 Dblechoc. All rights reserved.
+//  Copyright 2014 REA Group. All rights reserved.
 //
 
 #import <Kiwi/Kiwi.h>
