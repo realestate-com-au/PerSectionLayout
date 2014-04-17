@@ -22,6 +22,9 @@
     CGFloat progress = [self.collectionView verticalBouncedOffProgressForMaxOffset:30.f];
     if (progress >= 1.f)
     {
+        id<AMSectionController> mapSectionController = [self.sectionsProvider controllerForSection:MainSectionMap];
+        mapSectionController.expanded = NO;
+        
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

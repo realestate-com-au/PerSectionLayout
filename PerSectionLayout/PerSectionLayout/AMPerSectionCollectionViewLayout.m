@@ -62,11 +62,6 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
     if ([self isTransitioning])
     {
         contentOffsetY = self.transitionTargetContentOffset.y;
-        
-        if ([self isExpanded])
-        {
-            contentOffsetY += 0.1; // make sure sticky / stretchy items stay at the top
-        }
     }
     
     CGFloat adjustedYValue = contentOffsetY + self.collectionView.contentInset.top;
@@ -291,15 +286,21 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset
 {
-    CGPoint targetOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset];
+  CGPoint targetOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset];
+  
+  if ([self isTransitioning])
+  {
+    targetOffset.y = -self.collectionView.contentInset.top;
     
-    if ([self isTransitioning])
+    if (CGPointEqualToPoint(targetOffset, proposedContentOffset))
     {
-        targetOffset.y = -self.collectionView.contentInset.top;
-        self.transitionTargetContentOffset = targetOffset;
+      targetOffset.y += 0.1; // make sure sticky / stretchy items stay at the top
     }
     
-    return targetOffset;
+    self.transitionTargetContentOffset = targetOffset;
+  }
+  
+  return targetOffset;
 }
 
 + (Class)invalidationContextClass

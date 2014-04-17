@@ -7,6 +7,8 @@
 
 @implementation AMMapSectionController
 
+@synthesize expanded = _expanded;
+
 - (NSInteger)section
 {
     return MainSectionMap;
@@ -53,7 +55,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    return CGSizeMake(CGRectGetWidth(collectionView.frame), [self maxCellHeight:[collectionViewLayout isExpanded]]);
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), [self maxCellHeight:[self isExpanded]]);
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasStickyHeaderOverSection:(NSInteger)section

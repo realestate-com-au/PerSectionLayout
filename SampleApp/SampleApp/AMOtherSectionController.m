@@ -7,6 +7,8 @@
 
 @implementation AMOtherSectionController
 
+@synthesize expanded = _expanded;
+
 - (NSInteger)section
 {
     return MainSectionOther;

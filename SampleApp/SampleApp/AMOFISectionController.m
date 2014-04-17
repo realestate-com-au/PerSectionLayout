@@ -7,6 +7,8 @@
 
 @implementation AMOFISectionController
 
+@synthesize expanded = _expanded;
+
 - (NSInteger)section
 {
     return MainSectionOFI;

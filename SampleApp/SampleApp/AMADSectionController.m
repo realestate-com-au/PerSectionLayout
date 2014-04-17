@@ -7,6 +7,8 @@
 
 @implementation AMADSectionController
 
+@synthesize expanded = _expanded;
+
 - (NSInteger)section
 {
     return MainSectionAd;

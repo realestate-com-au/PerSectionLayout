@@ -26,6 +26,8 @@
 
 @implementation AMListSectionController
 
+@synthesize expanded = _expanded;
+
 - (NSInteger)section
 {
     return MainSectionList;

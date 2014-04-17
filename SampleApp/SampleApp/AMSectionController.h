@@ -10,5 +10,6 @@
 
 - (NSInteger)section;
 - (void)registerCustomElementsForCollectionView:(UICollectionView *)collectionView;
+@property (nonatomic, assign, getter = isExpanded) BOOL expanded;
 
 @end

@@ -7,6 +7,8 @@
 
 @implementation AMGraphSectionController
 
+@synthesize expanded = _expanded;
+
 - (NSInteger)section
 {
     return MainSectionGraph;

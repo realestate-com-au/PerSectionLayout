@@ -54,10 +54,18 @@
     self.navigationItem.rightBarButtonItem = rightBarButtonItem;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    id<AMSectionController> mapSectionController = [self.sectionsProvider controllerForSection:MainSectionMap];
+    mapSectionController.expanded = NO;
+}
+
 - (void)pushViewControllerWithNewLayout
 {
     AMPerSectionCollectionViewLayout *expandedLayout = [[AMPerSectionCollectionViewLayout alloc] init];
-    expandedLayout.expanded = YES;
+    
+    id<AMSectionController> mapSectionController = [self.sectionsProvider controllerForSection:MainSectionMap];
+    mapSectionController.expanded = YES;
     
     AMMapExpandedCollectionViewController *viewController = [[AMMapExpandedCollectionViewController alloc] initWithCollectionViewLayout:expandedLayout];
     viewController.sectionsProvider = self.sectionsProvider;
