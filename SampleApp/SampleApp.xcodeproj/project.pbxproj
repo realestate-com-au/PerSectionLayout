@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5F78C65C18FCB35600ACE12B /* UICollectionView+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78C65B18FCB35600ACE12B /* UICollectionView+Utilities.m */; };
+		5F9BE37218FFAB240094BD20 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F9BE37118FFAB240094BD20 /* Main.storyboard */; };
 		5FD2CD3A18FB987400B8E740 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CD3918FB987400B8E740 /* Foundation.framework */; };
 		5FD2CD3C18FB987400B8E740 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CD3B18FB987400B8E740 /* CoreGraphics.framework */; };
 		5FD2CD3E18FB987400B8E740 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CD3D18FB987400B8E740 /* UIKit.framework */; };
@@ -27,7 +28,6 @@
 		5FD2CE1518FB9D6300B8E740 /* AMSectionsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2CE0A18FB9D6300B8E740 /* AMSectionsProvider.m */; };
 		5FD2CE1918FB9DD300B8E740 /* UIDevice+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2CE1818FB9DD300B8E740 /* UIDevice+Utilities.m */; };
 		5FD2CE1F18FB9EF700B8E740 /* libPerSectionLayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CE1E18FB9EF700B8E740 /* libPerSectionLayout.a */; };
-		5FD2CE2D18FBA4CE00B8E740 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2CE2B18FBA4CE00B8E740 /* Main.storyboard */; };
 		5FD2CE3418FBA5B600B8E740 /* Warnings.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2CE3118FBA5B600B8E740 /* Warnings.xcconfig */; };
 		5FD2CE3518FBA5B600B8E740 /* Test.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2CE3218FBA5B600B8E740 /* Test.xcconfig */; };
 		5FD2CE3618FBA5B600B8E740 /* Project.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5FD2CE3318FBA5B600B8E740 /* Project.xcconfig */; };
@@ -36,6 +36,7 @@
 /* Begin PBXFileReference section */
 		5F78C65A18FCB35600ACE12B /* UICollectionView+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+Utilities.h"; sourceTree = "<group>"; };
 		5F78C65B18FCB35600ACE12B /* UICollectionView+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+Utilities.m"; sourceTree = "<group>"; };
+		5F9BE37118FFAB240094BD20 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		5FD2CD3618FB987400B8E740 /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FD2CD3918FB987400B8E740 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5FD2CD3B18FB987400B8E740 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -73,7 +74,6 @@
 		5FD2CE1818FB9DD300B8E740 /* UIDevice+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Utilities.m"; sourceTree = "<group>"; };
 		5FD2CE1C18FB9E8C00B8E740 /* libPerSectionLayout.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPerSectionLayout.a; path = "../PerSectionLayout/build/Debug-iphoneos/libPerSectionLayout.a"; sourceTree = "<group>"; };
 		5FD2CE1E18FB9EF700B8E740 /* libPerSectionLayout.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPerSectionLayout.a; path = "../PerSectionLayout/build/Debug-iphoneos/libPerSectionLayout.a"; sourceTree = "<group>"; };
-		5FD2CE2C18FBA4CE00B8E740 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ../../../../../Desktop/InProgress/PerSectionLayout/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FD2CE3118FBA5B600B8E740 /* Warnings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Warnings.xcconfig; path = ../Warnings.xcconfig; sourceTree = "<group>"; };
 		5FD2CE3218FBA5B600B8E740 /* Test.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Test.xcconfig; path = ../Test.xcconfig; sourceTree = "<group>"; };
 		5FD2CE3318FBA5B600B8E740 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Project.xcconfig; path = ../Project.xcconfig; sourceTree = "<group>"; };
@@ -137,8 +137,8 @@
 				5FD2CE0118FB9D6300B8E740 /* AMMapExpandedCollectionViewController.m */,
 				5FD2CE1A18FB9DE300B8E740 /* Sections */,
 				5FD2CE1B18FB9DE800B8E740 /* Utilities */,
+				5F9BE37118FFAB240094BD20 /* Main.storyboard */,
 				5FD2CD4B18FB987400B8E740 /* Images.xcassets */,
-				5FD2CE2B18FBA4CE00B8E740 /* Main.storyboard */,
 				5FD2CD4018FB987400B8E740 /* Supporting Files */,
 			);
 			path = SampleApp;
@@ -255,7 +255,7 @@
 				5FD2CD4418FB987400B8E740 /* InfoPlist.strings in Resources */,
 				5FD2CE3418FBA5B600B8E740 /* Warnings.xcconfig in Resources */,
 				5FD2CD4C18FB987400B8E740 /* Images.xcassets in Resources */,
-				5FD2CE2D18FBA4CE00B8E740 /* Main.storyboard in Resources */,
+				5F9BE37218FFAB240094BD20 /* Main.storyboard in Resources */,
 				5FD2CE3618FBA5B600B8E740 /* Project.xcconfig in Resources */,
 				5FD2CE3518FBA5B600B8E740 /* Test.xcconfig in Resources */,
 			);
@@ -294,14 +294,6 @@
 				5FD2CD4318FB987400B8E740 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		5FD2CE2B18FBA4CE00B8E740 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FD2CE2C18FBA4CE00B8E740 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
