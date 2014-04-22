@@ -3,7 +3,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <PerSectionLayout/AMPerSectionCollectionViewLayout.h>
+#import "AMPerSectionCollectionViewLayout.h"
 
 @interface AMFakeCollectionViewDelegateDataSource : NSObject <UICollectionViewDataSource, AMPerSectionCollectionViewLayoutDelegate>
 

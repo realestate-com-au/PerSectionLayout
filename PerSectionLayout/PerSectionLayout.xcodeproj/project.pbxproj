@@ -17,8 +17,6 @@
 		5F78C78418FD1A6C00ACE12B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C73018FD143900ACE12B /* UIKit.framework */; };
 		5F78C78C18FD1A6C00ACE12B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78C78B18FD1A6C00ACE12B /* main.m */; };
 		5F78C79018FD1A6C00ACE12B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78C78F18FD1A6C00ACE12B /* AppDelegate.m */; };
-		5F78C7AD18FD1BA200ACE12B /* libPerSectionLayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */; };
-		5F78C7C518FD1F0400ACE12B /* UIDevice+iOS7Compatibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F78C7C318FD1F0400ACE12B /* UIDevice+iOS7Compatibility.h */; };
 		5F78C7C618FD1F0400ACE12B /* UIDevice+iOS7Compatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78C7C418FD1F0400ACE12B /* UIDevice+iOS7Compatibility.m */; };
 		5FD2CDA718FB9AD000B8E740 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA618FB9AD000B8E740 /* Foundation.framework */; };
 		5FD2CDB618FB9AD000B8E740 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA618FB9AD000B8E740 /* Foundation.framework */; };
@@ -38,17 +36,13 @@
 		5FD2CDF118FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutRowSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2CDE818FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutRowSpec.m */; };
 		5FD2CDF218FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutSectionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2CDE918FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutSectionSpec.m */; };
 		5FD2CDF318FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD2CDEA18FB9BD900B8E740 /* AMPerSectionCollectionViewLayoutSpec.m */; };
-		5FD2CE2118FB9F5700B8E740 /* AMPerSectionCollectionViewLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDCC18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5FD2CE2218FBA27400B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDCE18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5FD2CE2318FBA28200B8E740 /* AMPerSectionCollectionViewLayoutInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDD018FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutInfo.h */; };
-		5FD2CE2418FBA28200B8E740 /* AMPerSectionCollectionViewLayoutInvalidationContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDD218FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutInvalidationContext.h */; };
-		5FD2CE2518FBA28200B8E740 /* AMPerSectionCollectionViewLayoutItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDD418FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutItem.h */; };
-		5FD2CE2618FBA28200B8E740 /* AMPerSectionCollectionViewLayoutRow.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDD618FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutRow.h */; };
-		5FD2CE2718FBA28200B8E740 /* AMPerSectionCollectionViewLayoutSection.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD2CDD818FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutSection.h */; };
 		5FDDB80018FDDB58005D20F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */; };
 		5FDDB80118FDDB61005D20F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */; };
 		88ADDC6218FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ADDC6118FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m */; };
 		88ADDC6418FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m */; };
+		C98D0E9919060D36009BC415 /* AMPerSectionCollectionView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C98D0E9819060D33009BC415 /* AMPerSectionCollectionView.h */; };
+		C98D0E9C19060F17009BC415 /* AMPerSectionCollectionViewLayout.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FD2CDCC18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayout.h */; };
+		C98D0E9D19060F19009BC415 /* AMPerSectionCollectionViewLayoutAttributes.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FD2CDCE18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +61,21 @@
 			remoteInfo = PerSectionLayoutTestLoader;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C98D0E9719060D0D009BC415 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				C98D0E9919060D36009BC415 /* AMPerSectionCollectionView.h in CopyFiles */,
+				C98D0E9C19060F17009BC415 /* AMPerSectionCollectionViewLayout.h in CopyFiles */,
+				C98D0E9D19060F19009BC415 /* AMPerSectionCollectionViewLayoutAttributes.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5F78C72E18FD141500ACE12B /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = ../tools/Kiwi.framework; sourceTree = "<group>"; };
@@ -116,6 +125,7 @@
 		5FD2CE3018FBA58F00B8E740 /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Project.xcconfig; path = ../Project.xcconfig; sourceTree = "<group>"; };
 		88ADDC6118FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutInfoLayoutAttributesSpec.m; sourceTree = "<group>"; };
 		88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutSectionLayoutAttributesSpec.m; sourceTree = "<group>"; };
+		C98D0E9819060D33009BC415 /* AMPerSectionCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMPerSectionCollectionView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +133,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F78C7AD18FD1BA200ACE12B /* libPerSectionLayout.a in Frameworks */,
 				5F78C78318FD1A6C00ACE12B /* CoreGraphics.framework in Frameworks */,
 				5F78C78418FD1A6C00ACE12B /* UIKit.framework in Frameworks */,
 				5F78C78118FD1A6C00ACE12B /* Foundation.framework in Frameworks */,
@@ -224,6 +233,7 @@
 		5FD2CDA818FB9AD000B8E740 /* PerSectionLayout */ = {
 			isa = PBXGroup;
 			children = (
+				C98D0E9819060D33009BC415 /* AMPerSectionCollectionView.h */,
 				5FD2CDCC18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayout.h */,
 				5FD2CDCD18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayout.m */,
 				5FD2CDD018FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutInfo.h */,
@@ -306,14 +316,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FD2CE2618FBA28200B8E740 /* AMPerSectionCollectionViewLayoutRow.h in Headers */,
-				5FD2CE2318FBA28200B8E740 /* AMPerSectionCollectionViewLayoutInfo.h in Headers */,
-				5FD2CE2418FBA28200B8E740 /* AMPerSectionCollectionViewLayoutInvalidationContext.h in Headers */,
-				5FD2CE2218FBA27400B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h in Headers */,
-				5FD2CE2518FBA28200B8E740 /* AMPerSectionCollectionViewLayoutItem.h in Headers */,
-				5FD2CE2118FB9F5700B8E740 /* AMPerSectionCollectionViewLayout.h in Headers */,
-				5FD2CE2718FBA28200B8E740 /* AMPerSectionCollectionViewLayoutSection.h in Headers */,
-				5F78C7C518FD1F0400ACE12B /* UIDevice+iOS7Compatibility.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +347,7 @@
 				5FD2CD9F18FB9AD000B8E740 /* Sources */,
 				5FD2CDA018FB9AD000B8E740 /* Frameworks */,
 				5FD2CE2018FB9F4800B8E740 /* Headers */,
+				C98D0E9719060D0D009BC415 /* CopyFiles */,
 			);
 			buildRules = (
 			);

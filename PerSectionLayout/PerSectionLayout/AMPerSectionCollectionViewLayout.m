@@ -2,7 +2,7 @@
 //  Copyright (c) 2014 REA Group. All rights reserved.
 //
 
-#import <PerSectionLayout/AMPerSectionCollectionViewLayout.h>
+#import "AMPerSectionCollectionViewLayout.h"
 #import "AMPerSectionCollectionViewLayoutInfo.h"
 #import "math.h"
 #import "AMPerSectionCollectionViewLayoutInvalidationContext.h"
