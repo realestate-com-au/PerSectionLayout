@@ -164,8 +164,8 @@
         while (nextOrigin.x + CGRectGetWidth(sectionFrame) > dimension)
         {
             // go to new line
-            nextOrigin.y += CGRectGetHeight(section.frame);
-            
+            nextOrigin.y = contentSize.height;
+          
             // reset x
             AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
             nextOrigin.x = CGRectGetMaxX(sectionInMyWay.frame);
