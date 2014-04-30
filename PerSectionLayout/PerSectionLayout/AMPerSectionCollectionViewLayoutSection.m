@@ -252,11 +252,11 @@
 - (CGRect)offsetFrameForItem:(AMPerSectionCollectionViewLayoutItem *)item withOffset:(CGPoint)offset
 {
     NSParameterAssert(item);
-    CGRect rowFrame = [self offsetFrameForRow:item.row withOffest:offset];
+    CGRect rowFrame = [self offsetFrameForRow:item.row withOffset:offset];
     return CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
 }
 
-- (CGRect)offsetFrameForRow:(AMPerSectionCollectionViewLayoutRow *)row withOffest:(CGPoint)offset
+- (CGRect)offsetFrameForRow:(AMPerSectionCollectionViewLayoutRow *)row withOffset:(CGPoint)offset
 {
     NSParameterAssert(row);
     CGRect sectionFrame = [self stretchedFrameForOffset:offset];
@@ -300,7 +300,7 @@
         {
             BOOL shouldStretchFirstRow = (self.canStretch && row.index == 0);
             
-            CGRect rowFrame = [self offsetFrameForRow:row withOffest:offset];
+            CGRect rowFrame = [self offsetFrameForRow:row withOffset:offset];
             rowFrame.origin.y += firstRowSizeAdjustment;
             if (shouldStretchFirstRow)
             {
