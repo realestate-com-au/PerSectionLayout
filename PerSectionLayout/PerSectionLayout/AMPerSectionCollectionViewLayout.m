@@ -246,7 +246,7 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
         width = [self.collectionViewDelegate collectionView:self.collectionView layout:self widthForSectionAtIndex:section];
     }
     
-    return width;
+    return MIN(width, CGRectGetWidth(self.collectionView.bounds));
 }
 
 - (CGFloat)minimumLineSpacingForSectionAtIndex:(NSInteger)section

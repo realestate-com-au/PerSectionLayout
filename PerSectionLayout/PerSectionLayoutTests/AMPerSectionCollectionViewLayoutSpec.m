@@ -274,7 +274,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 layout.sectionHeaderReferenceSize = CGSizeMake(227.f, 148.f);
                 layout.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
                 layout.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
-                layout.sectionWidth = 400.f;
+                layout.sectionWidth = 40.f;
                 layout.minimumLineSpacing = 8.f;
                 layout.minimumInteritemSpacing = 10.f;
                 
@@ -304,7 +304,18 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             it(@"insetForSectionAtIndex", ^{
                 [[theValue([layout insetForSectionAtIndex:0]) should] equal:theValue(layout.sectionInset)];
             });
-            
+          
+            context(@"widthForSectionAtIndex", ^{
+              it(@"should use the layout value", ^{
+                [[theValue([layout widthForSectionAtIndex:0]) should] equal:theValue(layout.sectionWidth)];
+              });
+              
+              it(@"should limit the width the the collection view bounds width", ^{
+                layout.sectionWidth = 100.f;
+                [[theValue([layout widthForSectionAtIndex:0]) should] equal:theValue(CGRectGetWidth(layout.collectionView.bounds))];
+              });
+            });
+          
             it(@"widthForSectionAtIndex", ^{
                 [[theValue([layout widthForSectionAtIndex:0]) should] equal:theValue(layout.sectionWidth)];
             });
@@ -342,7 +353,8 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 delegateDataSource.minimumLineSpacing = 8.f;
                 delegateDataSource.minimumInteritemSpacing = 10.f;
                 delegateDataSource.sectionIndexToStretch = 0;
-                
+                delegateDataSource.sectionWidth = 40;
+              
                 collectionView.delegate = delegateDataSource;
                 collectionView.dataSource = delegateDataSource;
                 [delegateDataSource registerCustomElementsForCollectionView:collectionView];
@@ -371,10 +383,18 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             it(@"insetForSectionAtIndex", ^{
                 [[theValue([layout insetForSectionAtIndex:0]) should] equal:theValue(delegateDataSource.sectionInset)];
             });
-            it(@"widthForSectionAtIndex", ^{
+          
+            context(@"widthForSectionAtIndex", ^{
+              it(@"should query it's delegate for the value", ^{
                 [[theValue([layout widthForSectionAtIndex:0]) should] equal:theValue(delegateDataSource.sectionWidth)];
+              });
+              
+              it(@"should limit the width the the collection view bounds width", ^{
+                delegateDataSource.sectionWidth = 400.f;
+                [[theValue([layout widthForSectionAtIndex:0]) should] equal:theValue(CGRectGetWidth(layout.collectionView.bounds))];
+              });
             });
-            
+          
             it(@"minimumLineSpacingForSectionAtIndex", ^{
                 [[theValue([layout minimumLineSpacingForSectionAtIndex:0]) should] equal:theValue(delegateDataSource.minimumLineSpacing)];
             });
@@ -422,7 +442,29 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 });
             });
         });
-        
+      
+        context(@"widthForSectionAtIndex", ^{
+          __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
+          
+          beforeEach(^{
+            delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
+            
+            delegateDataSource.itemSize = CGSizeMake(70.f, 80.f);
+            delegateDataSource.headerReferenceSize = CGSizeMake(27.f, 48.f);
+            delegateDataSource.footerReferenceSize = CGSizeMake(17.f, 58.f);
+            delegateDataSource.sectionHeaderReferenceSize = CGSizeMake(227.f, 148.f);
+            delegateDataSource.sectionFooterReferenceSize = CGSizeMake(127.f, 458.f);
+            delegateDataSource.sectionInset =  UIEdgeInsetsMake(10.f, 25.f, 20.f, 5.f);
+            delegateDataSource.minimumLineSpacing = 8.f;
+            delegateDataSource.minimumInteritemSpacing = 10.f;
+            delegateDataSource.sectionIndexToStretch = 0;
+            
+            collectionView.delegate = delegateDataSource;
+            collectionView.dataSource = delegateDataSource;
+            [delegateDataSource registerCustomElementsForCollectionView:collectionView];
+          });
+        });
+      
         context(@"adjustedCollectionViewContentOffset", ^{
             beforeEach(^{
                 collectionView = [UICollectionView nullMock];
@@ -503,14 +545,13 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
             }
         });
         
-        context(@"layout methods to override", ^{
+        context(@"sticky header", ^{
             
             __block AMFakeCollectionViewDelegateDataSource *delegateDataSource = nil;
             
             beforeEach(^{
                 collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 250.f, 500.f) collectionViewLayout:layout];
                 delegateDataSource = [[AMFakeCollectionViewDelegateDataSource alloc] init];
-                
                 
                 delegateDataSource.numberOfSections = 3;
                 delegateDataSource.numberOfItemsInSection = 10;
@@ -530,15 +571,13 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
                 
                 [layout prepareLayout];
             });
+          
+            it(@"should enable on the layout info sticky header", ^{
+              [[theValue(layout.layoutInfo.hasStickyHeader) should] equal:theValue(delegateDataSource.hasStickyHeader)];
+            });
             
-            context(@"sticky header", ^{
-                it(@"should enable on the layout info sticky header", ^{
-                    [[theValue(layout.layoutInfo.hasStickyHeader) should] equal:theValue(delegateDataSource.hasStickyHeader)];
-                });
-                
-                it(@"should set the layout info last section with sticky header", ^{
-                    [[theValue(layout.layoutInfo.lastSectionWithStickyHeader) should] equal:theValue(delegateDataSource.lastSectionWithStickyHeader)];
-                });
+            it(@"should set the layout info last section with sticky header", ^{
+              [[theValue(layout.layoutInfo.lastSectionWithStickyHeader) should] equal:theValue(delegateDataSource.lastSectionWithStickyHeader)];
             });
         });
         

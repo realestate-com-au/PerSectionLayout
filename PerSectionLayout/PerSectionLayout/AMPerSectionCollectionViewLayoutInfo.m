@@ -169,6 +169,12 @@
             // reset x
             AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
             nextOrigin.x = CGRectGetMaxX(sectionInMyWay.frame);
+          
+            if (nextOrigin.y >= contentSize.height && nextOrigin.x == 0.f)
+            {
+              NSLog(@"section width is too wide and cannot be greater than the collection view width");
+              break;
+            }
         }
 
         sectionFrame.origin = nextOrigin;
