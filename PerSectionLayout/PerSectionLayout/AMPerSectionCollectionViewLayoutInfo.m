@@ -172,7 +172,7 @@
           
             if (nextOrigin.y >= contentSize.height && nextOrigin.x == 0.f)
             {
-              NSLog(@"section width is too wide and cannot be greater than the collection view width");
+              // next origin is already at the bottom left, no reason to keep going
               break;
             }
         }
