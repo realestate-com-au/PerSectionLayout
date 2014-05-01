@@ -279,6 +279,41 @@ describe(@"AMPerSectionCollectionViewLayoutSection", ^{
       });
     });
     
+    context(@"with a width of zero", ^{
+      beforeEach(^{
+        section = [[AMPerSectionCollectionViewLayoutSection alloc] init];
+        section.width = 0.f;
+        
+        AMPerSectionCollectionViewLayoutItem *item1 = [section addItem];
+        item1.frame = CGRectMake(0, 0, 100, 100);
+        
+        section.headerFrame = CGRectMake(0.f, 0.f, 50.f, 40.f);
+        section.footerFrame = CGRectMake(0.f, 0.f, 40.f, 60.f);
+        
+        [section computeLayout:nil];
+      });
+      
+      it(@"should have have no row", ^{
+        [[[section layoutSectionRows] should] beEmpty];
+      });
+      
+      it(@"should set the header frame size with to 0", ^{
+        [[theValue(CGRectGetWidth(section.headerFrame)) should] equal:theValue(0)];
+      });
+      
+      it(@"should set the footer frame size with to 0", ^{
+        [[theValue(CGRectGetWidth(section.footerFrame)) should] equal:theValue(0)];
+      });
+      
+      it(@"should set the body size with to 0", ^{
+        [[theValue(CGRectGetWidth(section.bodyFrame)) should] equal:theValue(0)];
+      });
+      
+      it(@"should set the frame size with to 0", ^{
+        [[theValue(CGRectGetWidth(section.frame)) should] equal:theValue(0)];
+      });
+    });
+    
     context(@"stretchedFrameForOffset", ^{
       beforeEach(^{
         section = [[AMPerSectionCollectionViewLayoutSection alloc] init];

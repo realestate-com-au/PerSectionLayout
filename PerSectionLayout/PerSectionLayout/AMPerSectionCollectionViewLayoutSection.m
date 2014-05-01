@@ -88,8 +88,23 @@
 
 #pragma mark - Layout
 
+
+
 - (void)computeLayout:(__unused AMPerSectionCollectionViewLayoutInfo *)layoutInfo
 {
+  if (self.width <= 0)
+  {
+    CGRect headerFrame = self.headerFrame;
+    headerFrame.size.width = self.width;
+    self.headerFrame = headerFrame;
+    
+    CGRect footerFrame = self.footerFrame;
+    footerFrame.size.width = self.width;
+    self.footerFrame = footerFrame;
+    
+    return;
+  }
+  
   // iterate over all items, turning them into rows.
   CGPoint bodyOrigin = CGPointZero;
   CGSize bodySize = CGSizeZero;
@@ -251,14 +266,12 @@
 
 - (CGRect)offsetFrameForItem:(AMPerSectionCollectionViewLayoutItem *)item withOffset:(CGPoint)offset
 {
-  NSParameterAssert(item);
   CGRect rowFrame = [self offsetFrameForRow:item.row withOffset:offset];
   return CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
 }
 
 - (CGRect)offsetFrameForRow:(AMPerSectionCollectionViewLayoutRow *)row withOffset:(CGPoint)offset
 {
-  NSParameterAssert(row);
   CGRect sectionFrame = [self stretchedFrameForOffset:offset];
   return CGRectOffset(row.frame, sectionFrame.origin.x, sectionFrame.origin.y);
 }
