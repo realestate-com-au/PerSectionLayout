@@ -66,9 +66,6 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
   }
   
   CGFloat adjustedYValue = contentOffsetY + self.collectionView.contentInset.top;
-  
-  NSLog(@"value: %f", adjustedYValue);
-  
   return CGPointMake(0, adjustedYValue);
 }
 
