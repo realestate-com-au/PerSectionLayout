@@ -20,6 +20,7 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
 @property (nonatomic, assign, getter = isTransitioning) BOOL transitioning;
 @property (nonatomic, assign) CGPoint transitionTargetContentOffset;
+@property (nonatomic, assign, getter = isPerformingCollectionViewUpdates) BOOL performingCollectionViewUpdates;
 @end
 
 @implementation AMPerSectionCollectionViewLayout
@@ -65,6 +66,9 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
   }
   
   CGFloat adjustedYValue = contentOffsetY + self.collectionView.contentInset.top;
+  
+  NSLog(@"value: %f", adjustedYValue);
+  
   return CGPointMake(0, adjustedYValue);
 }
 
@@ -151,6 +155,20 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 {
   self.transitioning = NO;
   self.transitionTargetContentOffset = CGPointZero;
+}
+
+- (void)prepareForCollectionViewUpdates:(NSArray *)updateItems
+{
+  [super prepareForCollectionViewUpdates:updateItems];
+  
+  self.performingCollectionViewUpdates = YES;
+}
+
+- (void)finalizeCollectionViewUpdates
+{
+  [super finalizeCollectionViewUpdates];
+  
+  self.performingCollectionViewUpdates = NO;
 }
 
 #pragma mark - AMPerSectionCollectionViewLayoutDelegate
@@ -294,10 +312,14 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
     
     if (CGPointEqualToPoint(targetOffset, proposedContentOffset))
     {
-      targetOffset.y += 0.1; // make sure sticky / stretchy items stay at the top
+      targetOffset.y += 0.1; // make sure sticky / stretchy items stay at the top, force a relayout
     }
     
     self.transitionTargetContentOffset = targetOffset;
+  }
+  else if ([self isPerformingCollectionViewUpdates])
+  {
+    targetOffset.y = -self.collectionView.contentInset.top;
   }
   
   return targetOffset;

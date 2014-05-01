@@ -31,6 +31,7 @@
 @property (nonatomic, strong) AMPerSectionCollectionViewLayoutInfo *layoutInfo;
 @property (nonatomic, assign, getter = isTransitioning) BOOL transitioning;
 @property (nonatomic, assign) CGPoint transitionTargetContentOffset;
+@property (nonatomic, assign, getter = isPerformingCollectionViewUpdates) BOOL performingCollectionViewUpdates;
 
 @end
 
@@ -251,6 +252,48 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         
         it(@"should no longer have a transition target content offset", ^{
           [[theValue(newLayout.transitionTargetContentOffset) should] equal:theValue(CGPointZero)];
+        });
+      });
+    });
+    
+    context(@"performingCollectionViewUpdates", ^{
+      beforeEach(^{
+        collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 50.f, 250.f) collectionViewLayout:layout];
+        collectionView.contentInset = UIEdgeInsetsMake(45.f, 15.f, 25.f, 13.f);
+        [layout stub:@selector(collectionView) andReturn:collectionView];
+      });
+      
+      context(@"when performing collection view updates", ^{
+        beforeEach(^{
+          [layout prepareForCollectionViewUpdates:[NSArray array]];
+        });
+        
+        it(@"should mark the layout as performing updates", ^{
+          [[theValue(layout.performingCollectionViewUpdates) should] beYes];
+        });
+      });
+      
+      context(@"when target content offset is called", ^{
+        context(@"when proposed content offset is different from target content offset", ^{
+          beforeEach(^{
+            [layout prepareForCollectionViewUpdates:[NSArray array]];
+           
+          });
+          
+          it(@"should udpate the target content offset", ^{
+            [[theValue([layout targetContentOffsetForProposedContentOffset:CGPointMake(0.f, 60.f)]) should] equal:theValue(CGPointMake(0.f, -45.f))];
+          });
+        });
+      });
+      
+      context(@"when collection view updates is finalized", ^{
+        beforeEach(^{
+          [layout prepareForCollectionViewUpdates:[NSArray array]];
+          [layout finalizeCollectionViewUpdates];
+        });
+        
+        it(@"should mark the new layout as being transitioned", ^{
+          [[theValue(layout.performingCollectionViewUpdates) should] beNo];
         });
       });
     });
