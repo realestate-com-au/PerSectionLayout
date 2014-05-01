@@ -330,7 +330,11 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 - (UICollectionViewLayoutInvalidationContext *)invalidationContextForBoundsChange:(CGRect)newBounds
 {
   AMPerSectionCollectionViewLayoutInvalidationContext *invalidationContext = (AMPerSectionCollectionViewLayoutInvalidationContext *)[super invalidationContextForBoundsChange:newBounds];
-  invalidationContext.invalidateHeader = YES;
+  
+  if (CGSizeEqualToSize(self.collectionView.bounds.size, newBounds.size))
+  {
+    invalidationContext.invalidateHeader = YES;
+  }
   
   return invalidationContext;
 }

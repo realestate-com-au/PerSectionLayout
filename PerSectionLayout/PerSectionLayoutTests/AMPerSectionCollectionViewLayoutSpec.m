@@ -107,10 +107,27 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
       });
       
       context(@"invalidationContextForBoundsChange", ^{
-        it(@"should set invalidateHeader to YES", ^{
-          AMPerSectionCollectionViewLayoutInvalidationContext *context = (AMPerSectionCollectionViewLayoutInvalidationContext *)[layout invalidationContextForBoundsChange:CGRectMake(0.f, 0.f, 200.f, 50.f)];
-          [[theValue(context.invalidateHeader) should] beTrue];
+        beforeEach(^{
+          collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0.f, 0.f, 200.f, 50.f) collectionViewLayout:layout];
+          [layout stub:@selector(collectionView) andReturn:collectionView];
         });
+        
+        context(@"when the collection view bounds size has changed", ^{
+          it(@"should set invalidateHeader to No", ^{
+            AMPerSectionCollectionViewLayoutInvalidationContext *context = (AMPerSectionCollectionViewLayoutInvalidationContext *)[layout invalidationContextForBoundsChange:CGRectMake(0.f, 0.f, 250.f, 50.f)];
+            [[theValue(context.invalidateHeader) should] beFalse];
+          });
+        });
+        
+        context(@"when the collection view bounds size stays the same", ^{
+          
+          
+          it(@"should set invalidateHeader to Yes", ^{
+            AMPerSectionCollectionViewLayoutInvalidationContext *context = (AMPerSectionCollectionViewLayoutInvalidationContext *)[layout invalidationContextForBoundsChange:CGRectMake(0.f, 0.f, 200.f, 50.f)];
+            [[theValue(context.invalidateHeader) should] beTrue];
+          });
+        });
+        
       });
       
       context(@"invalidateLayoutWithContext", ^{
