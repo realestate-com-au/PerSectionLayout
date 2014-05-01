@@ -201,7 +201,7 @@
   
   // global footer
   CGRect globalFooterFrame =  self.footerFrame;
-  if (CGRectGetWidth(globalFooterFrame) > 0)
+  if (CGRectGetHeight(globalFooterFrame) > 0)
   {
     globalFooterFrame.origin.x = 0;
     globalFooterFrame.origin.y = contentSize.height;
