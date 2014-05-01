@@ -8,7 +8,7 @@
 
 - (BOOL)isPerSectionLayoutRunningOnAtLeastiOS7
 {
-    return floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1;
+  return floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1;
 }
 
 @end

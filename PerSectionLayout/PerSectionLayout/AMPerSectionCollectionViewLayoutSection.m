@@ -16,327 +16,327 @@
 
 - (id)init
 {
-    self = [super init];
-    if (self)
-    {
-        _items = [NSMutableArray array];
-        _rows = [NSMutableArray array];
-    }
-    
-    return self;
+  self = [super init];
+  if (self)
+  {
+    _items = [NSMutableArray array];
+    _rows = [NSMutableArray array];
+  }
+  
+  return self;
 }
 
 #pragma mark - Sticky
 
 - (CGRect)stretchedFrameForOffset:(CGPoint)offset
 {
-    CGRect normalizedSectionFrame = self.frame;
-    if (self.canStretch && offset.y < 0)
-    {
-        normalizedSectionFrame.origin.y += offset.y;
-        normalizedSectionFrame.size.height = MAX(0, CGRectGetHeight(normalizedSectionFrame) - offset.y);
-    }
-    
-    return normalizedSectionFrame;
+  CGRect normalizedSectionFrame = self.frame;
+  if (self.canStretch && offset.y < 0)
+  {
+    normalizedSectionFrame.origin.y += offset.y;
+    normalizedSectionFrame.size.height = MAX(0, CGRectGetHeight(normalizedSectionFrame) - offset.y);
+  }
+  
+  return normalizedSectionFrame;
 }
 
 #pragma mark - Items
 
 - (NSArray *)layoutSectionItems
 {
-    return [self.items copy];
+  return [self.items copy];
 }
 
 - (NSInteger)itemsCount
 {
-    return (NSInteger)self.items.count;
+  return (NSInteger)self.items.count;
 }
 
 - (NSInteger)lastItemIndex
 {
-    return MAX(0, self.itemsCount - 1);
+  return MAX(0, self.itemsCount - 1);
 }
 
 - (AMPerSectionCollectionViewLayoutItem *)addItem
 {
-    AMPerSectionCollectionViewLayoutItem *layoutItem = [[AMPerSectionCollectionViewLayoutItem alloc] init];
-    [self.items addObject:layoutItem];
-    layoutItem.index = (NSInteger)[self.items indexOfObject:layoutItem];
-    
-    return layoutItem;
+  AMPerSectionCollectionViewLayoutItem *layoutItem = [[AMPerSectionCollectionViewLayoutItem alloc] init];
+  [self.items addObject:layoutItem];
+  layoutItem.index = (NSInteger)[self.items indexOfObject:layoutItem];
+  
+  return layoutItem;
 }
 
 #pragma mark - Rows
 
 - (NSArray *)layoutSectionRows
 {
-    return [self.rows copy];
+  return [self.rows copy];
 }
 
 - (AMPerSectionCollectionViewLayoutRow *)addRow
 {
-    AMPerSectionCollectionViewLayoutRow *layoutItem = [[AMPerSectionCollectionViewLayoutRow alloc] init];
-    [self.rows addObject:layoutItem];
-    
-    return layoutItem;
+  AMPerSectionCollectionViewLayoutRow *layoutItem = [[AMPerSectionCollectionViewLayoutRow alloc] init];
+  [self.rows addObject:layoutItem];
+  
+  return layoutItem;
 }
 
 - (void)invalidate
 {
-    [self.rows removeAllObjects];
+  [self.rows removeAllObjects];
 }
 
 #pragma mark - Layout
 
 - (void)computeLayout:(__unused AMPerSectionCollectionViewLayoutInfo *)layoutInfo
 {
-    // iterate over all items, turning them into rows.
-    CGPoint bodyOrigin = CGPointZero;
-    CGSize bodySize = CGSizeZero;
-    NSInteger rowIndex = 0;
-    NSInteger itemIndex = 0;
-    CGFloat dimensionLeft = 0;
-    AMPerSectionCollectionViewLayoutRow *row;
+  // iterate over all items, turning them into rows.
+  CGPoint bodyOrigin = CGPointZero;
+  CGSize bodySize = CGSizeZero;
+  NSInteger rowIndex = 0;
+  NSInteger itemIndex = 0;
+  CGFloat dimensionLeft = 0;
+  AMPerSectionCollectionViewLayoutRow *row;
+  
+  //	header origin is 0, 0. nothing to do
+  
+  // get available space for section body, compensate for section margins
+  CGFloat dimension = self.width;
+  
+  dimension -= (self.sectionMargins.left + self.sectionMargins.right);
+  bodySize.width = dimension;
+  
+  if (CGRectIsEmpty(self.headerFrame)) //no header frame
+  {
+    bodyOrigin = CGPointMake(self.sectionMargins.left, self.sectionMargins.top);
+  }
+  else
+  {
+    //Restrict the header width to our section width
+    CGRect normalisedHeaderFrame = (CGRect){.origin = CGPointZero, .size = CGSizeMake(self.width, self.headerFrame.size.height)};
+    self.headerFrame = normalisedHeaderFrame;
     
-    //	header origin is 0, 0. nothing to do
+    bodyOrigin.x = 0;
+    bodyOrigin.x += self.sectionMargins.left;
+    bodyOrigin.y = self.headerFrame.size.height;
+    bodyOrigin.y += self.sectionMargins.top;
+  }
+  
+  CGFloat currentRowPoint = bodyOrigin.y;
+  
+  do
+  {
+    BOOL finishCycle = (itemIndex >= self.itemsCount);
     
-    // get available space for section body, compensate for section margins
-    CGFloat dimension = self.width;
-    
-    dimension -= (self.sectionMargins.left + self.sectionMargins.right);
-    bodySize.width = dimension;
-    
-    if (CGRectIsEmpty(self.headerFrame)) //no header frame
+    AMPerSectionCollectionViewLayoutItem *item;
+    if (!finishCycle)
     {
-        bodyOrigin = CGPointMake(self.sectionMargins.left, self.sectionMargins.top);
+      item = self.items[(NSUInteger)itemIndex];
     }
-    else
+    
+    CGSize itemSize = item.frame.size;
+    CGFloat itemDimension = itemSize.width;
+    itemDimension += self.horizontalInterstice;
+    
+    if (dimensionLeft < itemDimension || finishCycle)
     {
-        //Restrict the header width to our section width
-        CGRect normalisedHeaderFrame = (CGRect){.origin = CGPointZero, .size = CGSizeMake(self.width, self.headerFrame.size.height)};
-        self.headerFrame = normalisedHeaderFrame;
-
-        bodyOrigin.x = 0;
-        bodyOrigin.x += self.sectionMargins.left;
-        bodyOrigin.y = self.headerFrame.size.height;
-        bodyOrigin.y += self.sectionMargins.top;
+      // finish current row
+      if (row)
+      {
+        [row computeLayoutInSection:self];
+        row.frame = CGRectMake(bodyOrigin.x, currentRowPoint, CGRectGetWidth(row.frame), CGRectGetHeight(row.frame));
+        if (rowIndex > 0)
+        {
+          bodySize.height += self.verticalInterstice;
+        }
+        bodySize.height += CGRectGetHeight(row.frame);
+        currentRowPoint += CGRectGetHeight(row.frame) + self.verticalInterstice;
+      }
+      if (!finishCycle)
+      {
+        // create new row
+        row = [self addRow];
+        row.index = rowIndex;
+        rowIndex++;
+        dimensionLeft = dimension;
+      }
     }
     
-    CGFloat currentRowPoint = bodyOrigin.y;
+    dimensionLeft -= itemDimension;
     
-    do
+    if (item)
     {
-        BOOL finishCycle = (itemIndex >= self.itemsCount);
-        
-        AMPerSectionCollectionViewLayoutItem *item;
-        if (!finishCycle)
-        {
-            item = self.items[(NSUInteger)itemIndex];
-        }
-        
-        CGSize itemSize = item.frame.size;
-        CGFloat itemDimension = itemSize.width;
-        itemDimension += self.horizontalInterstice;
-        
-        if (dimensionLeft < itemDimension || finishCycle)
-        {
-            // finish current row
-            if (row)
-            {
-                [row computeLayoutInSection:self];
-                row.frame = CGRectMake(bodyOrigin.x, currentRowPoint, CGRectGetWidth(row.frame), CGRectGetHeight(row.frame));
-                if (rowIndex > 0)
-                {
-                    bodySize.height += self.verticalInterstice;
-                }
-                bodySize.height += CGRectGetHeight(row.frame);
-                currentRowPoint += CGRectGetHeight(row.frame) + self.verticalInterstice;
-            }
-            if (!finishCycle)
-            {
-                // create new row
-                row = [self addRow];
-                row.index = rowIndex;
-                rowIndex++;
-                dimensionLeft = dimension;
-            }
-        }
-
-        dimensionLeft -= itemDimension;
-        
-        if (item)
-        {
-            [row addItem:item];
-        }
-        itemIndex++;
-
-    } while (itemIndex <= self.itemsCount); // cycle once more to finish last row
-    
-    self.bodyFrame = (CGRect){.origin = bodyOrigin, .size = bodySize};
-    
-    CGFloat footerOrigin = bodyOrigin.y + bodySize.height + self.sectionMargins.bottom;
-
-    CGRect footerframe = self.footerFrame;
-    if (!CGRectIsEmpty(footerframe))
-    {
-        footerframe.origin.x = 0;
-        footerframe.origin.y = footerOrigin;
-        footerframe.size.width = self.width;
-        self.footerFrame = footerframe;
+      [row addItem:item];
     }
-
-    CGPoint sectionOrigin = CGPointZero;
-    CGSize sectionSize = CGSizeZero;
-    sectionSize.width = self.width;
-    sectionSize.height = footerOrigin + footerframe.size.height;
-    self.frame = (CGRect){.origin = sectionOrigin, .size = sectionSize};
+    itemIndex++;
+    
+  } while (itemIndex <= self.itemsCount); // cycle once more to finish last row
+  
+  self.bodyFrame = (CGRect){.origin = bodyOrigin, .size = bodySize};
+  
+  CGFloat footerOrigin = bodyOrigin.y + bodySize.height + self.sectionMargins.bottom;
+  
+  CGRect footerframe = self.footerFrame;
+  if (!CGRectIsEmpty(footerframe))
+  {
+    footerframe.origin.x = 0;
+    footerframe.origin.y = footerOrigin;
+    footerframe.size.width = self.width;
+    self.footerFrame = footerframe;
+  }
+  
+  CGPoint sectionOrigin = CGPointZero;
+  CGSize sectionSize = CGSizeZero;
+  sectionSize.width = self.width;
+  sectionSize.height = footerOrigin + footerframe.size.height;
+  self.frame = (CGRect){.origin = sectionOrigin, .size = sectionSize};
 }
 
 #pragma mark - UICollectionViewLayoutAttributes
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSectionHeaderWithOffset:(CGPoint)offset
 {
-    CGRect sectionFrame = [self stretchedFrameForOffset:offset];
-    CGRect headerFrame = CGRectOffset(self.headerFrame, sectionFrame.origin.x, sectionFrame.origin.y);
-    if (CGRectGetHeight(headerFrame) > 0)
-    {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:self.index];
-        AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withIndexPath:indexPath];
-        attr.frame = headerFrame;
-        attr.adjustmentOffset = offset;
-        return attr;
-    }
-
-    return nil;
+  CGRect sectionFrame = [self stretchedFrameForOffset:offset];
+  CGRect headerFrame = CGRectOffset(self.headerFrame, sectionFrame.origin.x, sectionFrame.origin.y);
+  if (CGRectGetHeight(headerFrame) > 0)
+  {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:self.index];
+    AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionHeader withIndexPath:indexPath];
+    attr.frame = headerFrame;
+    attr.adjustmentOffset = offset;
+    return attr;
+  }
+  
+  return nil;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSectionFooterWithOffset:(CGPoint)offset
 {
-    CGRect sectionFrame = [self stretchedFrameForOffset:offset];
-    CGRect footerFrame = CGRectOffset(self.footerFrame, sectionFrame.origin.x, sectionFrame.origin.y);
-    if (CGRectGetHeight(footerFrame) > 0)
-    {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self lastItemIndex] inSection:self.index];
-        AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:indexPath];
-        attr.frame = footerFrame;
-        attr.adjustmentOffset = offset;
-        return attr;
-    }
-
-    return nil;
+  CGRect sectionFrame = [self stretchedFrameForOffset:offset];
+  CGRect footerFrame = CGRectOffset(self.footerFrame, sectionFrame.origin.x, sectionFrame.origin.y);
+  if (CGRectGetHeight(footerFrame) > 0)
+  {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self lastItemIndex] inSection:self.index];
+    AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:AMPerSectionCollectionElementKindSectionFooter withIndexPath:indexPath];
+    attr.frame = footerFrame;
+    attr.adjustmentOffset = offset;
+    return attr;
+  }
+  
+  return nil;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind withIndexPath:(NSIndexPath *)indexPath withOffset:(CGPoint)offset
 {
-    if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionHeader])
+  if ([kind isEqualToString:AMPerSectionCollectionElementKindSectionHeader])
+  {
+    //FIXME: JC - this check (row/section) is doubling up on the indexPath given to the attributes above.
+    if (indexPath.section == self.index && indexPath.item == 0)
     {
-        //FIXME: JC - this check (row/section) is doubling up on the indexPath given to the attributes above.
-        if (indexPath.section == self.index && indexPath.item == 0)
-        {
-            return [self layoutAttributesForSectionHeaderWithOffset:offset];
-        }
+      return [self layoutAttributesForSectionHeaderWithOffset:offset];
     }
-    else if([kind isEqualToString:AMPerSectionCollectionElementKindSectionFooter])
+  }
+  else if([kind isEqualToString:AMPerSectionCollectionElementKindSectionFooter])
+  {
+    if (indexPath.section == self.index && indexPath.item == [self lastItemIndex])
     {
-        if (indexPath.section == self.index && indexPath.item == [self lastItemIndex])
-        {
-            return [self layoutAttributesForSectionFooterWithOffset:offset];
-        }
+      return [self layoutAttributesForSectionFooterWithOffset:offset];
     }
-
-    return nil;
+  }
+  
+  return nil;
 }
 
 //FIXME: JC - It would be good to reuse these methods.
 
 - (CGRect)offsetFrameForItem:(AMPerSectionCollectionViewLayoutItem *)item withOffset:(CGPoint)offset
 {
-    NSParameterAssert(item);
-    CGRect rowFrame = [self offsetFrameForRow:item.row withOffset:offset];
-    return CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
+  NSParameterAssert(item);
+  CGRect rowFrame = [self offsetFrameForRow:item.row withOffset:offset];
+  return CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
 }
 
 - (CGRect)offsetFrameForRow:(AMPerSectionCollectionViewLayoutRow *)row withOffset:(CGPoint)offset
 {
-    NSParameterAssert(row);
-    CGRect sectionFrame = [self stretchedFrameForOffset:offset];
-    return CGRectOffset(row.frame, sectionFrame.origin.x, sectionFrame.origin.y);
+  NSParameterAssert(row);
+  CGRect sectionFrame = [self stretchedFrameForOffset:offset];
+  return CGRectOffset(row.frame, sectionFrame.origin.x, sectionFrame.origin.y);
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath withOffset:(CGPoint)offset
 {
-    NSAssert(indexPath.section == self.index, @"index path must be asking for rows in this section");
-
-    AMPerSectionCollectionViewLayoutItem *item = self.layoutSectionItems[(NSUInteger)indexPath.item];
-    AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-    attr.frame = [self offsetFrameForItem:item withOffset:offset];
-    attr.adjustmentOffset = offset;
-
-    return attr;
+  NSAssert(indexPath.section == self.index, @"index path must be asking for rows in this section");
+  
+  AMPerSectionCollectionViewLayoutItem *item = self.layoutSectionItems[(NSUInteger)indexPath.item];
+  AMPerSectionCollectionViewLayoutAttributes *attr = [AMPerSectionCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+  attr.frame = [self offsetFrameForItem:item withOffset:offset];
+  attr.adjustmentOffset = offset;
+  
+  return attr;
 }
 
 - (NSArray *)layoutAttributesArrayForSectionInRect:(CGRect)rect withOffset:(CGPoint)offset
 {
-    NSMutableArray *layoutAttributesArray = [NSMutableArray array];
-
-    CGRect sectionFrame = [self stretchedFrameForOffset:offset];
-    if (CGRectIntersectsRect(sectionFrame, rect))
+  NSMutableArray *layoutAttributesArray = [NSMutableArray array];
+  
+  CGRect sectionFrame = [self stretchedFrameForOffset:offset];
+  if (CGRectIntersectsRect(sectionFrame, rect))
+  {
+    UICollectionViewLayoutAttributes *headerAttributes = [self layoutAttributesForSectionHeaderWithOffset:offset];
+    if (headerAttributes != nil && CGRectIntersectsRect(headerAttributes.frame, rect))
     {
-        UICollectionViewLayoutAttributes *headerAttributes = [self layoutAttributesForSectionHeaderWithOffset:offset];
-        if (headerAttributes != nil && CGRectIntersectsRect(headerAttributes.frame, rect))
+      [layoutAttributesArray addObject:headerAttributes];
+    }
+    
+    UICollectionViewLayoutAttributes *footerAttributes = [self layoutAttributesForSectionFooterWithOffset:offset];
+    if (footerAttributes != nil && CGRectIntersectsRect(footerAttributes.frame, rect))
+    {
+      [layoutAttributesArray addObject:footerAttributes];
+    }
+    
+    //FIXME: JC - can this be written like the header/footer?
+    CGFloat firstRowSizeAdjustment = 0;
+    for (AMPerSectionCollectionViewLayoutRow *row in self.layoutSectionRows)
+    {
+      BOOL shouldStretchFirstRow = (self.canStretch && row.index == 0);
+      
+      CGRect rowFrame = [self offsetFrameForRow:row withOffset:offset];
+      rowFrame.origin.y += firstRowSizeAdjustment;
+      if (shouldStretchFirstRow)
+      {
+        firstRowSizeAdjustment = MAX(0, CGRectGetHeight(sectionFrame) - CGRectGetHeight(self.frame));
+        rowFrame.size.height += firstRowSizeAdjustment;
+      }
+      
+      if (CGRectIntersectsRect(rowFrame, rect))
+      {
+        for (AMPerSectionCollectionViewLayoutItem *item in row.layoutSectionItems)
         {
-            [layoutAttributesArray addObject:headerAttributes];
-        }
-
-        UICollectionViewLayoutAttributes *footerAttributes = [self layoutAttributesForSectionFooterWithOffset:offset];
-        if (footerAttributes != nil && CGRectIntersectsRect(footerAttributes.frame, rect))
-        {
-            [layoutAttributesArray addObject:footerAttributes];
-        }
-
-        //FIXME: JC - can this be written like the header/footer?
-        CGFloat firstRowSizeAdjustment = 0;
-        for (AMPerSectionCollectionViewLayoutRow *row in self.layoutSectionRows)
-        {
-            BOOL shouldStretchFirstRow = (self.canStretch && row.index == 0);
-            
-            CGRect rowFrame = [self offsetFrameForRow:row withOffset:offset];
-            rowFrame.origin.y += firstRowSizeAdjustment;
+          NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item.index inSection:self.index];
+          UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:indexPath withOffset:offset];
+          if (attr != nil)
+          {
+            CGRect itemFrame = CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
             if (shouldStretchFirstRow)
             {
-                firstRowSizeAdjustment = MAX(0, CGRectGetHeight(sectionFrame) - CGRectGetHeight(self.frame));
-                rowFrame.size.height += firstRowSizeAdjustment;
+              itemFrame.size.height = CGRectGetHeight(rowFrame);
             }
-            
-            if (CGRectIntersectsRect(rowFrame, rect))
-            {
-                for (AMPerSectionCollectionViewLayoutItem *item in row.layoutSectionItems)
-                {
-                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item.index inSection:self.index];
-                    UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:indexPath withOffset:offset];
-                    if (attr != nil)
-                    {
-                        CGRect itemFrame = CGRectOffset(item.frame, rowFrame.origin.x, rowFrame.origin.y);
-                        if (shouldStretchFirstRow)
-                        {
-                            itemFrame.size.height = CGRectGetHeight(rowFrame);
-                        }
-                        attr.frame = itemFrame;
-                        [layoutAttributesArray addObject:attr];
-                    }
-                }
-            }
+            attr.frame = itemFrame;
+            [layoutAttributesArray addObject:attr];
+          }
         }
+      }
     }
-
-    return layoutAttributesArray;
+  }
+  
+  return layoutAttributesArray;
 }
 
 #pragma mark - NSObject
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: %p itemsCount:%ld frame:%@ bodyFrame:%@ headerFrame:%@ footerFrame:%@ rows:%@>", NSStringFromClass([self class]), self, (long)self.itemsCount, NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bodyFrame), NSStringFromCGRect(self.headerFrame), NSStringFromCGRect(self.footerFrame), self.rows];
+  return [NSString stringWithFormat:@"<%@: %p itemsCount:%ld frame:%@ bodyFrame:%@ headerFrame:%@ footerFrame:%@ rows:%@>", NSStringFromClass([self class]), self, (long)self.itemsCount, NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bodyFrame), NSStringFromCGRect(self.headerFrame), NSStringFromCGRect(self.footerFrame), self.rows];
 }
 
 @end

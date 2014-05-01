@@ -8,25 +8,25 @@
 SPEC_BEGIN(AMPerSectionCollectionViewLayoutInvalidationContextSpec)
 
 describe(@"AMPerSectionCollectionViewLayoutInvalidationContext", ^{
-    
-    __block AMPerSectionCollectionViewLayoutInvalidationContext *invalidationContext = nil;
+  
+  __block AMPerSectionCollectionViewLayoutInvalidationContext *invalidationContext = nil;
+  
+  beforeEach(^{
+    invalidationContext = [[AMPerSectionCollectionViewLayoutInvalidationContext alloc] init];
+  });
+  
+  context(@"default", ^{
+    [[theValue(invalidationContext) should] equal:theValue(YES)];
+  });
+  
+  context(@"invalidateHeader", ^{
+    __block BOOL invalidateHeader = NO;
     
     beforeEach(^{
-        invalidationContext = [[AMPerSectionCollectionViewLayoutInvalidationContext alloc] init];
+      invalidateHeader = YES;
+      invalidationContext.invalidateHeader = invalidateHeader;
     });
-    
-    context(@"default", ^{
-        [[theValue(invalidationContext) should] equal:theValue(YES)];
-    });
-    
-    context(@"invalidateHeader", ^{
-        __block BOOL invalidateHeader = NO;
-        
-        beforeEach(^{
-            invalidateHeader = YES;
-            invalidationContext.invalidateHeader = invalidateHeader;
-        });
-    });
+  });
 });
 
 SPEC_END
