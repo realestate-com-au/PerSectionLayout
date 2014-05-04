@@ -8,8 +8,17 @@
 
 - (BOOL)isEqual:(AMPerSectionCollectionViewLayoutAttributes *)object
 {
-  BOOL isEqual = [super isEqual:object];
-  return (isEqual && CGPointEqualToPoint(self.adjustmentOffset, object.adjustmentOffset));
+  if (self == object) return YES;
+  
+  if ([object class] == [self class])
+  {
+    if (!CGPointEqualToPoint(self.adjustmentOffset, object.adjustmentOffset))
+    {
+      return NO;
+    }
+  }
+  
+  return [super isEqual:object];
 }
 
 - (id)copyWithZone:(NSZone *)zone
