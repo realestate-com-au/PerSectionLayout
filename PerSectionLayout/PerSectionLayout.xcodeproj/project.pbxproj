@@ -66,7 +66,7 @@
 		C98D0E9719060D0D009BC415 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
+			dstPath = "${PUBLIC_HEADERS_FOLDER_PATH}";
 			dstSubfolderSpec = 16;
 			files = (
 				C98D0E9919060D36009BC415 /* AMPerSectionCollectionView.h in CopyFiles */,
@@ -311,16 +311,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		5FD2CE2018FB9F4800B8E740 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		5F78C77F18FD1A6C00ACE12B /* PerSectionLayoutTestLoader */ = {
 			isa = PBXNativeTarget;
@@ -346,7 +336,6 @@
 			buildPhases = (
 				5FD2CD9F18FB9AD000B8E740 /* Sources */,
 				5FD2CDA018FB9AD000B8E740 /* Frameworks */,
-				5FD2CE2018FB9F4800B8E740 /* Headers */,
 				C98D0E9719060D0D009BC415 /* CopyFiles */,
 			);
 			buildRules = (
