@@ -91,6 +91,17 @@
     return collectionViewLayout.sectionWidth;
 }
 
+- (CGPoint)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout originForSectionAtIndex:(NSInteger)section
+{
+    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
+    if ([sectionController respondsToSelector:@selector(collectionView:layout:originForSectionAtIndex:)])
+    {
+        return [sectionController collectionView:collectionView layout:collectionViewLayout originForSectionAtIndex:section];
+    }
+    
+    return CGPointZero;
+}
+
 - (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasStickyHeaderOverSection:(NSInteger)section
 {
     id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
@@ -108,6 +119,17 @@
     if ([sectionController respondsToSelector:@selector(collectionView:layout:canStretchSectionAtIndex:)])
     {
         return [sectionController collectionView:collectionView layout:collectionViewLayout canStretchSectionAtIndex:section];
+    }
+    
+    return NO;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout isFloatingSectionAtIndex:(NSInteger)section
+{
+    id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
+    if ([sectionController respondsToSelector:@selector(collectionView:layout:isFloatingSectionAtIndex:)])
+    {
+        return [sectionController collectionView:collectionView layout:collectionViewLayout isFloatingSectionAtIndex:section];
     }
     
     return NO;

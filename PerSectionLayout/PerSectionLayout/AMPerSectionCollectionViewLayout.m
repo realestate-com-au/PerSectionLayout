@@ -264,6 +264,18 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
   return MIN(width, CGRectGetWidth(self.collectionView.bounds));
 }
 
+- (CGPoint)originForSectionAtIndex:(NSInteger)section
+{
+  CGPoint origin = CGPointZero;
+  if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:originForSectionAtIndex:)])
+  {
+    origin = [self.collectionViewDelegate collectionView:self.collectionView layout:self originForSectionAtIndex:section];
+  }
+
+  return origin;
+}
+
+
 - (CGFloat)minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
   CGFloat minimumLineSpacing = self.minimumLineSpacing;
@@ -295,6 +307,17 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
   }
   
   return canStretchSectionAtIndex;
+}
+
+- (BOOL)isFloatingSectionAtIndex:(NSInteger)section
+{
+  BOOL isFloatingSectionAtIndex = NO;
+  if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:isFloatingSectionAtIndex:)])
+  {
+    isFloatingSectionAtIndex = [self.collectionViewDelegate collectionView:self.collectionView layout:self isFloatingSectionAtIndex:section];
+  }
+
+  return isFloatingSectionAtIndex;
 }
 
 #pragma mark - Layout
@@ -389,7 +412,9 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
     layoutSection.horizontalInterstice = [self minimumInteritemSpacingForSectionAtIndex:section];
     layoutSection.width = [self widthForSectionAtIndex:section];
     layoutSection.stretch = [self canStretchSectionAtIndex:section];
-    
+    layoutSection.floating = [self isFloatingSectionAtIndex:section];
+    layoutSection.origin = [self originForSectionAtIndex:section];
+
     NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:section];
     CGSize itemSize = [self itemSize];
     BOOL implementsSizeDelegate = [self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:sizeForItemAtIndexPath:)];

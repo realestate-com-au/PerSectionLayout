@@ -56,4 +56,14 @@
     return [self maxWidthForCollectionView:collectionView];
 }
 
+- (CGPoint)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout originForSectionAtIndex:(NSInteger)section
+{
+    return CGPointMake(768.f, 200.f);
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout isFloatingSectionAtIndex:(NSInteger)section
+{
+    return [[UIDevice currentDevice] isiPad] && UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]);
+}
+
 @end

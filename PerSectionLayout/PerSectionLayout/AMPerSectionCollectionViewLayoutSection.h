@@ -31,10 +31,12 @@
 @property (nonatomic, assign) UIEdgeInsets sectionMargins;
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGRect frame;
+@property (nonatomic, assign) CGPoint origin;
 @property (nonatomic, assign) CGRect headerFrame;
 @property (nonatomic, assign) CGRect bodyFrame;
 @property (nonatomic, assign) CGRect footerFrame;
 @property (nonatomic, assign) NSInteger index;
 @property (nonatomic, assign, getter = canStretch) BOOL stretch;
+@property (nonatomic, assign, getter = isFloating) BOOL floating;
 
 @end

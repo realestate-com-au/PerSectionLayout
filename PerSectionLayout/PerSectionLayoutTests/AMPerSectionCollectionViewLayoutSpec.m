@@ -22,6 +22,7 @@
 - (CGFloat)minimumLineSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
 - (CGFloat)widthForSectionAtIndex:(NSInteger)section;
+- (CGPoint)originForSectionAtIndex:(NSInteger)section;
 - (BOOL)hasStickyHeaderOverSection:(NSInteger)section;
 - (BOOL)canStretchSectionAtIndex:(NSInteger)section;
 - (void)getSizingInfos:(id)arg;

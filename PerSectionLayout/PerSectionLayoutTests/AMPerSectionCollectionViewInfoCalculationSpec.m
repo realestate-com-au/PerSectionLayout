@@ -84,6 +84,56 @@ describe(@"AMPerSectionCollectionViewInfoCalculation", ^{
     });
     
     it(@"should compute the correct content size", ^{
+      [[theValue(layoutInfo.contentSize) should] equal:theValue(CGSizeMake(400, 2150))];
+    });
+  });
+  
+  context(@"a complex layout with floating section", ^{
+    
+    beforeEach(^{
+      layoutInfo = [[AMPerSectionCollectionViewLayoutInfo alloc] init];
+      layoutInfo.collectionViewSize = CGSizeMake(1024, 768);
+      
+      AMPerSectionCollectionViewLayoutSection *sectionOne = [layoutInfo addSection];
+      sectionOne.width = 400;
+      AMPerSectionCollectionViewLayoutItem *sectionOneItem = [sectionOne addItem];
+      sectionOneItem.frame = (CGRect){.size = CGSizeMake(400, 1000)};
+      
+      AMPerSectionCollectionViewLayoutSection *sectionTwo = [layoutInfo addSection];
+      sectionTwo.width = 259;
+      sectionTwo.floating = YES;
+      sectionTwo.origin = CGPointMake(400.f, 0.f);
+      AMPerSectionCollectionViewLayoutItem *sectionTwoItem = [sectionTwo addItem];
+      sectionTwoItem.frame = (CGRect){.size = CGSizeMake(259, 200)};
+      
+      AMPerSectionCollectionViewLayoutSection *sectionThree = [layoutInfo addSection];
+      sectionThree.width = 259;
+      sectionThree.floating = YES;
+      sectionThree.origin = CGPointMake(659.f, 0.f);
+      AMPerSectionCollectionViewLayoutItem *sectionThreeItem = [sectionThree addItem];
+      sectionThreeItem.frame = (CGRect){.size = CGSizeMake(259, 300)};
+      
+      AMPerSectionCollectionViewLayoutSection *sectionFour = [layoutInfo addSection];
+      sectionFour.width = 259;
+      AMPerSectionCollectionViewLayoutItem *sectionFourItem = [sectionFour addItem];
+      sectionFourItem.frame = (CGRect){.size = CGSizeMake(259, 300)};
+      
+      AMPerSectionCollectionViewLayoutSection *sectionFive = [layoutInfo addSection];
+      sectionFive.width = 259;
+      sectionFive.floating = YES;
+      sectionFive.origin = CGPointMake(259.f, 1010.f);
+      AMPerSectionCollectionViewLayoutItem *sectionFiveItem = [sectionFive addItem];
+      sectionFiveItem.frame = (CGRect){.size = CGSizeMake(259, 300)};
+      
+      for (AMPerSectionCollectionViewLayoutSection *section in [layoutInfo layoutInfoSections])
+      {
+        section.verticalInterstice = 10;
+      }
+      
+      [layoutInfo updateItemsLayout];
+    });
+    
+    it(@"should compute the correct content size", ^{
       [[theValue(layoutInfo.contentSize) should] equal:theValue(CGSizeMake(918, 1320))];
     });
   });
@@ -171,7 +221,7 @@ describe(@"AMPerSectionCollectionViewInfoCalculation", ^{
     });
     
     it(@"should compute the collection view content size", ^{
-      [[theValue(layoutInfo.contentSize) should] equal:theValue(CGSizeMake(200, 300))];
+      [[theValue(layoutInfo.contentSize) should] equal:theValue(CGSizeMake(100, 500))];
     });
     
     context(@"first section", ^{
@@ -198,7 +248,7 @@ describe(@"AMPerSectionCollectionViewInfoCalculation", ^{
       });
       
       it(@"should compute the total frame", ^{
-        [[theValue(layoutSection.frame) should] equal:theValue(CGRectMake(100, 100, 100, 100))];
+        [[theValue(layoutSection.frame) should] equal:theValue(CGRectMake(0, 300, 100, 100))];
       });
     });
     
@@ -212,7 +262,7 @@ describe(@"AMPerSectionCollectionViewInfoCalculation", ^{
       });
       
       it(@"should compute the total frame", ^{
-        [[theValue(layoutSection.frame) should] equal:theValue(CGRectMake(0, 200, 100, 100))];
+        [[theValue(layoutSection.frame) should] equal:theValue(CGRectMake(0, 400, 100, 100))];
       });
     });
   });

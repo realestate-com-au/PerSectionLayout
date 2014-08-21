@@ -8,6 +8,8 @@
 @interface AMPerSectionCollectionViewLayoutInfo : NSObject
 
 - (NSArray *)layoutInfoSections;
+- (NSArray *)layoutInfoNonFloatingSections;
+- (NSArray *)layoutInfoFloatingSections;
 - (NSInteger)lastSectionIndex;
 - (AMPerSectionCollectionViewLayoutSection *)addSection;
 - (void)invalidate;

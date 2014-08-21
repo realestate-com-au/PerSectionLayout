@@ -36,12 +36,24 @@
   return [self.sections copy];
 }
 
+
+- (NSArray *)layoutInfoNonFloatingSections
+{
+  return [self.sections filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isFloating == %@", @NO]];
+}
+
+
+- (NSArray *)layoutInfoFloatingSections
+{
+  return [self.sections filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isFloating == %@", @YES]];
+}
+
 - (NSInteger)lastSectionIndex
 {
   return MAX(0, ((NSInteger)self.sections.count - 1));
 }
 
-- (NSObject *)addSection
+- (AMPerSectionCollectionViewLayoutSection *)addSection
 {
   AMPerSectionCollectionViewLayoutSection *layoutSection = [[AMPerSectionCollectionViewLayoutSection alloc] init];
   [self.sections addObject:layoutSection];
@@ -148,55 +160,32 @@
   contentSize.height += CGRectGetHeight(self.headerFrame);
   
   // first pass, compute all of the frames, ignoring position
-  NSArray *layoutSections = self.layoutInfoSections;
-  for (AMPerSectionCollectionViewLayoutSection *section in layoutSections)
+  for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfoSections)
   {
     CGFloat sectionWidth = section.width;
     section.width = (isnan(sectionWidth)) ? dimension : sectionWidth;
     [section computeLayout:self];
   }
-  
-  CGPoint nextOrigin = CGPointMake(0.f, contentSize.height);
-  for (AMPerSectionCollectionViewLayoutSection *section in layoutSections)
+
+  for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfoNonFloatingSections)
   {
     CGRect sectionFrame = section.frame;
-    
-    while (nextOrigin.x + CGRectGetWidth(sectionFrame) > dimension)
-    {
-      // go to new line
-      nextOrigin.y = contentSize.height;
-      
-      // reset x
-      AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
-      nextOrigin.x = CGRectGetMaxX(sectionInMyWay.frame);
-      
-      if (nextOrigin.y >= contentSize.height && nextOrigin.x == 0.f)
-      {
-        // next origin is already at the bottom left, no reason to keep going
-        break;
-      }
-    }
-    
-    sectionFrame.origin = nextOrigin;
+    sectionFrame.origin.y = contentSize.height;
+    section.frame = sectionFrame;
+
+    contentSize.width = MAX(contentSize.width, CGRectGetWidth(sectionFrame));
+    contentSize.height += CGRectGetHeight(sectionFrame);
+  }
+
+  for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfoFloatingSections)
+  {
+    CGRect sectionFrame = section.frame;
+    sectionFrame.origin.x = section.origin.x;
+    sectionFrame.origin.y = section.origin.y + CGRectGetHeight(self.headerFrame);
     section.frame = sectionFrame;
     
-    contentSize.width = MAX(CGRectGetMaxX(sectionFrame), contentSize.width);
-    contentSize.height = MAX(CGRectGetMaxY(sectionFrame), contentSize.height);
-    
-    if (CGRectGetMaxX(section.frame) >= dimension)
-    {
-      // go to new line
-      nextOrigin.y = CGRectGetMaxY(section.frame);
-      
-      // reset x
-      AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
-      nextOrigin.x = CGRectGetMaxX(sectionInMyWay.frame);
-    }
-    else
-    {
-      nextOrigin.x = CGRectGetMaxX(section.frame);
-      nextOrigin.y = CGRectGetMinY(section.frame);
-    }
+    contentSize.width = MAX(contentSize.width, CGRectGetMaxX(sectionFrame));
+    contentSize.height = MAX(contentSize.height, CGRectGetMaxY(sectionFrame));
   }
   
   // global footer
