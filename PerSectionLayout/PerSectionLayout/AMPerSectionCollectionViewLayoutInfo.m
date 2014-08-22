@@ -7,6 +7,7 @@
 #import "AMPerSectionCollectionViewLayoutAttributes.h"
 
 @interface AMPerSectionCollectionViewLayoutInfo ()
+
 @property (nonatomic, strong) NSMutableArray *sections;
 @end
 
@@ -20,7 +21,7 @@
     _sections = [NSMutableArray array];
     [self invalidate];
   }
-  
+
   return self;
 }
 
@@ -46,9 +47,9 @@
   AMPerSectionCollectionViewLayoutSection *layoutSection = [[AMPerSectionCollectionViewLayoutSection alloc] init];
   [self.sections addObject:layoutSection];
   layoutSection.index = (NSInteger)[self.sections indexOfObject:layoutSection];
-  
+
   [self invalidate];
-  
+
   return layoutSection;
 }
 
@@ -58,12 +59,12 @@
   {
     return nil;
   }
-  
+
   if (section < 0 || section >= (NSInteger)self.layoutInfoSections.count)
   {
     return nil;
   }
-  
+
   return self.layoutInfoSections[(NSUInteger)section];
 }
 
@@ -76,20 +77,20 @@
       return section;
     }
   }
-  
+
   return nil;
 }
 
 - (NSInteger)firstSectionIndexBelowHeaderForYOffset:(CGFloat)yOffset
 {
   AMPerSectionCollectionViewLayoutSection *firstSection = [self firstSectionAtPoint:CGPointMake(0.f, yOffset + CGRectGetMaxY(self.headerFrame))];
-  
+
   NSInteger firstSectionIndex = (NSInteger)[self.layoutInfoSections indexOfObject:firstSection];
   if (firstSectionIndex == NSNotFound)
   {
     firstSectionIndex = 0;
   }
-  
+
   return firstSectionIndex;
 }
 
@@ -102,7 +103,7 @@
   {
     return nil;
   }
-  
+
   return section.layoutSectionItems[(NSUInteger)indexPath.item];
 }
 
@@ -111,7 +112,7 @@
 - (CGRect)stickyHeaderFrameForYOffset:(CGFloat)yOffset
 {
   CGRect normalizedHeaderFrame = self.headerFrame;
-  
+
   if (self.hasStickyHeader)
   {
     NSInteger lastSectionWithStickyHeader = self.lastSectionWithStickyHeader;
@@ -124,7 +125,7 @@
       normalizedHeaderFrame.origin.y = CGRectGetMaxY([self sectionAtIndex:lastSectionWithStickyHeader].frame) - CGRectGetHeight(normalizedHeaderFrame);
     }
   }
-  
+
   return normalizedHeaderFrame;
 }
 
@@ -132,84 +133,154 @@
 
 - (void)updateItemsLayout
 {
-  CGFloat dimension = self.collectionViewSize.width;
-  CGSize contentSize = CGSizeZero;
-  
-  // global header
+  self.contentSize = CGSizeZero;
+
+  [self updateHeaderLayout];
+  [self updateSectionsLayout];
+  [self updateFooterLayout];
+}
+
+- (void)updateHeaderLayout
+{
   CGRect globalHeaderFrame = self.headerFrame;
   if (!CGRectEqualToRect(globalHeaderFrame, CGRectZero))
   {
     globalHeaderFrame.origin = CGPointZero;
-    globalHeaderFrame.size.width = dimension;
+    globalHeaderFrame.size.width = self.collectionViewSize.width;
     self.headerFrame = globalHeaderFrame;
   }
-  
-  contentSize.width = MAX(contentSize.width, CGRectGetWidth(self.headerFrame));
-  contentSize.height += CGRectGetHeight(self.headerFrame);
-  
-  // first pass, compute all of the frames, ignoring position
-  NSArray *layoutSections = self.layoutInfoSections;
-  for (AMPerSectionCollectionViewLayoutSection *section in layoutSections)
-  {
-    CGFloat sectionWidth = section.width;
-    section.width = (isnan(sectionWidth)) ? dimension : sectionWidth;
-    [section computeLayout:self];
-  }
-  
-  CGPoint nextOrigin = CGPointMake(0.f, contentSize.height);
-  for (AMPerSectionCollectionViewLayoutSection *section in layoutSections)
+
+  [self updateContentSizeWithNewFrame:self.headerFrame];
+}
+
+- (void)updateSectionsLayout
+{
+  [self updateSectionsSize];
+  [self updateSectionsOrigin];
+}
+
+- (void)updateSectionsOrigin
+{
+  // Remember all the origin candidates for place the section later, every time after a section placed, put its right top and left bottom
+  NSMutableArray *availableOrigins = [NSMutableArray array];
+  [availableOrigins addObject:[NSValue valueWithCGPoint:CGPointMake(0.f, self.contentSize.height)]];
+
+  // Remember the section already been placed to the right position
+  NSMutableArray *placedSections = [NSMutableArray array];
+
+  for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfoSections)
   {
     CGRect sectionFrame = section.frame;
+    NSValue *legalOriginValue = [self findLegalOriginFromAvailableOrigins:availableOrigins forFrame:sectionFrame placedSections:placedSections];;
     
-    while (nextOrigin.x + CGRectGetWidth(sectionFrame) > dimension)
+    if (legalOriginValue)
     {
-      // go to new line
-      nextOrigin.y = contentSize.height;
+      sectionFrame.origin = [legalOriginValue CGPointValue];
+      section.frame = sectionFrame;
+      [self updateContentSizeWithNewFrame:sectionFrame];
+      [placedSections addObject:section];
+      [self updateAvailableOrigins:availableOrigins withOldOrigin:legalOriginValue newSection:section];
       
-      // reset x
-      AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
-      nextOrigin.x = CGRectGetMaxX(sectionInMyWay.frame);
-      
-      if (nextOrigin.y >= contentSize.height && nextOrigin.x == 0.f)
-      {
-        // next origin is already at the bottom left, no reason to keep going
-        break;
-      }
-    }
-    
-    sectionFrame.origin = nextOrigin;
-    section.frame = sectionFrame;
-    
-    contentSize.width = MAX(CGRectGetMaxX(sectionFrame), contentSize.width);
-    contentSize.height = MAX(CGRectGetMaxY(sectionFrame), contentSize.height);
-    
-    if (CGRectGetMaxX(section.frame) >= dimension)
-    {
-      // go to new line
-      nextOrigin.y = CGRectGetMaxY(section.frame);
-      
-      // reset x
-      AMPerSectionCollectionViewLayoutSection *sectionInMyWay = [self firstSectionAtPoint:CGPointMake(0.f, nextOrigin.y)];
-      nextOrigin.x = CGRectGetMaxX(sectionInMyWay.frame);
     }
     else
     {
-      nextOrigin.x = CGRectGetMaxX(section.frame);
-      nextOrigin.y = CGRectGetMinY(section.frame);
+      NSLog(@"[Warning]: Can not place section into a legal place:\n%@ ", section);
     }
   }
-  
-  // global footer
-  CGRect globalFooterFrame =  self.footerFrame;
+}
+
+- (NSValue *)findLegalOriginFromAvailableOrigins:(NSMutableArray *)availableOrigins forFrame:(CGRect)frame placedSections:(NSMutableArray *)placedSections
+{
+  for (NSValue *originValue in availableOrigins)
+  {
+    frame.origin = [originValue CGPointValue];
+
+    if ([self isFrameLegal:frame withSections:placedSections])
+    {
+      return originValue;
+    }
+  }
+  return nil;
+}
+
+- (void)updateAvailableOrigins:(NSMutableArray *)availableOrigins withOldOrigin:(NSValue *)oldOrigin newSection:(AMPerSectionCollectionViewLayoutSection *)section
+{
+  // Remove old origin
+  [availableOrigins removeObject:oldOrigin];
+
+  // Add section right top as origin
+  CGFloat sectionRight = CGRectGetMaxX(section.frame);
+  // If section right already hit the right edge, ignore the right top
+  if (sectionRight < self.collectionViewSize.width)
+  {
+    [availableOrigins addObject:[NSValue valueWithCGPoint:CGPointMake(CGRectGetMaxX(section.frame), CGRectGetMinY(section.frame))]];
+  }
+  // Add section left bottom as origin
+  [availableOrigins addObject:[NSValue valueWithCGPoint:CGPointMake(CGRectGetMinX(section.frame), CGRectGetMaxY(section.frame))]];
+
+  // Sort the origins by the top value
+  [availableOrigins sortUsingComparator:^NSComparisonResult(NSValue *originValue1, NSValue *originValue2) {
+    return [@([originValue1 CGPointValue].y) compare:@([originValue2 CGPointValue].y)];
+  }];
+}
+
+- (BOOL)isFrameLegal:(CGRect)sectionFrame withSections:(NSMutableArray *)placedSections
+{
+  BOOL isSectionFrameLegal;
+  if (CGRectGetMaxX(sectionFrame) > self.collectionViewSize.width)
+  {
+    isSectionFrameLegal = NO;
+  }
+  else
+  {
+    isSectionFrameLegal = [self isFrameDetached:sectionFrame withSections:placedSections];
+  }
+  return isSectionFrameLegal;
+}
+
+- (BOOL)isFrameDetached:(CGRect)sectionFrame withSections:(NSMutableArray *)placedSections
+{
+// Test if the this section intersect with any of the existing sections
+  BOOL isDetached = YES;
+  NSEnumerator *placedSectionsEnumerator = [placedSections objectEnumerator];
+  AMPerSectionCollectionViewLayoutSection *placedSection = nil;
+  while (isDetached && (placedSection = [placedSectionsEnumerator nextObject]))
+  {
+    isDetached = !CGRectIntersectsRect(sectionFrame, placedSection.frame);
+  }
+  return isDetached;
+}
+
+- (void)updateSectionsSize
+{
+// first pass, compute all of the frames, ignoring position
+  for (AMPerSectionCollectionViewLayoutSection *section in self.layoutInfoSections)
+  {
+    CGFloat sectionWidth = section.width;
+    section.width = (isnan(sectionWidth)) ? self.collectionViewSize.width : sectionWidth;
+    [section computeLayout:self];
+  }
+}
+
+- (void)updateFooterLayout
+{
+  CGRect globalFooterFrame = self.footerFrame;
   if (CGRectGetHeight(globalFooterFrame) > 0)
   {
     globalFooterFrame.origin.x = 0;
-    globalFooterFrame.origin.y = contentSize.height;
-    globalFooterFrame.size.width = dimension;
+    globalFooterFrame.origin.y = self.contentSize.height;
+    globalFooterFrame.size.width = self.collectionViewSize.width;
     self.footerFrame = globalFooterFrame;
   }
-  
-  contentSize.height += CGRectGetHeight(self.footerFrame);
+
+  [self updateContentSizeWithNewFrame:self.footerFrame];
+}
+
+- (void)updateContentSizeWithNewFrame:(CGRect)frame
+{
+  CGSize contentSize = self.contentSize;
+  contentSize.width = MAX(contentSize.width, CGRectGetMaxX(frame));
+  contentSize.height = MAX(contentSize.height, CGRectGetMaxY(frame));
   self.contentSize = contentSize;
 }
 
@@ -227,7 +298,7 @@
     attr.adjustmentOffset = offset;
     return attr;
   }
-  
+
   return nil;
 }
 
@@ -242,7 +313,7 @@
     attr.adjustmentOffset = offset;
     return attr;
   }
-  
+
   return nil;
 }
 
