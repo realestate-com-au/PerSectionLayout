@@ -182,10 +182,6 @@
       [self updateAvailableOrigins:availableOrigins withOldOrigin:legalOriginValue newSection:section];
       
     }
-    else
-    {
-      NSLog(@"[Warning]: Can not place section into a legal place:\n%@ ", section);
-    }
   }
 }
 
