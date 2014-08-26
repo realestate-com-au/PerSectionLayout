@@ -227,6 +227,10 @@
   {
     isSectionFrameLegal = NO;
   }
+  else if (CGRectIsEmpty(sectionFrame))
+  {
+    isSectionFrameLegal = YES;
+  }
   else
   {
     isSectionFrameLegal = [self isFrameDetached:sectionFrame withSections:placedSections];
@@ -242,7 +246,8 @@
   AMPerSectionCollectionViewLayoutSection *placedSection = nil;
   while (isDetached && (placedSection = [placedSectionsEnumerator nextObject]))
   {
-    isDetached = !CGRectIntersectsRect(sectionFrame, placedSection.frame);
+    CGRect existFrame = placedSection.frame;
+    isDetached = CGRectIsEmpty(existFrame) || !CGRectIntersectsRect(sectionFrame, existFrame);
   }
   return isDetached;
 }
