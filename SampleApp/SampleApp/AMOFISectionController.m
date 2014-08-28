@@ -53,7 +53,12 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout widthForSectionAtIndex:(NSInteger)section
 {
-    return [self maxWidthForCollectionView:collectionView];
+  return [self maxWidthForCollectionView:collectionView];
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumHeightForSectionAtIndex:(NSInteger)section
+{
+  return 200.f;
 }
 
 @end

@@ -82,13 +82,25 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout widthForSectionAtIndex:(NSInteger)section
 {
+  id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
+  if ([sectionController respondsToSelector:@selector(collectionView:layout:widthForSectionAtIndex:)])
+  {
+    return [sectionController collectionView:collectionView layout:collectionViewLayout widthForSectionAtIndex:section];
+  }
+
+  return collectionViewLayout.sectionWidth;
+}
+
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout minimumHeightForSectionAtIndex:(NSInteger)section
+{
     id<AMSectionController> sectionController = [self.sectionsProvider controllerForSection:section];
-    if ([sectionController respondsToSelector:@selector(collectionView:layout:widthForSectionAtIndex:)])
+    if ([sectionController respondsToSelector:@selector(collectionView:layout:minimumHeightForSectionAtIndex:)])
     {
-        return [sectionController collectionView:collectionView layout:collectionViewLayout widthForSectionAtIndex:section];
+        return [sectionController collectionView:collectionView layout:collectionViewLayout minimumHeightForSectionAtIndex:section];
     }
     
-    return collectionViewLayout.sectionWidth;
+    return 0.f;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView layout:(AMPerSectionCollectionViewLayout *)collectionViewLayout hasStickyHeaderOverSection:(NSInteger)section

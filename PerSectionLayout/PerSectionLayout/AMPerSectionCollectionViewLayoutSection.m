@@ -203,7 +203,7 @@
   CGPoint sectionOrigin = CGPointZero;
   CGSize sectionSize = CGSizeZero;
   sectionSize.width = self.width;
-  sectionSize.height = footerOrigin + footerframe.size.height;
+  sectionSize.height = MAX(footerOrigin + footerframe.size.height, self.minimumHeight);
   self.frame = (CGRect){.origin = sectionOrigin, .size = sectionSize};
 }
 

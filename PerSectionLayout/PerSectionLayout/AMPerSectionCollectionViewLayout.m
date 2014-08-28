@@ -260,8 +260,18 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
   {
     width = [self.collectionViewDelegate collectionView:self.collectionView layout:self widthForSectionAtIndex:section];
   }
-  
+
   return MIN(width, CGRectGetWidth(self.collectionView.bounds));
+}
+
+- (CGFloat)minimumHeightForSectionAtIndex:(NSInteger)section
+{
+  if ([self.collectionViewDelegate respondsToSelector:@selector(collectionView:layout:minimumHeightForSectionAtIndex:)])
+  {
+    return [self.collectionViewDelegate collectionView:self.collectionView layout:self minimumHeightForSectionAtIndex:section];
+  }
+
+  return 0.f;
 }
 
 - (CGFloat)minimumLineSpacingForSectionAtIndex:(NSInteger)section
@@ -389,6 +399,7 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
     layoutSection.horizontalInterstice = [self minimumInteritemSpacingForSectionAtIndex:section];
     layoutSection.width = [self widthForSectionAtIndex:section];
     layoutSection.stretch = [self canStretchSectionAtIndex:section];
+    layoutSection.minimumHeight = [self minimumHeightForSectionAtIndex:section];
     
     NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:section];
     CGSize itemSize = [self itemSize];

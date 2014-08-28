@@ -30,6 +30,7 @@
 @property (nonatomic, assign) CGFloat horizontalInterstice;
 @property (nonatomic, assign) UIEdgeInsets sectionMargins;
 @property (nonatomic, assign) CGFloat width;
+@property (nonatomic, assign) CGFloat minimumHeight;
 @property (nonatomic, assign) CGRect frame;
 @property (nonatomic, assign) CGRect headerFrame;
 @property (nonatomic, assign) CGRect bodyFrame;

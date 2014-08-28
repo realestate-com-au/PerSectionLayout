@@ -52,6 +52,7 @@ describe(@"AMPerSectionCollectionViewInfoCalculation", ^{
       
       AMPerSectionCollectionViewLayoutSection *sectionOne = [layoutInfo addSection];
       sectionOne.width = 400;
+      sectionOne.minimumHeight = 1200.f;
       AMPerSectionCollectionViewLayoutItem *sectionOneItem = [sectionOne addItem];
       sectionOneItem.frame = (CGRect){.size = CGSizeMake(400, 1000)};
       
@@ -84,7 +85,7 @@ describe(@"AMPerSectionCollectionViewInfoCalculation", ^{
     });
     
     it(@"should compute the correct content size", ^{
-      [[theValue(layoutInfo.contentSize) should] equal:theValue(CGSizeMake(918, 1010))];
+      [[theValue(layoutInfo.contentSize) should] equal:theValue(CGSizeMake(918, 1200))];
     });
   });
   
