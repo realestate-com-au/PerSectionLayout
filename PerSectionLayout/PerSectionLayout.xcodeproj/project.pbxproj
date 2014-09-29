@@ -11,7 +11,6 @@
 		5F78C73118FD143900ACE12B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C73018FD143900ACE12B /* UIKit.framework */; };
 		5F78C73218FD144E00ACE12B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C73018FD143900ACE12B /* UIKit.framework */; };
 		5F78C73318FD149200ACE12B /* libPerSectionLayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */; };
-		5F78C73518FD14A900ACE12B /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C73418FD14A900ACE12B /* SenTestingKit.framework */; };
 		5F78C78118FD1A6C00ACE12B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA618FB9AD000B8E740 /* Foundation.framework */; };
 		5F78C78318FD1A6C00ACE12B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */; };
 		5F78C78418FD1A6C00ACE12B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C73018FD143900ACE12B /* UIKit.framework */; };
@@ -40,6 +39,7 @@
 		5FDDB80118FDDB61005D20F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */; };
 		88ADDC6218FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ADDC6118FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m */; };
 		88ADDC6418FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m */; };
+		A3EEA02819D9208F0066845B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3EEA02719D9208F0066845B /* XCTest.framework */; };
 		C98D0E9919060D36009BC415 /* AMPerSectionCollectionView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C98D0E9819060D33009BC415 /* AMPerSectionCollectionView.h */; };
 		C98D0E9C19060F17009BC415 /* AMPerSectionCollectionViewLayout.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FD2CDCC18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayout.h */; };
 		C98D0E9D19060F19009BC415 /* AMPerSectionCollectionViewLayoutAttributes.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FD2CDCE18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h */; };
@@ -80,7 +80,6 @@
 /* Begin PBXFileReference section */
 		5F78C72E18FD141500ACE12B /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = ../tools/Kiwi.framework; sourceTree = "<group>"; };
 		5F78C73018FD143900ACE12B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		5F78C73418FD14A900ACE12B /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		5F78C78018FD1A6C00ACE12B /* PerSectionLayoutTestLoader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerSectionLayoutTestLoader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		5F78C78718FD1A6C00ACE12B /* PerSectionLayoutTestLoader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PerSectionLayoutTestLoader-Info.plist"; sourceTree = "<group>"; };
@@ -93,7 +92,7 @@
 		5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPerSectionLayout.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FD2CDA618FB9AD000B8E740 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5FD2CDAA18FB9AD000B8E740 /* PerSectionLayout-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PerSectionLayout-Prefix.pch"; sourceTree = "<group>"; };
-		5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PerSectionLayoutTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PerSectionLayoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FD2CDBE18FB9AD000B8E740 /* PerSectionLayoutTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PerSectionLayoutTests-Info.plist"; sourceTree = "<group>"; };
 		5FD2CDC018FB9AD000B8E740 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5FD2CDCC18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPerSectionCollectionViewLayout.h; sourceTree = "<group>"; };
@@ -125,6 +124,7 @@
 		5FD2CE3018FBA58F00B8E740 /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Project.xcconfig; path = ../Project.xcconfig; sourceTree = "<group>"; };
 		88ADDC6118FBADFC00467201 /* LayoutInfoLayoutAttributesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutInfoLayoutAttributesSpec.m; sourceTree = "<group>"; };
 		88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutSectionLayoutAttributesSpec.m; sourceTree = "<group>"; };
+		A3EEA02719D9208F0066845B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C98D0E9819060D33009BC415 /* AMPerSectionCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMPerSectionCollectionView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,8 +153,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3EEA02819D9208F0066845B /* XCTest.framework in Frameworks */,
 				5FDDB80018FDDB58005D20F3 /* CoreGraphics.framework in Frameworks */,
-				5F78C73518FD14A900ACE12B /* SenTestingKit.framework in Frameworks */,
 				5F78C73318FD149200ACE12B /* libPerSectionLayout.a in Frameworks */,
 				5F78C73218FD144E00ACE12B /* UIKit.framework in Frameworks */,
 				5F78C72F18FD141500ACE12B /* Kiwi.framework in Frameworks */,
@@ -212,7 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */,
-				5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.octest */,
+				5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.xctest */,
 				5F78C78018FD1A6C00ACE12B /* PerSectionLayoutTestLoader.app */,
 			);
 			name = Products;
@@ -221,7 +221,7 @@
 		5FD2CDA518FB9AD000B8E740 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5F78C73418FD14A900ACE12B /* SenTestingKit.framework */,
+				A3EEA02719D9208F0066845B /* XCTest.framework */,
 				5F78C73018FD143900ACE12B /* UIKit.framework */,
 				5FD2CDA618FB9AD000B8E740 /* Foundation.framework */,
 				5F78C72E18FD141500ACE12B /* Kiwi.framework */,
@@ -362,7 +362,7 @@
 			);
 			name = PerSectionLayoutTests;
 			productName = PerSectionLayoutTests;
-			productReference = 5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.octest */;
+			productReference = 5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -615,12 +615,13 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 					"\"$(SRCROOT)/../tools\"",
+					"$(DEVELOPER_DIR)/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayout/PerSectionLayout-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
@@ -633,12 +634,13 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 					"\"$(SRCROOT)/../tools\"",
+					"$(DEVELOPER_DIR)/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PerSectionLayout/PerSectionLayout-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
+				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};

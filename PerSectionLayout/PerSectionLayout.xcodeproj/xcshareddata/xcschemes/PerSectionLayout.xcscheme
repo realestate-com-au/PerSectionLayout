@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5FD2CDB218FB9AD000B8E740"
-               BuildableName = "PerSectionLayoutTests.octest"
+               BuildableName = "PerSectionLayoutTests.xctest"
                BlueprintName = "PerSectionLayoutTests"
                ReferencedContainer = "container:PerSectionLayout.xcodeproj">
             </BuildableReference>
@@ -49,6 +49,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5FD2CDA218FB9AD000B8E740"
+            BuildableName = "libPerSectionLayout.a"
+            BlueprintName = "PerSectionLayout"
+            ReferencedContainer = "container:PerSectionLayout.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
