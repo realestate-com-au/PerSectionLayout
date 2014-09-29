@@ -1,7 +1,7 @@
 default: test
 
 test: check
-	xcodebuild -workspace PerSectionLayout.xcworkspace -scheme PerSectionLayout -sdk iphonesimulator -destination "name=iPhone Retina (4-inch),OS=7.0" clean test | xcpretty -c && exit ${PIPESTATUS[0]}
+	xcodebuild -workspace PerSectionLayout.xcworkspace -scheme PerSectionLayout -sdk iphonesimulator -destination "name=iPhone 4s,OS=8.0" clean test | xcpretty -c && exit ${PIPESTATUS[0]}
 
 update:
 	@echo "\n\033[04m+ sync and update your git submodules\033[0m"
