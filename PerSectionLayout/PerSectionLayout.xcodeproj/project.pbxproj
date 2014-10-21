@@ -43,6 +43,7 @@
 		C98D0E9919060D36009BC415 /* AMPerSectionCollectionView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C98D0E9819060D33009BC415 /* AMPerSectionCollectionView.h */; };
 		C98D0E9C19060F17009BC415 /* AMPerSectionCollectionViewLayout.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FD2CDCC18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayout.h */; };
 		C98D0E9D19060F19009BC415 /* AMPerSectionCollectionViewLayoutAttributes.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FD2CDCE18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h */; };
+		C999EBF019F621BB00C980F6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C999EBEF19F621BB00C980F6 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,7 @@
 		88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutSectionLayoutAttributesSpec.m; sourceTree = "<group>"; };
 		A3EEA02719D9208F0066845B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C98D0E9819060D33009BC415 /* AMPerSectionCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMPerSectionCollectionView.h; sourceTree = "<group>"; };
+		C999EBEF19F621BB00C980F6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +199,7 @@
 		5FD2CD9A18FB9AD000B8E740 = {
 			isa = PBXGroup;
 			children = (
+				C999EBEF19F621BB00C980F6 /* Default-568h@2x.png */,
 				5FD2CE3718FBA5BE00B8E740 /* Configurations */,
 				5FD2CDA818FB9AD000B8E740 /* PerSectionLayout */,
 				5FD2CDBC18FB9AD000B8E740 /* PerSectionLayoutTests */,
@@ -372,7 +375,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = AM;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "REA Group";
 				TargetAttributes = {
 					5FD2CDB218FB9AD000B8E740 = {
@@ -404,6 +407,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C999EBF019F621BB00C980F6 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,7 +514,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -550,7 +553,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
