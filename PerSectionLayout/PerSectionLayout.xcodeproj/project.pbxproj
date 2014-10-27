@@ -181,6 +181,7 @@
 		5F78C78618FD1A6C00ACE12B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C999EBEF19F621BB00C980F6 /* Default-568h@2x.png */,
 				5F78C78718FD1A6C00ACE12B /* PerSectionLayoutTestLoader-Info.plist */,
 				5F78C78B18FD1A6C00ACE12B /* main.m */,
 			);
@@ -199,7 +200,6 @@
 		5FD2CD9A18FB9AD000B8E740 = {
 			isa = PBXGroup;
 			children = (
-				C999EBEF19F621BB00C980F6 /* Default-568h@2x.png */,
 				5FD2CE3718FBA5BE00B8E740 /* Configurations */,
 				5FD2CDA818FB9AD000B8E740 /* PerSectionLayout */,
 				5FD2CDBC18FB9AD000B8E740 /* PerSectionLayoutTests */,
