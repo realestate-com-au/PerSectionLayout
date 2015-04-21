@@ -25,6 +25,11 @@ const NSInteger AMPerSectionCollectionElementAlwaysShowOnTopZIndex = 2048;
 
 @implementation AMPerSectionCollectionViewLayout
 
+- (void)setLayoutInfo:(AMPerSectionCollectionViewLayoutInfo *)layoutInfo
+{
+  _layoutInfo = layoutInfo;
+}
+
 - (id)init
 {
   self = [super init];

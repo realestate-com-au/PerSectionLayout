@@ -629,7 +629,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         
         collectionView.delegate = delegateDataSource;
         collectionView.dataSource = delegateDataSource;
-        
+        [collectionView numberOfSections];
         [layout prepareLayout];
       });
       
@@ -668,6 +668,7 @@ describe(@"AMPerSectionCollectionViewLayout", ^{
         collectionView.delegate = delegateDataSource;
         collectionView.dataSource = delegateDataSource;
         
+        [collectionView numberOfSections];
         [layout prepareLayout];
       });
       
