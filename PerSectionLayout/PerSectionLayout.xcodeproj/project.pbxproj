@@ -11,11 +11,6 @@
 		5F78C73118FD143900ACE12B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C73018FD143900ACE12B /* UIKit.framework */; };
 		5F78C73218FD144E00ACE12B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C73018FD143900ACE12B /* UIKit.framework */; };
 		5F78C73318FD149200ACE12B /* libPerSectionLayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */; };
-		5F78C78118FD1A6C00ACE12B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA618FB9AD000B8E740 /* Foundation.framework */; };
-		5F78C78318FD1A6C00ACE12B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */; };
-		5F78C78418FD1A6C00ACE12B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F78C73018FD143900ACE12B /* UIKit.framework */; };
-		5F78C78C18FD1A6C00ACE12B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78C78B18FD1A6C00ACE12B /* main.m */; };
-		5F78C79018FD1A6C00ACE12B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78C78F18FD1A6C00ACE12B /* AppDelegate.m */; };
 		5F78C7C618FD1F0400ACE12B /* UIDevice+iOS7Compatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F78C7C418FD1F0400ACE12B /* UIDevice+iOS7Compatibility.m */; };
 		5FD2CDA718FB9AD000B8E740 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA618FB9AD000B8E740 /* Foundation.framework */; };
 		5FD2CDB618FB9AD000B8E740 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD2CDA618FB9AD000B8E740 /* Foundation.framework */; };
@@ -43,23 +38,15 @@
 		C98D0E9919060D36009BC415 /* AMPerSectionCollectionView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C98D0E9819060D33009BC415 /* AMPerSectionCollectionView.h */; };
 		C98D0E9C19060F17009BC415 /* AMPerSectionCollectionViewLayout.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FD2CDCC18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayout.h */; };
 		C98D0E9D19060F19009BC415 /* AMPerSectionCollectionViewLayoutAttributes.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FD2CDCE18FB9B5D00B8E740 /* AMPerSectionCollectionViewLayoutAttributes.h */; };
-		C999EBF019F621BB00C980F6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C999EBEF19F621BB00C980F6 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		5F78C7AB18FD1B9700ACE12B /* PBXContainerItemProxy */ = {
+		85E739341B6EF1810006FDDD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5FD2CD9B18FB9AD000B8E740 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 5FD2CDA218FB9AD000B8E740;
 			remoteInfo = PerSectionLayout;
-		};
-		8844C64618FFA307004D768F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5FD2CD9B18FB9AD000B8E740 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5F78C77F18FD1A6C00ACE12B;
-			remoteInfo = PerSectionLayoutTestLoader;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -81,13 +68,7 @@
 /* Begin PBXFileReference section */
 		5F78C72E18FD141500ACE12B /* Kiwi.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kiwi.framework; path = ../tools/Kiwi.framework; sourceTree = "<group>"; };
 		5F78C73018FD143900ACE12B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		5F78C78018FD1A6C00ACE12B /* PerSectionLayoutTestLoader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerSectionLayoutTestLoader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F78C78218FD1A6C00ACE12B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		5F78C78718FD1A6C00ACE12B /* PerSectionLayoutTestLoader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PerSectionLayoutTestLoader-Info.plist"; sourceTree = "<group>"; };
-		5F78C78B18FD1A6C00ACE12B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5F78C78E18FD1A6C00ACE12B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		5F78C78F18FD1A6C00ACE12B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5F78C79118FD1A6C00ACE12B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5F78C7C318FD1F0400ACE12B /* UIDevice+iOS7Compatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+iOS7Compatibility.h"; sourceTree = "<group>"; };
 		5F78C7C418FD1F0400ACE12B /* UIDevice+iOS7Compatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+iOS7Compatibility.m"; sourceTree = "<group>"; };
 		5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPerSectionLayout.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,20 +108,9 @@
 		88ADDC6318FBB48200467201 /* LayoutSectionLayoutAttributesSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutSectionLayoutAttributesSpec.m; sourceTree = "<group>"; };
 		A3EEA02719D9208F0066845B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		C98D0E9819060D33009BC415 /* AMPerSectionCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMPerSectionCollectionView.h; sourceTree = "<group>"; };
-		C999EBEF19F621BB00C980F6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5F78C77D18FD1A6C00ACE12B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5F78C78318FD1A6C00ACE12B /* CoreGraphics.framework in Frameworks */,
-				5F78C78418FD1A6C00ACE12B /* UIKit.framework in Frameworks */,
-				5F78C78118FD1A6C00ACE12B /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5FD2CDA018FB9AD000B8E740 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -167,27 +137,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5F78C78518FD1A6C00ACE12B /* PerSectionLayoutTestLoader */ = {
-			isa = PBXGroup;
-			children = (
-				5F78C78E18FD1A6C00ACE12B /* AppDelegate.h */,
-				5F78C78F18FD1A6C00ACE12B /* AppDelegate.m */,
-				5F78C79118FD1A6C00ACE12B /* Images.xcassets */,
-				5F78C78618FD1A6C00ACE12B /* Supporting Files */,
-			);
-			path = PerSectionLayoutTestLoader;
-			sourceTree = "<group>";
-		};
-		5F78C78618FD1A6C00ACE12B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				C999EBEF19F621BB00C980F6 /* Default-568h@2x.png */,
-				5F78C78718FD1A6C00ACE12B /* PerSectionLayoutTestLoader-Info.plist */,
-				5F78C78B18FD1A6C00ACE12B /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		5F78C7C118FD1EC900ACE12B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,7 +152,6 @@
 				5FD2CE3718FBA5BE00B8E740 /* Configurations */,
 				5FD2CDA818FB9AD000B8E740 /* PerSectionLayout */,
 				5FD2CDBC18FB9AD000B8E740 /* PerSectionLayoutTests */,
-				5F78C78518FD1A6C00ACE12B /* PerSectionLayoutTestLoader */,
 				5FD2CDA518FB9AD000B8E740 /* Frameworks */,
 				5FD2CDA418FB9AD000B8E740 /* Products */,
 			);
@@ -216,7 +164,6 @@
 			children = (
 				5FD2CDA318FB9AD000B8E740 /* libPerSectionLayout.a */,
 				5FD2CDB318FB9AD000B8E740 /* PerSectionLayoutTests.xctest */,
-				5F78C78018FD1A6C00ACE12B /* PerSectionLayoutTestLoader.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -315,24 +262,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5F78C77F18FD1A6C00ACE12B /* PerSectionLayoutTestLoader */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5F78C7A918FD1A6D00ACE12B /* Build configuration list for PBXNativeTarget "PerSectionLayoutTestLoader" */;
-			buildPhases = (
-				5F78C77C18FD1A6C00ACE12B /* Sources */,
-				5F78C77D18FD1A6C00ACE12B /* Frameworks */,
-				5F78C77E18FD1A6C00ACE12B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5F78C7AC18FD1B9700ACE12B /* PBXTargetDependency */,
-			);
-			name = PerSectionLayoutTestLoader;
-			productName = PerSectionLayoutTestLoader;
-			productReference = 5F78C78018FD1A6C00ACE12B /* PerSectionLayoutTestLoader.app */;
-			productType = "com.apple.product-type.application";
-		};
 		5FD2CDA218FB9AD000B8E740 /* PerSectionLayout */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5FD2CDC618FB9AD000B8E740 /* Build configuration list for PBXNativeTarget "PerSectionLayout" */;
@@ -361,7 +290,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				8844C64718FFA307004D768F /* PBXTargetDependency */,
+				85E739351B6EF1810006FDDD /* PBXTargetDependency */,
 			);
 			name = PerSectionLayoutTests;
 			productName = PerSectionLayoutTests;
@@ -397,20 +326,11 @@
 			targets = (
 				5FD2CDA218FB9AD000B8E740 /* PerSectionLayout */,
 				5FD2CDB218FB9AD000B8E740 /* PerSectionLayoutTests */,
-				5F78C77F18FD1A6C00ACE12B /* PerSectionLayoutTestLoader */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		5F78C77E18FD1A6C00ACE12B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C999EBF019F621BB00C980F6 /* Default-568h@2x.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5FD2CDB118FB9AD000B8E740 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -421,15 +341,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		5F78C77C18FD1A6C00ACE12B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5F78C79018FD1A6C00ACE12B /* AppDelegate.m in Sources */,
-				5F78C78C18FD1A6C00ACE12B /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5FD2CD9F18FB9AD000B8E740 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -466,15 +377,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5F78C7AC18FD1B9700ACE12B /* PBXTargetDependency */ = {
+		85E739351B6EF1810006FDDD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5FD2CDA218FB9AD000B8E740 /* PerSectionLayout */;
-			targetProxy = 5F78C7AB18FD1B9700ACE12B /* PBXContainerItemProxy */;
-		};
-		8844C64718FFA307004D768F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5F78C77F18FD1A6C00ACE12B /* PerSectionLayoutTestLoader */;
-			targetProxy = 8844C64618FFA307004D768F /* PBXContainerItemProxy */;
+			targetProxy = 85E739341B6EF1810006FDDD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -490,26 +396,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		5F78C7A518FD1A6D00ACE12B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				INFOPLIST_FILE = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		5F78C7A618FD1A6D00ACE12B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				INFOPLIST_FILE = "PerSectionLayoutTestLoader/PerSectionLayoutTestLoader-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
 		5FD2CDC418FB9AD000B8E740 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -611,7 +497,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5FD2CE2F18FBA58F00B8E740 /* Test.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PerSectionLayoutTestLoader.app/PerSectionLayoutTestLoader";
+				BUNDLE_LOADER = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -630,7 +516,7 @@
 		5FD2CDCB18FB9AD000B8E740 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PerSectionLayoutTestLoader.app/PerSectionLayoutTestLoader";
+				BUNDLE_LOADER = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -649,15 +535,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5F78C7A918FD1A6D00ACE12B /* Build configuration list for PBXNativeTarget "PerSectionLayoutTestLoader" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5F78C7A518FD1A6D00ACE12B /* Debug */,
-				5F78C7A618FD1A6D00ACE12B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		5FD2CD9E18FB9AD000B8E740 /* Build configuration list for PBXProject "PerSectionLayout" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
